@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Master Zoo × Bolt Food — Partnership</title>
+<style>
+:root{--green:#34D186;--dark:#2F313F;--grey:#6B7080;--light:#EEF6F1;--line:#E3E7EA}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,-apple-system,sans-serif;background:#0c0f14;color:var(--dark);
+display:flex;flex-direction:column;align-items:center;min-height:100vh}
+#stage{position:relative;width:min(96vw,1100px);aspect-ratio:16/9;background:#fff;
+border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);margin:auto}
+.slide{position:absolute;inset:0;padding:5.2% 5.5%;display:flex;flex-direction:column}
+.kick{color:var(--green);font-weight:700;font-size:1.05vw;letter-spacing:.06em;text-transform:uppercase}
+.bar{width:5%;height:.7vh;background:var(--green);border-radius:3px;margin-bottom:1.3vh}
+h1{font-size:2.5vw;line-height:1.15}
+h2{font-size:2.1vw;margin-bottom:1vh}
+.logo{position:absolute;top:4.4%;right:5%;height:5.4%}
+.sub{color:var(--grey);font-size:1.25vw}
+.tiles{display:flex;gap:1.2%;margin-top:2.4vh}
+.tile{flex:1;background:var(--light);border-radius:12px;padding:1.5vw;text-align:center}
+.tile .big{font-size:2.5vw;font-weight:800;color:var(--green)}
+.tile .big.d{color:var(--dark)}
+.tile .lab{font-size:1.0vw;color:var(--grey);margin-top:.5vh}
+.tile .sub2{font-size:.82vw;color:var(--grey)}
+.dark{background:var(--dark);color:#fff;padding:7% 6%}
+.dark h1{color:#fff;font-size:3.2vw}
+.dark .accent{color:var(--green);font-weight:700}
+.note{color:var(--grey);font-size:1.05vw;margin-top:auto}
+.foot{position:absolute;bottom:3.2%;left:5.5%;color:var(--grey);font-size:.82vw}
+.agenda{display:flex;align-items:center;gap:1.2vw;margin-top:1.6vh}
+.num{width:2.6vw;height:2.6vw;border-radius:10px;background:var(--light);color:var(--green);
+font-weight:800;font-size:1.3vw;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.agenda .t{font-size:1.4vw;font-weight:700}
+.agenda .d{font-size:1vw;color:var(--grey)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1.4%;margin-top:2.2vh}
+.card{background:var(--light);border-radius:12px;padding:1.4vw 1.6vw;border-left:5px solid var(--green)}
+.card h3{font-size:1.4vw}.card p{font-size:1vw;color:var(--grey);margin-top:.5vh}
+.chart{width:100%;margin-top:1.4vh;border-radius:8px}
+.scen{display:flex;gap:1.4%;margin-top:2.4vh}
+.scol{flex:1;border-radius:14px;background:var(--light);padding:2vw 1vw;text-align:center}
+.scol.hot{background:var(--green);color:#fff}
+.scol .nm{font-weight:700;font-size:1.3vw}.scol .sh{font-size:.95vw;color:var(--grey)}
+.scol.hot .sh{color:#eafff4}
+.scol .gmv{font-size:2.3vw;font-weight:800;color:var(--green);margin:.6vh 0}
+.scol.hot .gmv{color:#fff}.scol .ord{font-size:1.1vw;font-weight:700}
+.two{display:flex;gap:2%;margin-top:1vh}.col{flex:1}
+.row{display:flex;justify-content:space-between;background:var(--light);border-radius:10px;
+padding:.8vw 1.1vw;margin-top:.8vh;font-size:1.15vw}.row b{color:var(--green)}
+.step{display:flex;align-items:center;gap:.9vw;margin-top:.85vh;font-size:1.1vw}
+.sc{width:1.9vw;height:1.9vw;border-radius:8px;background:var(--green);color:#fff;font-weight:700;
+display:flex;align-items:center;justify-content:center;font-size:.95vw;flex-shrink:0}
+.promo{display:flex;gap:1.1%;margin-top:1.8vh}
+.pt{flex:1;background:var(--light);border-radius:12px;padding:1vw}
+.pt .pn{width:1.9vw;height:1.9vw;border-radius:8px;background:var(--green);color:#fff;font-weight:800;
+display:flex;align-items:center;justify-content:center;font-size:1vw;margin-bottom:.7vh}
+.pt h4{font-size:1.05vw}.pt p{font-size:.78vw;color:var(--grey);margin-top:.4vh}
+.pbot{display:flex;gap:1.4%;margin-top:1.4vh}
+.pbox{flex:1;background:var(--light);border-radius:12px;padding:1vw 1.2vw;border-left:5px solid var(--green)}
+.pbox.d{border-left-color:var(--dark)}
+.pbox h4{font-size:1.1vw}.pbox p{font-size:.85vw;color:var(--grey);margin-top:.4vh}
+#nav{display:flex;gap:14px;align-items:center;padding:14px;color:#aab}
+#nav button{background:#1b2330;color:#fff;border:1px solid #2c3647;border-radius:8px;
+padding:7px 14px;cursor:pointer;font-size:14px}
+#nav button:hover{background:#26303f}
+#dots{display:flex;gap:6px}.dot{width:8px;height:8px;border-radius:50%;background:#3a4456;cursor:pointer}
+.dot.on{background:var(--green)}
+.dl{color:var(--green);text-decoration:none}
+</style></head>
+<body>
+<div id="stage"></div>
+<div id="nav">
+  <button onclick="go(-1)">‹ Назад</button>
+  <span id="counter">1 / 11</span>
+  <button onclick="go(1)">Далі ›</button>
+  <div id="dots"></div>
+  <a class="dl" href="Master-Zoo-Bolt-Food-Partnership.pptx" download>⬇ .pptx</a>
+</div>
+
+<script>
+const LOGO='bolt-food-logo.png';
+function logo(){return `<img class="logo" src="${LOGO}" onerror="this.style.display='none'">`}
+const slides=[
+// 1 title
+`<div class="slide dark" style="justify-content:center">
+  <div class="kick">Partnership proposal</div>
+  <h1 style="margin:1.4vh 0">Master&nbsp;Zoo <span class="accent">×</span> Bolt&nbsp;Food</h1>
+  <div class="sub" style="color:#c9ced6">Де ми зараз і куди ростемо разом</div>
+  <div style="margin-top:3vh;color:#9aa0ac;font-size:1.1vw">Перша зустріч · Україна · Червень 2026</div>
+</div>`,
+// 2 agenda
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Agenda</div><h2>Про що говоримо сьогодні</h2>
+  ${[['01','Хто такий Bolt Food','масштаб і екосистема'],['02','Де Master Zoo зараз','ваша позиція на ринку доставки'],['03','Можливість','незайнятий канал продажів'],['04','Амбіція: замовлення та GMV','помісячний план на 12 міс'],['05','Наступні кроки','як швидко стартуємо']].map(r=>`<div class="agenda"><div class="num">${r[0]}</div><div><div class="t">${r[1]}</div><div class="d">${r[2]}</div></div></div>`).join('')}
+</div>`,
+// 3 bolt numbers
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Bolt today</div><h2>Bolt — у цифрах</h2>
+  <div class="tiles">
+   ${[['50+','країн'],['850+','міст'],['4 млн+','замовлень/день'],['€12 млрд+','GMV run-rate'],['30%+','GMV CAGR 21–25']].map(t=>`<div class="tile"><div class="big">${t[0]}</div><div class="lab">${t[1]}</div></div>`).join('')}
+  </div>
+  <p class="note">Один застосунок: доставка їжі та товарів, таксі, оренда — мільйони активних клієнтів в Україні.</p>
+</div>`,
+// 4 where now
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Де ви зараз</div><h2>Master Zoo на ринку доставки</h2>
+  <div class="tiles">
+   <div class="tile"><div class="big d">5&nbsp;513</div><div class="lab">замовлень/міс на Glovo</div></div>
+   <div class="tile"><div class="big d">29</div><div class="lab">міст присутності</div></div>
+   <div class="tile"><div class="big d">#16</div><div class="lab">ритейл-бренд на Glovo</div></div>
+   <div class="tile"><div class="big">0</div><div class="lab">замовлень на Bolt Food</div></div>
+  </div>
+  <p class="note"><b style="color:var(--dark)">Висновок:</b> сильний стабільний попит на доставку зоотоварів — але <b style="color:var(--green)">повністю поза Bolt Food</b>. Чистий новий канал без канібалізації.</p>
+  <div class="foot">Джерело: Bolt internal data (Databricks) + Get Placed market scan, Jan–Apr 2026</div>
+</div>`,
+// 5 opportunity
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Можливість</div><h2>Чому зараз</h2>
+  <div class="cards">
+   ${[['Незайнятий канал','Master Zoo = 0 на Bolt Food. Кожне замовлення інкрементальне, поверх Glovo.'],['Bolt Food росте','Замовлення на платформі ростуть двозначними темпами кв/кв в Україні.'],['Pets — недопредставлені','Зоотовари майже відсутні у food-delivery. Низька конкуренція, висока лояльність.'],['Швидкий старт','Інтеграція каталогу й запуск у топ-містах за кілька тижнів.']].map(c=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')}
+  </div>
+</div>`,
+// 6 orders
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Амбіція · замовлення</div><h2>Помісячний план на 12 місяців</h2>
+  <img class="chart" src="mz-orders.png">
+  <p class="note">Старт ~80 → <b style="color:var(--green)">~670 замовлень/міс</b> на 12-й місяць · рік 1 разом <b style="color:var(--dark)">5 329 замовлень</b></p>
+  <div class="foot">Базова частка 12% обсягу Glovo (бенчмарк ритейл-мереж на Bolt). Прогноз модельний.</div>
+</div>`,
+// 7 gmv
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Амбіція · GMV</div><h2>GMV-потенціал, AOV €15</h2>
+  <img class="chart" src="mz-gmv.png">
+  <p class="note">Рік 1: <b style="color:var(--green)">€79 935</b> · річний run-rate на 12-й міс: <b style="color:var(--dark)">€120 960/рік</b></p>
+  <div class="foot">GMV = замовлення × €15 AOV. Базовий сценарій.</div>
+</div>`,
+// 8 scenarios
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Сценарії</div><h2>Три рівні амбіції — рік 1</h2>
+  <div class="scen">
+   ${[['Консервативний','8% обсягу Glovo','€53 310','3 554 замовлень',false],['Базовий','12% обсягу Glovo','€79 935','5 329 замовлень',true],['Амбітний','18% обсягу Glovo','€119 925','7 995 замовлень',false]].map(s=>`<div class="scol${s[4]?' hot':''}"><div class="nm">${s[0]}</div><div class="sh">${s[1]}</div><div class="gmv">${s[2]}</div><div class="sh">GMV рік 1</div><div class="ord">${s[3]}</div></div>`).join('')}
+  </div>
+  <div class="foot">AOV €15. Базовий сценарій — рекомендований.</div>
+</div>`,
+// 9 promo
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Промо · як розганяємо замовлення</div><h2>Промо-інструменти Bolt Food</h2>
+  <div class="promo">
+   ${[['1','Знижка на доставку','Частково або 0 ₴. №1 інструмент для залучення нових клієнтів.'],['2','Знижки на меню','Окремі позиції або весь асортимент — через API або від Bolt.'],['3','Когорти','Таргет на Нових / Втрачених / Активних — різний розмір знижки.'],['4','Банерна підтримка','Банер у вкладці «Магазини» в періоди активних акцій.']].map(p=>`<div class="pt"><div class="pn">${p[0]}</div><h4>${p[1]}</h4><p>${p[2]}</p></div>`).join('')}
+  </div>
+  <div class="pbot">
+   <div class="pbox"><h4>Рекомендований старт</h4><p>Безкоштовна доставка для нових клієнтів + MOV трохи вищий за середній чек.</p></div>
+   <div class="pbox d"><h4>Оподаткування (ПДВ)</h4><p>Знижки через Bolt → +20% ПДВ. Через API (зміна цін партнером) → без ПДВ.</p></div>
+  </div>
+  <div class="foot">Джерело: гайд «Промо-активності на Bolt Food» для партнерів (Україна)</div>
+</div>`,
+// 10 rollout
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Запуск</div><h2>З чого починаємо</h2>
+  <div class="two">
+   <div class="col"><div style="font-weight:700;font-size:1.3vw;margin-bottom:.5vh">Топ-міста для старту</div>
+    ${[['Київ','41%'],['Львів','13%'],['Одеса','8%'],['Дніпро','4%'],['Івано-Франківськ','3%']].map(c=>`<div class="row"><span>${c[0]}</span><b>${c[1]}</b></div>`).join('')}
+   </div>
+   <div class="col"><div style="font-weight:700;font-size:1.3vw;margin-bottom:.5vh">Наступні кроки</div>
+    ${['Підтвердити інтерес і scope пілоту','Інтеграція каталогу та цін','Запуск у топ-3 містах','Спільний маркетинг на старті','Огляд результатів через 4 тижні'].map((s,i)=>`<div class="step"><div class="sc">${i+1}</div><span>${s}</span></div>`).join('')}
+   </div>
+  </div>
+</div>`,
+// 11 closing
+`<div class="slide dark" style="justify-content:center">
+  <h1>Готові запустити Master Zoo на Bolt Food</h1>
+  <div class="accent" style="font-size:1.6vw;margin-top:1.6vh">Рік 1: ~5 329 замовлень · €79 935 GMV</div>
+  <div style="margin-top:3vh;color:#9aa0ac;font-size:1.2vw">Дякуємо! Обговоримо деталі пілоту.</div>
+</div>`
+];
+let i=0;const stage=document.getElementById('stage'),dots=document.getElementById('dots');
+stage.innerHTML=slides.map((h,n)=>`<div class="slidewrap${n===0?' on':''}" data-i="${n}" style="position:absolute;inset:0;display:${n===0?'block':'none'}">${h}</div>`).join('');
+slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');d.onclick=()=>set(n);dots.appendChild(d)});
+function set(n){i=Math.max(0,Math.min(slides.length-1,n));
+  document.querySelectorAll('.slidewrap').forEach(w=>w.style.display=(+w.dataset.i===i)?'block':'none');
+  document.querySelectorAll('.dot').forEach((d,k)=>d.classList.toggle('on',k===i));
+  document.getElementById('counter').textContent=(i+1)+' / '+slides.length;}
+function go(d){set(i+d)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1)});
+</script>
+</body></html>
