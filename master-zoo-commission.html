@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Master Zoo × Bolt Food — Середньозважена комісія</title>
+<style>
+:root{--green:#34D186;--dark:#2F313F;--grey:#6B7080;--light:#EEF6F1;--line:#E3E7EA}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,-apple-system,sans-serif;background:#fff;color:var(--dark);line-height:1.5}
+.wrap{max-width:920px;margin:0 auto;padding:34px 22px 70px}
+.kick{color:var(--green);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.bar{width:46px;height:5px;background:var(--green);border-radius:3px;margin:10px 0 6px}
+h1{font-size:30px}
+.sub{color:var(--grey);font-size:15px;margin-top:6px}
+h2{font-size:19px;margin:34px 0 12px;border-left:3px solid var(--green);padding-left:10px}
+.assum{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.chip{background:var(--light);border-radius:10px;padding:10px 16px;font-size:14px}
+.chip b{color:var(--dark)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.card{border-radius:16px;padding:22px;background:var(--light);border-top:6px solid var(--grey)}
+.card.hot{background:var(--green);color:#fff;border-top-color:#1f7d52}
+.card .nm{font-weight:700;font-size:17px}
+.card .base{font-size:13px;opacity:.85;margin-top:2px}
+.card .big{font-size:46px;font-weight:800;color:var(--dark);margin:12px 0 2px}
+.card.hot .big{color:#fff}
+.card .biglab{font-size:13px;color:var(--grey)}
+.card.hot .biglab{color:#eafff4}
+.card .rows{margin-top:14px}
+.card .r{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid rgba(0,0,0,.08);font-size:14px}
+.card.hot .r{border-top-color:rgba(255,255,255,.25)}
+.card .r b{font-weight:700}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th{background:var(--dark);color:#fff;font-size:13px}
+td:first-child,th:first-child{text-align:left}
+td.w{font-weight:800;color:var(--green)}
+.note{background:var(--light);border-left:3px solid var(--dark);border-radius:10px;padding:14px 16px;color:var(--grey);font-size:13.5px;margin-top:18px}
+.note b{color:var(--dark)}
+.formula{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:12px 16px;color:var(--grey);font-size:14px;margin-top:14px}
+.formula b{color:var(--dark)}
+.foot{margin-top:40px;color:var(--grey);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+.delta{display:inline-block;background:var(--dark);color:#fff;border-radius:8px;padding:4px 10px;font-size:13px;font-weight:700;margin-top:14px}
+</style></head>
+<body><div class="wrap">
+<div class="kick">Master Zoo × Bolt Food · Орієнтовні умови</div>
+<div class="bar"></div>
+<h1>Середньозважена комісія — 2 сценарії</h1>
+<p class="sub">З урахуванням замовлень Bolt+ (підписники платять базову комісію +2%).</p>
+
+<div class="assum">
+  <div class="chip">GMV за 6 міс: <b>11,5 млн ₴</b></div>
+  <div class="chip">Частка Bolt+: <b>15% продажів</b></div>
+  <div class="chip">Надбавка Bolt+: <b>+2% комісії</b> (лише на ці замовлення)</div>
+</div>
+
+<div class="formula">
+  <b>Формула:</b> середньозважена = база + (частка Bolt+ × 2%) = база + (15% × 2%) = <b>база + 0,3 п.п.</b>
+</div>
+
+<h2>Сценарії</h2>
+<div class="cards">
+  <div class="card">
+    <div class="nm">Сценарій 1 — рекомендований</div>
+    <div class="base">базова комісія 10% · передаєте фінальні ціни зі знижками</div>
+    <div class="big">10,3%</div>
+    <div class="biglab">середньозважена комісія</div>
+    <div class="rows">
+      <div class="r"><span>85% × 11,5 млн × 10%</span><b>977 500 ₴</b></div>
+      <div class="r"><span>15% × 11,5 млн × 12%</span><b>207 000 ₴</b></div>
+      <div class="r"><span>Разом комісія / 6 міс</span><b>≈ 1 184 500 ₴</b></div>
+    </div>
+  </div>
+  <div class="card hot">
+    <div class="nm">Сценарій 2 — без передачі знижок</div>
+    <div class="base">базова комісія 12% · ціни без урахування знижок</div>
+    <div class="big">12,3%</div>
+    <div class="biglab">середньозважена комісія</div>
+    <div class="rows">
+      <div class="r"><span>85% × 11,5 млн × 12%</span><b>1 173 000 ₴</b></div>
+      <div class="r"><span>15% × 11,5 млн × 14%</span><b>241 500 ₴</b></div>
+      <div class="r"><span>Разом комісія / 6 міс</span><b>≈ 1 414 500 ₴</b></div>
+    </div>
+  </div>
+</div>
+<div class="delta">Різниця між сценаріями: +230 000 ₴ комісії за 6 міс</div>
+
+<h2>Підсумок</h2>
+<table>
+<thead><tr><th>Сценарій</th><th>GMV 6 міс</th><th>База</th><th>Bolt+ (15%×2%)</th><th>Середньозважена</th><th>Комісія, ₴</th></tr></thead>
+<tbody>
+<tr><td>Сценарій 1</td><td>11,5 млн ₴</td><td>10%</td><td>+0,3 п.п.</td><td class="w">10,3%</td><td>≈ 1 184 500</td></tr>
+<tr><td>Сценарій 2</td><td>11,5 млн ₴</td><td>12%</td><td>+0,3 п.п.</td><td class="w">12,3%</td><td>≈ 1 414 500</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+Якщо частка Bolt+ = <b>20%</b> продажів, надбавка становить <b>+0,4 п.п.</b>:
+сценарій 1 → <b>10,4%</b>, сценарій 2 → <b>12,4%</b>.<br>
+Нагадування: +2% Bolt+ застосовується лише до замовлень підписників; решта замовлень — за базовою ставкою.
+</div>
+
+<div class="foot">
+Master Zoo × Bolt Food · розрахунок середньозваженої комісії · одиниці ₴, горизонт 6 міс.<br>
+Cmd+Shift+R для оновлення.
+</div>
+</div></body></html>
