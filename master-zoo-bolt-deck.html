@@ -84,7 +84,7 @@ padding:7px 14px;cursor:pointer;font-size:14px}
 <div id="stage"></div>
 <div id="nav">
   <button onclick="go(-1)">‹ Назад</button>
-  <span id="counter">1 / 20</span>
+  <span id="counter">1 / 21</span>
   <button onclick="go(1)">Далі ›</button>
   <div id="dots"></div>
   <a class="dl" href="Master-Zoo-Bolt-Food-Partnership.pptx" download>⬇ .pptx</a>
@@ -160,6 +160,29 @@ const slides=[
    ${[['Доступ до преміум-клієнтів —','найактивніші користувачі з високим середнім чеком.'],['Більше видимості —','окрема категорія на головному екрані, банер і бейдж Bolt Plus.'],['Комісія Bolt Plus —','лише на замовлення підписників; для решти — стандартна комісія.']].map(b=>`<div class="row" style="justify-content:flex-start;gap:.4vw"><b>${b[0]}</b> <span>${b[1]}</span></div>`).join('')}
   </div>
   <div class="foot">Джерело: презентація «Підписка Bolt+» (UA) + внутрішнє моделювання Bolt. dbx: частка замовлень Bolt+ зростає.</div>
+</div>`,
+// 5d2 bolt+ commission vs gmv balance
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Потенціал співпраці · Bolt+</div><h2>Bolt+: 0,4% комісії проти +20% GMV</h2>
+  <div style="display:flex;gap:2%;margin-top:2vh">
+   <div style="flex:1;background:var(--light);border-radius:14px;padding:1.8vh 1.5vw;border-top:6px solid var(--grey)">
+     <div style="font-weight:700;font-size:1.25vw">Вартість Bolt+</div>
+     <div style="color:var(--grey);font-size:.9vw;margin-bottom:1.2vh">середньозважена надбавка до комісії (20% × 2%)</div>
+     <div style="font-size:2.5vw;font-weight:800;color:var(--dark)">+0,4 п.п.</div>
+     <div class="row"><span>на місяць (міс 6)</span><b style="color:var(--dark)">~10 200 ₴</b></div>
+     <div class="row"><span>за 6 місяців</span><b style="color:var(--dark)">~46 000 ₴</b></div>
+   </div>
+   <div style="flex:1;background:var(--green);color:#fff;border-radius:14px;padding:1.8vh 1.5vw">
+     <div style="font-weight:700;font-size:1.25vw">Приріст GMV від Bolt+</div>
+     <div style="color:#eafff4;font-size:.9vw;margin-bottom:1.2vh">частіші замовлення преміум-аудиторії</div>
+     <div style="font-size:2.5vw;font-weight:800">+20%</div>
+     <div class="row" style="background:rgba(255,255,255,.16)"><span style="color:#eafff4">на місяць (міс 6)</span><b style="color:#fff">+510 000 ₴</b></div>
+     <div class="row" style="background:rgba(255,255,255,.16)"><span style="color:#eafff4">за 6 місяців</span><b style="color:#fff">+2,3 млн ₴</b></div>
+   </div>
+  </div>
+  <div style="background:var(--dark);color:#fff;border-radius:12px;padding:1.2vh 1.4vw;margin-top:1.5vh;font-size:1.1vw;text-align:center">
+   Кожна <b style="color:var(--green)">1 ₴</b> надбавки комісії приносить <b style="color:var(--green)">~40–50 ₴</b> додаткового GMV — 0,4% «з'їдає» лише ~2% приросту.
+  </div>
+  <div class="foot">Розрахунок: AOV 850 ₴, до 3 000 замовлень/міс, ~11,5 млн ₴ GMV за 6 міс. Bolt+ ≈ 20% продажів, +2% комісії на ці замовлення.</div>
 </div>`,
 // 5e consumer experience (MWB s13)
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Досвід користувача</div><h2>Bolt інвестує в Consumer Experience</h2>
