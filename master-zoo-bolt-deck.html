@@ -84,7 +84,7 @@ padding:7px 14px;cursor:pointer;font-size:14px}
 <div id="stage"></div>
 <div id="nav">
   <button onclick="go(-1)">‹ Назад</button>
-  <span id="counter">1 / 21</span>
+  <span id="counter">1 / 22</span>
   <button onclick="go(1)">Далі ›</button>
   <div id="dots"></div>
   <a class="dl" href="Master-Zoo-Bolt-Food-Partnership.pptx" download>⬇ .pptx</a>
@@ -161,26 +161,34 @@ const slides=[
   </div>
   <div class="foot">Джерело: презентація «Підписка Bolt+» (UA) + внутрішнє моделювання Bolt. dbx: частка замовлень Bolt+ зростає.</div>
 </div>`,
-// 5d2 weighted commission + Bolt+ value
-`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Орієнтовні умови · Bolt+</div><h2>Середньозважена комісія та цінність Bolt+</h2>
-  <div style="display:flex;gap:2%;margin-top:1.6vh">
-   <div style="flex:1;background:var(--light);border-radius:14px;padding:1.6vh 1.5vw;border-top:6px solid var(--grey)">
-     <div style="font-weight:700;font-size:1.2vw">Сценарій 1 — рекомендований</div>
-     <div style="color:var(--grey);font-size:.85vw">база 10% · передаєте ціни зі знижками</div>
-     <div style="font-size:2.4vw;font-weight:800;color:var(--dark);margin-top:.8vh">10,3%</div>
-     <div style="color:var(--grey);font-size:.9vw">середньозважена · комісія ≈ 1,18 млн ₴ / 6 міс</div>
-   </div>
-   <div style="flex:1;background:var(--green);color:#fff;border-radius:14px;padding:1.6vh 1.5vw">
-     <div style="font-weight:700;font-size:1.2vw">Сценарій 2 — без передачі знижок</div>
-     <div style="color:#eafff4;font-size:.85vw">база 12% · ціни без урахування знижок</div>
-     <div style="font-size:2.4vw;font-weight:800;margin-top:.8vh">12,3%</div>
-     <div style="color:#eafff4;font-size:.9vw">середньозважена · комісія ≈ 1,41 млн ₴ / 6 міс</div>
-   </div>
+// 5d2a weighted commission — 2 scenarios
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Орієнтовні умови · Bolt+</div><h2>Середньозважена комісія — 2 сценарії</h2>
+  <div style="display:flex;gap:1.2%;margin-top:1.4vh">
+   <div class="chip">GMV 6 міс (з Bolt+): <b>11,5 млн ₴</b></div>
+   <div class="chip">Частка Bolt+: <b>15%</b></div>
+   <div class="chip">+2% лише на замовлення Bolt+</div>
   </div>
-  <div style="background:var(--dark);color:#fff;border-radius:12px;padding:1.2vh 1.4vw;margin-top:1.5vh;font-size:1.05vw;text-align:center">
-   Без Bolt+ оборот <b style="color:var(--green)">−10%</b> (−1,15 млн ₴) → чистими втрачаємо <b style="color:var(--green)">~1 млн ₴</b>. Кожна 1 ₴ комісії → <b style="color:var(--green)">~7 ₴</b> обороту — Bolt+ варте того.
+  <p class="note" style="margin-top:1.2vh"><b>Формула:</b> середньозважена = база + (15% × 2%) = <b>база + 0,3 п.п.</b></p>
+  <table class="caltbl" style="text-align:left">
+   <tr><th>Сценарій</th><th>GMV 6 міс</th><th>База</th><th>Bolt+ (15%×2%)</th><th>Середньозважена</th><th>Комісія, ₴</th></tr>
+   <tr><td>Сценарій 1 — рекоменд.</td><td>11,5 млн</td><td>10%</td><td>+0,3 п.п.</td><td style="color:var(--green);font-weight:800">10,3%</td><td>≈ 1 184 500</td></tr>
+   <tr><td>Сценарій 2 — без знижок</td><td>11,5 млн</td><td>12%</td><td>+0,3 п.п.</td><td style="color:var(--green);font-weight:800">12,3%</td><td>≈ 1 414 500</td></tr>
+  </table>
+  <div class="foot">Якщо частка Bolt+ = 20% → +0,4 п.п.: сценарій 1 = 10,4%, сценарій 2 = 12,4%. +2% лише на замовлення підписників.</div>
+</div>`,
+// 5d2b worth it — with vs without Bolt+
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Орієнтовні умови · Bolt+</div><h2>Чи варте того? З Bolt+ проти без Bolt+</h2>
+  <p class="sub" style="margin-top:.6vh">11,5 млн ₴ — оборот <b>із Bolt+</b>. Без програми оборот <b>−10%</b> = 10,35 млн ₴ (усе за базовою ставкою). Дивимось на <b>чисте</b> = GMV − комісія.</p>
+  <table class="caltbl" style="text-align:left;margin-top:1.2vh">
+   <tr><th>Сценарій · показник</th><th>Без Bolt+ (10,35 млн)</th><th>З Bolt+ (11,5 млн)</th><th>Різниця</th></tr>
+   <tr><td>Сц. 1 (10%) · комісія</td><td>1 035 000 ₴</td><td>1 184 500 ₴</td><td>+149 500 ₴</td></tr>
+   <tr><td>Сц. 1 (10%) · чисте</td><td>9 315 000 ₴</td><td>10 315 500 ₴</td><td style="color:var(--green);font-weight:800">+1 000 500 ₴</td></tr>
+   <tr><td>Сц. 2 (12%) · комісія</td><td>1 242 000 ₴</td><td>1 414 500 ₴</td><td>+172 500 ₴</td></tr>
+   <tr><td>Сц. 2 (12%) · чисте</td><td>9 108 000 ₴</td><td>10 085 500 ₴</td><td style="color:var(--green);font-weight:800">+977 500 ₴</td></tr>
+  </table>
+  <div style="background:var(--green);color:#fff;border-radius:12px;padding:1.1vh 1.4vw;margin-top:1.3vh;font-size:1.02vw;text-align:center">
+   Без Bolt+ економимо ~150–173 тис ₴ комісії, але чистими втрачаємо <b>~1 млн ₴</b> · кожна 1 ₴ комісії → <b>~7 ₴</b> обороту → <b>Bolt+ варте того</b>.
   </div>
-  <div class="foot">GMV 11,5 млн ₴ (з Bolt+) · частка Bolt+ 15% × +2% = +0,3 п.п. · +2% лише на замовлення підписників.</div>
 </div>`,
 // 5e consumer experience (MWB s13)
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Досвід користувача</div><h2>Bolt інвестує в Consumer Experience</h2>
