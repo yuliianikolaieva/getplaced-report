@@ -86,7 +86,7 @@ def plan_row(name, vals, cls="", suffix=""):
     tds = "".join(f"<td>{fmt(round(v))}</td>" for v in vals)
     return f"<tr class='{cls}'><td class='lbl'>{name}</td>{tds}<td class='tot'>{fmt(round(sum(vals)))}{suffix}</td></tr>"
 
-share_row = "<tr class='muted'><td class='lbl'>Частка від Glovo, %</td>" + \
+share_row = "<tr class='muted'><td class='lbl'>Згідно даних ринку, %</td>" + \
     "".join(f"<td>{s}%</td>" for s in base_share) + "<td class='tot'>—</td></tr>"
 
 bench_rows = "".join(
@@ -107,7 +107,7 @@ for name,tgt in scenarios.items():
       <div class="sc-big">{fmt(tot)}</div>
       <div class="sc-sub">замовлень Bolt за 12 міс</div>
       <div class="sc-meta">GMV ≈ <b>{mln(year_gmv_uah[name])}</b> · {eurk(year_gmv_eur[name])}<br>
-      зріла частка ≈ {int(tgt*100)}% від Glovo · ~{fmt(plans[name][-1])}/міс на 12-й міс</div>
+      зріла частка ≈ {int(tgt*100)}% (згідно даних ринку) · ~{fmt(plans[name][-1])}/міс на 12-й міс</div>
     </div>"""
 
 html = f"""<!DOCTYPE html>
@@ -116,77 +116,77 @@ html = f"""<!DOCTYPE html>
 <title>Master Zoo · План Bolt Food 12 міс</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-:root{{--bg:#0d1117;--card:#161b22;--line:#262d38;--tx:#e6edf3;--mut:#8b949e;
---bolt:#34d186;--glovo:#ffb703;--accent:#34d186}}
+:root{{--line:#E3E7EA;--tx:#2F313F;--mut:#6B7080;--light:#EEF6F1;
+--bolt:#34d186;--accent:#34d186}}
 *{{box-sizing:border-box}}
 body{{margin:0;font-family:-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-background:var(--bg);color:var(--tx);line-height:1.5}}
+background:#fff;color:var(--tx);line-height:1.5}}
 .wrap{{max-width:1080px;margin:0 auto;padding:28px 20px 80px}}
 h1{{font-size:30px;margin:0 0 6px}}
 .sub{{color:var(--mut);margin:0 0 26px;font-size:15px}}
-.tag{{display:inline-block;background:#1f6feb22;color:#58a6ff;border:1px solid #1f6feb55;
-border-radius:20px;padding:3px 12px;font-size:12px;margin-bottom:14px}}
+.tag{{display:inline-block;background:var(--light);color:#1f7d52;border:1px solid #bfe8d3;
+border-radius:20px;padding:3px 12px;font-size:12px;margin-bottom:14px;font-weight:700}}
 h2{{font-size:19px;margin:38px 0 14px;border-left:3px solid var(--accent);padding-left:10px}}
 .grid{{display:grid;gap:14px}}
 .g4{{grid-template-columns:repeat(4,1fr)}}
 .g3{{grid-template-columns:repeat(3,1fr)}}
-.kpi{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}}
+.kpi{{background:var(--light);border:1px solid var(--line);border-radius:12px;padding:16px}}
 .kpi .v{{font-size:26px;font-weight:700}}
 .kpi .l{{color:var(--mut);font-size:12px;margin-top:4px}}
-.kpi .v.g{{color:var(--glovo)}} .kpi .v.b{{color:var(--bolt)}}
-.scard{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}}
-.scard.hot{{border-color:var(--bolt);box-shadow:0 0 0 1px var(--bolt)33}}
+.kpi .v.g{{color:#cf8a00}} .kpi .v.b{{color:var(--bolt)}}
+.scard{{background:var(--light);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}}
+.scard.hot{{border-color:var(--bolt);box-shadow:0 0 0 1px var(--bolt)}}
 .sc-name{{color:var(--mut);font-size:13px;text-transform:uppercase;letter-spacing:.5px}}
 .sc-big{{font-size:32px;font-weight:800;color:var(--bolt);margin:6px 0}}
 .sc-sub{{font-size:12px;color:var(--mut)}}
-.sc-meta{{font-size:12px;color:var(--tx);margin-top:8px;opacity:.85}}
-table{{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+.sc-meta{{font-size:12px;color:var(--tx);margin-top:8px}}
+table{{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
 border-radius:12px;overflow:hidden;font-size:13px}}
 th,td{{padding:9px 8px;text-align:right;border-bottom:1px solid var(--line)}}
-th{{background:#1c2230;color:var(--mut);font-weight:600;font-size:12px}}
+th{{background:var(--tx);color:#fff;font-weight:600;font-size:12px}}
 td.lbl,th:first-child{{text-align:left}}
 td.lbl{{color:var(--mut)}}
-td.tot{{font-weight:700;color:var(--bolt);background:#0f1722}}
+td.tot{{font-weight:700;color:#1f7d52;background:var(--light)}}
 tr.muted td{{color:var(--mut);font-size:12px}}
 tr.hl td{{font-weight:700}}
-.chartbox{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}}
-.note{{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+.chartbox{{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}}
+.note{{background:var(--light);border:1px solid var(--line);border-left:3px solid var(--accent);
 border-radius:10px;padding:14px 16px;color:var(--mut);font-size:13px;margin-top:14px}}
 .note b{{color:var(--tx)}}
 ul{{margin:8px 0;padding-left:20px}} li{{margin:4px 0}}
 .foot{{margin-top:50px;color:var(--mut);font-size:12px;border-top:1px solid var(--line);padding-top:16px}}
-a{{color:#58a6ff}}
+a{{color:#1f7d52}}
 .scroll{{overflow-x:auto}}
 @media(max-width:760px){{.g4,.g3{{grid-template-columns:1fr 1fr}}}}
 </style></head>
 <body><div class="wrap">
-<div class="tag">Get Placed · Ukraine · план на основі реальних даних Glovo</div>
+<div class="tag">Get Placed · Ukraine · план згідно даних ринку</div>
 <h1>Master Zoo — план замовлень на Bolt Food</h1>
-<p class="sub">12-місячний прогноз помісячно. База — фактичні дані Glovo (Jan–Apr 2026) та бенчмарк
+<p class="sub">12-місячний прогноз помісячно. База — дані ринку (Jan–Apr 2026) та бенчмарк
 конверсії великих ритейл-мереж, які вже працюють на Bolt Food.</p>
 
-<h2>Стартова точка (факт Glovo)</h2>
+<h2>Стартова точка (дані ринку)</h2>
 <div class="grid g4">
-  <div class="kpi"><div class="v g">{fmt(glovo_avg)}</div><div class="l">сер. замовлень/міс на Glovo (Jan–Apr)</div></div>
+  <div class="kpi"><div class="v g">{fmt(glovo_avg)}</div><div class="l">сер. замовлень/міс на доставці (Jan–Apr)</div></div>
   <div class="kpi"><div class="v b">0</div><div class="l">замовлень на Bolt Food зараз</div></div>
-  <div class="kpi"><div class="v">{data['n_cities']}</div><div class="l">міст присутності (Glovo)</div></div>
-  <div class="kpi"><div class="v">#16</div><div class="l">за обсягом серед ритейл-брендів Glovo</div></div>
+  <div class="kpi"><div class="v">{data['n_cities']}</div><div class="l">міст присутності</div></div>
+  <div class="kpi"><div class="v">#16</div><div class="l">за обсягом серед ритейл-брендів ринку</div></div>
 </div>
 <div class="scroll" style="margin-top:14px"><table>
-<thead><tr><th>Glovo, замовлень</th><th>Січень</th><th>Лютий</th><th>Березень</th><th>Квітень</th></tr></thead>
+<thead><tr><th>Замовлень/міс (ринок)</th><th>Січень</th><th>Лютий</th><th>Березень</th><th>Квітень</th></tr></thead>
 <tbody><tr class="hl"><td class="lbl">Master Zoo</td>{glovo_cells}</tr></tbody>
 </table></div>
-<div class="note">Master Zoo — стабільний партнер Glovo (~{fmt(glovo_avg)} замовлень/міс, рівний попит без
+<div class="note">Master Zoo — стабільний попит на доставку (~{fmt(glovo_avg)} замовлень/міс, рівний попит без
 сезонних провалів) і <b>повністю відсутній на Bolt Food</b>. Це чистий приріст для платформи.</div>
 
 <h2>Методологія прогнозу</h2>
 <div class="note">
 <ul>
-<li><b>База Glovo:</b> {fmt(glovo_base)} замовлень/міс (стабільне середнє Master Zoo, тримаємо плоско — попит зрілий).</li>
+<li><b>База (дані ринку):</b> {fmt(glovo_base)} замовлень/міс (стабільне середнє Master Zoo, тримаємо плоско — попит зрілий).</li>
 <li><b>Середній чек (AOV):</b> {AOV_UAH} грн ≈ €{AOV_EUR:.1f} (курс 1 € = {EUR_RATE} грн). GMV = замовлення × AOV.</li>
 <li><b>Крива розгону:</b> S-подібний ramp-up за 12 міс — новий партнер виходить на зрілу частку
 поступово (видимість, маркетинг, звичка клієнтів, Bolt+).</li>
-<li><b>Сценарії (зріла частка від обсягу Glovo):</b> консервативний 20%, базовий 40%, амбітний 55%.</li>
+<li><b>Сценарії (зріла частка згідно даних ринку):</b> консервативний 20%, базовий 40%, амбітний 55%.</li>
 </ul></div>
 
 <h2>Сценарії — підсумок за рік</h2>
@@ -215,13 +215,13 @@ a{{color:#58a6ff}}
 (≈ {eurk(year_gmv_eur['Базовий'])}). AOV {AOV_UAH} грн (€{AOV_EUR:.1f}).</div>
 
 <h2>З яких міст стартувати (базовий, 12-й міс)</h2>
-<p class="sub">Алокація зрілого місячного обсягу за часткою Glovo по містах — пріоритет запуску.</p>
+<p class="sub">Алокація зрілого місячного обсягу за часткою ринку по містах — пріоритет запуску.</p>
 <div class="scroll"><table>
 <thead><tr><th>Місто</th><th>частка попиту</th><th>Bolt замовл./міс (зрілий стан)</th></tr></thead>
 <tbody>{city_rows}</tbody></table></div>
 
 <div class="foot">
-Джерело: звіт Get Placed (Glovo vs Bolt, store-level, Jan–Apr 2026) ·
+Джерело: ринкові дані Get Placed (store-level, Jan–Apr 2026) ·
 <a href="https://yuliianikolaieva.github.io/getplaced-report/">getplaced-report</a><br>
 Прогноз — модельний (бенчмарк-конверсія × S-крива розгону), не зобов'язання. Cmd+Shift+R для оновлення.
 </div>
@@ -236,9 +236,9 @@ new Chart(document.getElementById('chart'),{{
    {{label:'Базовий 40%',data:{json.dumps(base_plan)},backgroundColor:'#34d186'}},
    {{label:'Амбітний 55%',data:{json.dumps(plans["Амбітний"])},backgroundColor:'#9af5c8'}},
  ]}},
- options:{{responsive:true,plugins:{{legend:{{labels:{{color:'#e6edf3'}}}}}},
-  scales:{{x:{{ticks:{{color:'#8b949e'}},grid:{{display:false}}}},
-           y:{{ticks:{{color:'#8b949e'}},grid:{{color:'#262d38'}}}}}}}}
+ options:{{responsive:true,plugins:{{legend:{{labels:{{color:'#2F313F'}}}}}},
+  scales:{{x:{{ticks:{{color:'#6B7080'}},grid:{{display:false}}}},
+           y:{{ticks:{{color:'#6B7080'}},grid:{{color:'#E3E7EA'}}}}}}}}
 }});
 </script>
 </body></html>"""
