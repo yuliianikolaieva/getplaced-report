@@ -71,49 +71,60 @@ a{color:#58a6ff}
 <div class="note">
 <ul>
 <li><b>База Glovo:</b> 5 600 замовлень/міс (стабільне середнє Master Zoo, тримаємо плоско — попит зрілий).</li>
-<li><b>Бенчмарк Bolt/Glovo:</b> великі ритейл-мережі, що вже на Bolt, дають 12.5% у середньому
-(діапазон 6–25%). Для зрілого стану Master Zoo беремо <b>базово 12%</b>.</li>
+<li><b>Середній чек (AOV):</b> 850 грн ≈ €16.7 (курс 1 € = 51 грн). GMV = замовлення × AOV.</li>
 <li><b>Крива розгону:</b> S-подібний ramp-up за 12 міс — новий партнер виходить на зрілу частку
-поступово (видимість, маркетинг, звичка клієнтів).</li>
-<li><b>Сценарії:</b> консервативний 8%, базовий 12%, амбітний 18% від обсягу Glovo.</li>
+поступово (видимість, маркетинг, звичка клієнтів, Bolt+).</li>
+<li><b>Сценарії (зріла частка від обсягу Glovo):</b> консервативний 20%, базовий 40%, амбітний 55%.</li>
 </ul></div>
-<div class="scroll" style="margin-top:6px"><table>
-<thead><tr><th>Bolt/Glovo бенчмарк</th><th>частка</th></tr></thead><tbody><tr><td class='lbl'>Kopiyka</td><td>6.3%</td></tr><tr><td class='lbl'>Loko</td><td>7.2%</td></tr><tr><td class='lbl'>Santim</td><td>10.4%</td></tr><tr><td class='lbl'>Rukavychka</td><td>10.6%</td></tr><tr><td class='lbl'>OKKO</td><td>15.9%</td></tr><tr><td class='lbl'>Beer Market</td><td>24.5%</td></tr></tbody></table></div>
 
 <h2>Сценарії — підсумок за рік</h2>
 <div class="grid g3"><div class="scard">
       <div class="sc-name">Консервативний</div>
-      <div class="sc-big">3 554</div>
+      <div class="sc-big">8 881</div>
       <div class="sc-sub">замовлень Bolt за 12 міс</div>
-      <div class="sc-meta">зріла частка ≈ 8% від Glovo · ~448/міс на 12-й міс</div>
+      <div class="sc-meta">GMV ≈ <b>7,5 млн ₴</b> · €148k<br>
+      зріла частка ≈ 20% від Glovo · ~1 120/міс на 12-й міс</div>
     </div><div class="scard hot">
       <div class="sc-name">Базовий</div>
-      <div class="sc-big">5 329</div>
+      <div class="sc-big">17 763</div>
       <div class="sc-sub">замовлень Bolt за 12 міс</div>
-      <div class="sc-meta">зріла частка ≈ 12% від Glovo · ~672/міс на 12-й міс</div>
+      <div class="sc-meta">GMV ≈ <b>15,1 млн ₴</b> · €296k<br>
+      зріла частка ≈ 40% від Glovo · ~2 240/міс на 12-й міс</div>
     </div><div class="scard">
       <div class="sc-name">Амбітний</div>
-      <div class="sc-big">7 995</div>
+      <div class="sc-big">24 425</div>
       <div class="sc-sub">замовлень Bolt за 12 міс</div>
-      <div class="sc-meta">зріла частка ≈ 18% від Glovo · ~1 008/міс на 12-й міс</div>
+      <div class="sc-meta">GMV ≈ <b>20,8 млн ₴</b> · €407k<br>
+      зріла частка ≈ 55% від Glovo · ~3 080/міс на 12-й міс</div>
     </div></div>
 
-<h2>Помісячний план (базовий сценарій, 12%)</h2>
+<h2>Помісячний план — замовлення</h2>
 <div class="chartbox"><canvas id="chart" height="120"></canvas></div>
 <div class="scroll" style="margin-top:14px"><table>
-<thead><tr><th>Bolt Food</th><th>Лип'26</th><th>Сер'26</th><th>Вер'26</th><th>Жов'26</th><th>Лис'26</th><th>Гру'26</th><th>Січ'27</th><th>Лют'27</th><th>Бер'27</th><th>Кві'27</th><th>Тра'27</th><th>Чер'27</th><th class="tot">Рік</th></tr></thead>
+<thead><tr><th>Bolt Food, замовлень</th><th>Лип'26</th><th>Сер'26</th><th>Вер'26</th><th>Жов'26</th><th>Лис'26</th><th>Гру'26</th><th>Січ'27</th><th>Лют'27</th><th>Бер'27</th><th>Кві'27</th><th>Тра'27</th><th>Чер'27</th><th class="tot">Рік</th></tr></thead>
 <tbody>
-<tr class=''><td class='lbl'>Консервативний (8%)</td><td>54</td><td>94</td><td>148</td><td>206</td><td>260</td><td>314</td><td>354</td><td>390</td><td>412</td><td>430</td><td>444</td><td>448</td><td class='tot'>3 554</td></tr>
-<tr class='hl'><td class='lbl'>Базовий (12%)</td><td>81</td><td>141</td><td>222</td><td>309</td><td>390</td><td>470</td><td>531</td><td>585</td><td>618</td><td>645</td><td>665</td><td>672</td><td class='tot'>5 329</td></tr>
-<tr class=''><td class='lbl'>Амбітний (18%)</td><td>121</td><td>212</td><td>333</td><td>464</td><td>585</td><td>706</td><td>796</td><td>877</td><td>927</td><td>968</td><td>998</td><td>1 008</td><td class='tot'>7 995</td></tr>
-<tr class='muted'><td class='lbl'>Частка від Glovo, %</td><td>1.4%</td><td>2.5%</td><td>4.0%</td><td>5.5%</td><td>7.0%</td><td>8.4%</td><td>9.5%</td><td>10.4%</td><td>11.0%</td><td>11.5%</td><td>11.9%</td><td>12.0%</td><td class='tot'>—</td></tr>
+<tr class=''><td class='lbl'>Консервативний (20%)</td><td>134</td><td>235</td><td>370</td><td>515</td><td>650</td><td>784</td><td>885</td><td>974</td><td>1 030</td><td>1 075</td><td>1 109</td><td>1 120</td><td class='tot'>8 881</td></tr>
+<tr class='hl'><td class='lbl'>Базовий (40%)</td><td>269</td><td>470</td><td>739</td><td>1 030</td><td>1 299</td><td>1 568</td><td>1 770</td><td>1 949</td><td>2 061</td><td>2 150</td><td>2 218</td><td>2 240</td><td class='tot'>17 763</td></tr>
+<tr class=''><td class='lbl'>Амбітний (55%)</td><td>370</td><td>647</td><td>1 016</td><td>1 417</td><td>1 786</td><td>2 156</td><td>2 433</td><td>2 680</td><td>2 834</td><td>2 957</td><td>3 049</td><td>3 080</td><td class='tot'>24 425</td></tr>
+<tr class='muted'><td class='lbl'>Частка від Glovo, %</td><td>4.8%</td><td>8.4%</td><td>13.2%</td><td>18.4%</td><td>23.2%</td><td>28.0%</td><td>31.6%</td><td>34.8%</td><td>36.8%</td><td>38.4%</td><td>39.6%</td><td>40.0%</td><td class='tot'>—</td></tr>
 </tbody></table></div>
+
+<h2>Помісячний GMV — базовий сценарій (40%)</h2>
+<div class="scroll" style="margin-top:6px"><table>
+<thead><tr><th>Базовий (40%)</th><th>Лип'26</th><th>Сер'26</th><th>Вер'26</th><th>Жов'26</th><th>Лис'26</th><th>Гру'26</th><th>Січ'27</th><th>Лют'27</th><th>Бер'27</th><th>Кві'27</th><th>Тра'27</th><th>Чер'27</th><th class="tot">Рік</th></tr></thead>
+<tbody>
+<tr class='hl'><td class='lbl'>Замовлення</td><td>269</td><td>470</td><td>739</td><td>1 030</td><td>1 299</td><td>1 568</td><td>1 770</td><td>1 949</td><td>2 061</td><td>2 150</td><td>2 218</td><td>2 240</td><td class='tot'>17 763</td></tr>
+<tr class=''><td class='lbl'>GMV, ₴</td><td>228 650</td><td>399 500</td><td>628 150</td><td>875 500</td><td>1 104 150</td><td>1 332 800</td><td>1 504 500</td><td>1 656 650</td><td>1 751 850</td><td>1 827 500</td><td>1 885 300</td><td>1 904 000</td><td class='tot'>15 098 550</td></tr>
+<tr class=''><td class='lbl'>GMV, €</td><td>4 483</td><td>7 833</td><td>12 317</td><td>17 167</td><td>21 650</td><td>26 133</td><td>29 500</td><td>32 483</td><td>34 350</td><td>35 833</td><td>36 967</td><td>37 333</td><td class='tot'>296 050</td></tr>
+</tbody></table></div>
+<div class="note">Базовий рік 1: <b>17 763 замовлень</b> · GMV <b>15,1 млн ₴</b>
+(≈ €296k). AOV 850 грн (€16.7).</div>
 
 <h2>З яких міст стартувати (базовий, 12-й міс)</h2>
 <p class="sub">Алокація зрілого місячного обсягу за часткою Glovo по містах — пріоритет запуску.</p>
 <div class="scroll"><table>
 <thead><tr><th>Місто</th><th>частка попиту</th><th>Bolt замовл./міс (зрілий стан)</th></tr></thead>
-<tbody><tr><td class='lbl'>Kyiv</td><td>41.4%</td><td>278</td></tr><tr><td class='lbl'>Lviv</td><td>12.9%</td><td>87</td></tr><tr><td class='lbl'>Odesa</td><td>8.4%</td><td>57</td></tr><tr><td class='lbl'>Dnipro</td><td>4.3%</td><td>29</td></tr><tr><td class='lbl'>Ivano-Frankivsk</td><td>3.5%</td><td>24</td></tr><tr><td class='lbl'>Chernivtsi</td><td>3.0%</td><td>20</td></tr><tr><td class='lbl'>Vinnytsia</td><td>2.8%</td><td>19</td></tr><tr><td class='lbl'>Kharkiv</td><td>2.3%</td><td>15</td></tr><tr><td class='lbl'>Cherkasy</td><td>2.1%</td><td>14</td></tr><tr><td class='lbl'>Uzhhorod</td><td>1.6%</td><td>11</td></tr></tbody></table></div>
+<tbody><tr><td class='lbl'>Kyiv</td><td>41.4%</td><td>927</td></tr><tr><td class='lbl'>Lviv</td><td>12.9%</td><td>288</td></tr><tr><td class='lbl'>Odesa</td><td>8.4%</td><td>189</td></tr><tr><td class='lbl'>Dnipro</td><td>4.3%</td><td>96</td></tr><tr><td class='lbl'>Ivano-Frankivsk</td><td>3.5%</td><td>79</td></tr><tr><td class='lbl'>Chernivtsi</td><td>3.0%</td><td>68</td></tr><tr><td class='lbl'>Vinnytsia</td><td>2.8%</td><td>63</td></tr><tr><td class='lbl'>Kharkiv</td><td>2.3%</td><td>50</td></tr><tr><td class='lbl'>Cherkasy</td><td>2.1%</td><td>46</td></tr><tr><td class='lbl'>Uzhhorod</td><td>1.6%</td><td>37</td></tr></tbody></table></div>
 
 <div class="foot">
 Джерело: звіт Get Placed (Glovo vs Bolt, store-level, Jan–Apr 2026) ·
@@ -127,9 +138,9 @@ const M=["Лип'26", "Сер'26", "Вер'26", "Жов'26", "Лис'26", "Гр�
 new Chart(document.getElementById('chart'),{
  type:'bar',
  data:{labels:M,datasets:[
-   {label:'Консервативний 8%',data:[54, 94, 148, 206, 260, 314, 354, 390, 412, 430, 444, 448],backgroundColor:'#2d6a4f'},
-   {label:'Базовий 12%',data:[81, 141, 222, 309, 390, 470, 531, 585, 618, 645, 665, 672],backgroundColor:'#34d186'},
-   {label:'Амбітний 18%',data:[121, 212, 333, 464, 585, 706, 796, 877, 927, 968, 998, 1008],backgroundColor:'#9af5c8'},
+   {label:'Консервативний 20%',data:[134, 235, 370, 515, 650, 784, 885, 974, 1030, 1075, 1109, 1120],backgroundColor:'#2d6a4f'},
+   {label:'Базовий 40%',data:[269, 470, 739, 1030, 1299, 1568, 1770, 1949, 2061, 2150, 2218, 2240],backgroundColor:'#34d186'},
+   {label:'Амбітний 55%',data:[370, 647, 1016, 1417, 1786, 2156, 2433, 2680, 2834, 2957, 3049, 3080],backgroundColor:'#9af5c8'},
  ]},
  options:{responsive:true,plugins:{legend:{labels:{color:'#e6edf3'}}},
   scales:{x:{ticks:{color:'#8b949e'},grid:{display:false}},
