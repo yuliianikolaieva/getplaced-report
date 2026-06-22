@@ -49,11 +49,20 @@ padding:.8vw 1.1vw;margin-top:.8vh;font-size:1.15vw}.row b{color:var(--green)}
 .step{display:flex;align-items:center;gap:.9vw;margin-top:.85vh;font-size:1.1vw}
 .sc{width:1.9vw;height:1.9vw;border-radius:8px;background:var(--green);color:#fff;font-weight:700;
 display:flex;align-items:center;justify-content:center;font-size:.95vw;flex-shrink:0}
+.promo{display:flex;gap:1.1%;margin-top:1.8vh}
+.pt{flex:1;background:var(--light);border-radius:12px;padding:1vw}
+.pt .pn{width:1.9vw;height:1.9vw;border-radius:8px;background:var(--green);color:#fff;font-weight:800;
+display:flex;align-items:center;justify-content:center;font-size:1vw;margin-bottom:.7vh}
+.pt h4{font-size:1.05vw}.pt p{font-size:.78vw;color:var(--grey);margin-top:.4vh}
+.pbot{display:flex;gap:1.4%;margin-top:1.4vh}
+.pbox{flex:1;background:var(--light);border-radius:12px;padding:1vw 1.2vw;border-left:5px solid var(--green)}
+.pbox.d{border-left-color:var(--dark)}
+.pbox h4{font-size:1.1vw}.pbox p{font-size:.85vw;color:var(--grey);margin-top:.4vh}
 .eco{display:flex;gap:2%;margin-top:2.4vh}
 .ecard{flex:1;background:var(--light);border-radius:14px;overflow:hidden;text-align:center}
 .ecard .hd{background:var(--green);color:#fff;font-weight:700;font-size:1.3vw;padding:.8vh 0}
 .ecard .bd{padding:1.6vh 0;font-size:1.7vw;font-weight:800;color:var(--dark);line-height:1.35}
-.mkgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2vh 1.4%;margin-top:2vh}
+.mkgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2vh 1.4%;margin-top:2.2vh}
 .mk{background:var(--light);border-radius:10px;padding:1vh 1vw;display:flex;align-items:center;gap:.8vw;font-weight:700;font-size:1.15vw}
 .mk .d{width:1.5vw;height:1.5vw;border-radius:7px;background:var(--green);flex-shrink:0}
 .caltbl{width:100%;border-collapse:collapse;margin-top:1.8vh;font-size:1vw}
@@ -61,12 +70,8 @@ display:flex;align-items:center;justify-content:center;font-size:.95vw;flex-shri
 .caltbl td{padding:.7vh .8vw;border-bottom:1px solid var(--line);color:var(--grey)}
 .caltbl td:first-child{font-weight:700;color:var(--dark)}
 .caltbl tr:nth-child(even) td{background:var(--light)}
-.chip{background:var(--light);border-radius:10px;padding:.7vh 1vw;font-size:1vw;color:var(--dark)}
-.chip b{color:var(--green)}
-.brand{display:flex;gap:2.6%;margin-top:1.6vh;align-items:center;flex:1}
-.brand .bcol{flex:1.05}
-.brand .bimgs{flex:1;display:flex;gap:3%;align-items:center;justify-content:center}
-.brand .bimgs img{max-height:46vh;max-width:48%;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.15)}
+.imgwrap{display:flex;justify-content:center;margin-top:1vh}
+.imgwrap img{max-height:60vh;max-width:100%;border-radius:8px}
 #nav{display:flex;gap:14px;align-items:center;padding:14px;color:#aab}
 #nav button{background:#1b2330;color:#fff;border:1px solid #2c3647;border-radius:8px;
 padding:7px 14px;cursor:pointer;font-size:14px}
@@ -79,7 +84,7 @@ padding:7px 14px;cursor:pointer;font-size:14px}
 <div id="stage"></div>
 <div id="nav">
   <button onclick="go(-1)">‹ Назад</button>
-  <span id="counter">1 / 12</span>
+  <span id="counter">1 / 22</span>
   <button onclick="go(1)">Далі ›</button>
   <div id="dots"></div>
   <a class="dl" href="Master-Zoo-Bolt-Food-Partnership.pptx" download>⬇ .pptx</a>
@@ -98,14 +103,21 @@ const slides=[
 </div>`,
 // 2 agenda
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Agenda</div><h2>Про що говоримо сьогодні</h2>
-  ${[['01','Bolt та екосистема','масштаб в одному застосунку'],['02','Де Master Zoo зараз','позиція на ринку доставки'],['03','Чому Bolt + Bolt+','інкрементальний попит, умови комісії'],['04','Маркетинг і запуск','широка кампанія та офлайн-брендинг'],['05','Амбіція та кроки','сценарії GMV і як стартуємо']].map(r=>`<div class="agenda"><div class="num">${r[0]}</div><div><div class="t">${r[1]}</div><div class="d">${r[2]}</div></div></div>`).join('')}
+  ${[['01','Bolt Food та екосистема','масштаб і динаміка росту'],['02','Де Master Zoo зараз','ваша позиція на ринку доставки'],['03','Чому Bolt','інкрементальний попит, Bolt Plus, маркетинг'],['04','Амбіція: замовлення та GMV','помісячний план на 12 міс'],['05','Наступні кроки','як швидко стартуємо']].map(r=>`<div class="agenda"><div class="num">${r[0]}</div><div><div class="t">${r[1]}</div><div class="d">${r[2]}</div></div></div>`).join('')}
 </div>`,
-// 3 ecosystem
+// 3 bolt numbers
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Bolt today</div><h2>Bolt — у цифрах</h2>
+  <div class="tiles">
+   ${[['50+','країн'],['850+','міст'],['4 млн+','замовлень/день'],['€12 млрд+','GMV run-rate'],['30%+','GMV CAGR 21–25']].map(t=>`<div class="tile"><div class="big">${t[0]}</div><div class="lab">${t[1]}</div></div>`).join('')}
+  </div>
+  <p class="note">Один застосунок: доставка їжі та товарів, таксі, оренда — мільйони активних клієнтів в Україні.</p>
+</div>`,
+// 3b meet bolt ecosystem (MWB s5)
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Meet Bolt</div><h2>Вся on-demand екосистема в одному застосунку</h2>
   <div class="eco">
    ${[['Таксі','40+ країн','500+ міст'],['Доставка','15+ країн','200+ міст'],['Оренда / самокати','20+ країн','200+ міст']].map(e=>`<div class="ecard"><div class="hd">${e[0]}</div><div class="bd">${e[1]}<br>${e[2]}</div></div>`).join('')}
   </div>
-  <p class="note">Один застосунок: доставка, таксі, оренда — мільйони активних клієнтів в Україні. Користувачів таксі та Food ми конвертуємо у покупців ваших товарів.</p>
+  <p class="note">Крос-вертикальний ефект: користувачів таксі та Food ми конвертуємо у покупців ваших товарів.</p>
 </div>`,
 // 4 where now
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Де ви зараз</div><h2>Master Zoo на ринку доставки</h2>
@@ -118,72 +130,129 @@ const slides=[
   <p class="note"><b style="color:var(--dark)">Висновок:</b> сильний стабільний попит на доставку зоотоварів — але <b style="color:var(--green)">повністю поза Bolt Food</b>. Чистий новий канал без канібалізації.</p>
   <div class="foot">Джерело: Bolt internal data (Databricks) + Get Placed market scan, Jan–Apr 2026</div>
 </div>`,
-// 5 why bolt (merged opportunity + growth + incremental)
+// 5 opportunity
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Можливість</div><h2>Чому зараз</h2>
+  <div class="cards">
+   ${[['Незайнятий канал','Master Zoo = 0 на Bolt Food. Кожне замовлення інкрементальне, поверх Glovo.'],['Bolt Food росте','Замовлення на платформі ростуть двозначними темпами кв/кв в Україні.'],['Pets — недопредставлені','Зоотовари майже відсутні у food-delivery. Низька конкуренція, висока лояльність.'],['Швидкий старт','Інтеграція каталогу й запуск у топ-містах за кілька тижнів.']].map(c=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')}
+  </div>
+</div>`,
+// 5b growth (market data, no Glovo)
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Чому зараз · Bolt Food росте</div><h2>Замовлення ростуть двозначними темпами кв/кв</h2>
+  <img class="chart" src="mz-growth.png">
+  <p class="note">3P-магазини <b style="color:var(--green)">2 401 → 6 429 (+168%)</b> · замовлення <b style="color:var(--dark)">78k → 154k (×2)</b> за Jan→Apr 2026</p>
+  <div class="foot">Базуючись на ринкових даних (Get Placed market scan), Jan–Apr 2026.</div>
+</div>`,
+// 5c incremental growth (MWB s8+s9)
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Чому Bolt</div><h2>Новий канал росту — без ризику</h2>
   <div class="cards">
-   ${[['Незайнятий канал','Master Zoo = 0 на Bolt Food. Кожне замовлення інкрементальне, поверх Glovo.'],['Bolt Food росте +168%','3P-магазини 2 401 → 6 429, замовлення ×2 за Jan→Apr 2026.'],['40% — нові клієнти','У середньому 40% замовлень магазину — від тих, хто вперше замовляє саме у вас.'],['Модель на комісії','Без цінових війн і витрат на експансію. ≈8–12 замовлень/магазин/день, частота ~2×/міс.']].map(c=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')}
+   ${[['40% — нові клієнти','У середньому 40% замовлень магазину — від клієнтів, які вперше замовляють саме у вас. Чистий інкрементальний попит.'],['Крос-вертикальний попит','Аудиторію таксі та Bolt Food конвертуємо у покупців ваших товарів — нові цифрові клієнти поза офлайн-базою.'],['Модель на комісії','Без цінових війн, демпінгу й витрат на експансію. Маркетинг-подібна інвестиція з високим ROI.'],['Орієнтир економіки','≈16 замовлень/магазин/день, частота ~2× на місяць — і зростає з підпискою та промо.']].map(c=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')}
   </div>
-  <div class="foot">Джерело: Get Placed market scan + Bolt market materials (MWB Sales Pitch).</div>
+  <div class="foot">Джерело: Bolt market materials (MWB Sales Pitch).</div>
 </div>`,
-// 6 bolt plus
+// 5d bolt plus
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Bolt Plus</div><h2>Преміум-аудиторія, що замовляє частіше</h2>
   <div class="tiles">
-   <div class="tile"><div class="big">3.5–4.1×</div><div class="lab">частіше замовляють підписники Bolt+</div></div>
+   <div class="tile"><div class="big">2.1–2.2×</div><div class="lab">частіше замовляють підписники Bolt+</div></div>
    <div class="tile"><div class="big">+12–17%</div><div class="lab">замовлень/міс після оформлення підписки</div></div>
    <div class="tile"><div class="big d">3 сервіси</div><div class="lab">таксі · Bolt Food · самокати в одній підписці</div></div>
   </div>
   <div style="margin-top:1.8vh">
    ${[['Доступ до преміум-клієнтів —','найактивніші користувачі з високим середнім чеком.'],['Більше видимості —','окрема категорія на головному екрані, банер і бейдж Bolt Plus.'],['Комісія Bolt Plus —','лише на замовлення підписників; для решти — стандартна комісія.']].map(b=>`<div class="row" style="justify-content:flex-start;gap:.4vw"><b>${b[0]}</b> <span>${b[1]}</span></div>`).join('')}
   </div>
-  <div class="foot">Джерело: презентація «Підписка Bolt+» (UA) + внутрішнє моделювання Bolt.</div>
+  <div class="foot">Джерело: презентація «Підписка Bolt+» (UA) + внутрішнє моделювання Bolt. dbx: частка замовлень Bolt+ зростає.</div>
 </div>`,
-// 7 commission (merged: weighted scenarios + worth-it message)
-`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Орієнтовні умови · Bolt+</div><h2>Середньозважена комісія</h2>
-  <div style="display:flex;gap:1.2%;margin-top:1.2vh">
+// 5d2a weighted commission — 2 scenarios
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Орієнтовні умови · Bolt+</div><h2>Середньозважена комісія — 2 сценарії</h2>
+  <div style="display:flex;gap:1.2%;margin-top:1.4vh">
    <div class="chip">GMV 6 міс (з Bolt+): <b>11,5 млн ₴</b></div>
    <div class="chip">Частка Bolt+: <b>15%</b></div>
    <div class="chip">+2% лише на замовлення Bolt+</div>
   </div>
+  <p class="note" style="margin-top:1.2vh"><b>Формула:</b> середньозважена = база + (15% × 2%) = <b>база + 0,3 п.п.</b></p>
   <table class="caltbl" style="text-align:left">
    <tr><th>Сценарій</th><th>GMV 6 міс</th><th>База</th><th>Bolt+ (15%×2%)</th><th>Середньозважена</th><th>Комісія, ₴</th></tr>
    <tr><td>Сценарій 1 — рекоменд.</td><td>11,5 млн</td><td>10%</td><td>+0,3 п.п.</td><td style="color:var(--green);font-weight:800">10,3%</td><td>≈ 1 184 500</td></tr>
    <tr><td>Сценарій 2 — без знижок</td><td>11,5 млн</td><td>12%</td><td>+0,3 п.п.</td><td style="color:var(--green);font-weight:800">12,3%</td><td>≈ 1 414 500</td></tr>
   </table>
-  <div style="background:var(--green);color:#fff;border-radius:12px;padding:1.1vh 1.4vw;margin-top:1.4vh;font-size:1.02vw;text-align:center">
+  <div class="foot">Якщо частка Bolt+ = 20% → +0,4 п.п.: сценарій 1 = 10,4%, сценарій 2 = 12,4%. +2% лише на замовлення підписників.</div>
+</div>`,
+// 5d2b worth it — with vs without Bolt+
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Орієнтовні умови · Bolt+</div><h2>Чи варте того? З Bolt+ проти без Bolt+</h2>
+  <p class="sub" style="margin-top:.6vh">11,5 млн ₴ — оборот <b>із Bolt+</b>. Без програми оборот <b>−10%</b> = 10,35 млн ₴ (усе за базовою ставкою). Дивимось на <b>чисте</b> = GMV − комісія.</p>
+  <table class="caltbl" style="text-align:left;margin-top:1.2vh">
+   <tr><th>Сценарій · показник</th><th>Без Bolt+ (10,35 млн)</th><th>З Bolt+ (11,5 млн)</th><th>Різниця</th></tr>
+   <tr><td>Сц. 1 (10%) · комісія</td><td>1 035 000 ₴</td><td>1 184 500 ₴</td><td>+149 500 ₴</td></tr>
+   <tr><td>Сц. 1 (10%) · чисте</td><td>9 315 000 ₴</td><td>10 315 500 ₴</td><td style="color:var(--green);font-weight:800">+1 000 500 ₴</td></tr>
+   <tr><td>Сц. 2 (12%) · комісія</td><td>1 242 000 ₴</td><td>1 414 500 ₴</td><td>+172 500 ₴</td></tr>
+   <tr><td>Сц. 2 (12%) · чисте</td><td>9 108 000 ₴</td><td>10 085 500 ₴</td><td style="color:var(--green);font-weight:800">+977 500 ₴</td></tr>
+  </table>
+  <div style="background:var(--green);color:#fff;border-radius:12px;padding:1.1vh 1.4vw;margin-top:1.3vh;font-size:1.02vw;text-align:center">
    Без Bolt+ економимо ~150–173 тис ₴ комісії, але чистими втрачаємо <b>~1 млн ₴</b> · кожна 1 ₴ комісії → <b>~7 ₴</b> обороту → <b>Bolt+ варте того</b>.
   </div>
 </div>`,
-// 8 launch supported by wide campaign (merged marketing + campaigns + promo)
-`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Маркетинг · запуск</div><h2>Запуск підтримаємо широкою кампанією</h2>
-  <div class="scen">
-   ${[['Standard','1× охоплення','Email + push Bolt Food',false],['Small','2× охоплення','+ In-app банер, email/push Food & Rides',false],['Big','10× охоплення','+ Спец-категорія, pop-up, соцмережі, paid ads, інфлюенсери',true]].map(s=>`<div class="scol${s[3]?' hot':''}"><div class="nm">${s[0]}</div><div class="gmv">${s[1]}</div><div class="sh">${s[2]}</div></div>`).join('')}
+// 5e consumer experience (MWB s13)
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Досвід користувача</div><h2>Bolt інвестує в Consumer Experience</h2>
+  <div class="cards">
+   ${[['Персоналізований контент','Рекомендації на основі історії та вподобань користувача.'],['Зручний пошук і фільтри','Швидка навігація, що показує більше релевантних товарів.'],['Прості точки входу в магазини','High-intent вкладки внизу екрану ведуть у ваш магазин.'],['Bolt Plus для утримання','Переваги підписки підвищують частоту та повернення клієнтів.']].map(c=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')}
   </div>
+</div>`,
+// 5f marketing & ads (MWB s15)
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Маркетингова підтримка</div><h2>Маркетинг і реклама, що ростять продажі магазину</h2>
   <div class="mkgrid">
    ${['Bolt Plus','In-app engagement','Merchant Offers','Online Ads','PR / Social Media','Email + Push'].map(m=>`<div class="mk"><div class="d"></div>${m}</div>`).join('')}
   </div>
-  <p class="note">Безкоштовна доставка для нових клієнтів — інструмент №1 на старті. Комбінація Bolt Food + Bolt Rides дає охоплення, недоступне поодинці.</p>
+  <p class="note">Комбінація каналів Bolt Food + Bolt Rides дає охоплення, недоступне поодинці.</p>
 </div>`,
-// 9 in-store branding (+ photo)
-`${logo()}<div class="slide"><div class="bar"></div><div class="kick">In-store branding</div><h2>Підтримка офлайн-брендингу</h2>
-  <div class="brand">
-   <div class="bcol">
-    ${[['Брендинг у точках —','Bolt підтримує оформлення та видимість бренду на місцях продажу.'],['Звʼязок онлайн ↔ офлайн —','офлайн-аудиторія дізнається про вашу присутність на Bolt Food.'],['Спільні матеріали —','тейбл-тенти, floor-стікери, банери, наліпки, POS-матеріали.']].map(b=>`<div class="row" style="flex-direction:column;align-items:flex-start;gap:.2vh"><b style="color:var(--dark)">${b[0]}</b><span style="color:var(--grey);font-size:.95vw">${b[1]}</span></div>`).join('')}
-   </div>
-   <div class="bimgs">
-    <img src="branding-tabletop.png" onerror="this.style.display='none'">
-    <img src="branding-pickup.png" onerror="this.style.display='none'">
-   </div>
+// 5g campaigns reach (MWB s16)
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Кампанії</div><h2>Маркетингові кампанії: до 10× охоплення</h2>
+  <div class="scen">
+   ${[['Standard','1× охоплення','Email + push Bolt Food',false],['Small','2× охоплення','+ In-app банер, email/push Food & Rides',false],['Big','10× охоплення','+ Спец-категорія, pop-up, соцмережі, paid ads, інфлюенсери',true]].map(s=>`<div class="scol${s[3]?' hot':''}"><div class="nm">${s[0]}</div><div class="gmv">${s[1]}</div><div class="sh">${s[2]}</div></div>`).join('')}
   </div>
 </div>`,
-// 10 ambition scenarios (merged orders + gmv + scenarios)
-`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Амбіція · рік 1</div><h2>Три рівні амбіції — GMV і замовлення</h2>
+// 5h in-store branding (MWB s17/36)
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">In-store branding</div><h2>Підтримка офлайн-брендингу</h2>
+  <div style="margin-top:2vh">
+   ${[['Брендинг у точках —','Bolt підтримує оформлення та видимість бренду на місцях продажу.'],['Звʼязок онлайн ↔ офлайн —','офлайн-аудиторія дізнається про вашу присутність на Bolt Food.'],['Спільні матеріали —','банери, наліпки, POS-матеріали для промо-періодів.']].map(b=>`<div class="row" style="justify-content:flex-start;gap:.4vw"><b>${b[0]}</b> <span>${b[1]}</span></div>`).join('')}
+  </div>
+</div>`,
+// 5i campaign calendar H1 (MWB s34)
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Календар 2026</div><h2>Кампанії H1 — план активностей</h2>
+  <table class="caltbl"><tr><th>Місяць</th><th>Кампанія 1</th><th>Кампанія 2</th><th>Кампанія 3</th></tr>
+   ${[['Січень','Новий рік','Treat Yourself Week','New Year, Same Favourites'],['Лютий','Treat Yourself Week','День Св. Валентина','—'],['Березень','8 березня','Treat Yourself Week','—'],['Квітень','Великдень','Treat Yourself Week','—'],['Травень','Treat Yourself Week','День матері','Eurovision Watch Party'],['Червень','Treat Yourself Week','FIFA 2026','—']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
+  </table>
+  <div class="foot">Орієнтовний календар Bolt Food. Підлаштовуємо під пет-сезони Master Zoo.</div>
+</div>`,
+// 6 orders
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Амбіція · замовлення</div><h2>Помісячний план на 12 місяців</h2>
+  <img class="chart" src="mz-orders.png">
+  <p class="note">Старт ~80 → <b style="color:var(--green)">~670 замовлень/міс</b> на 12-й місяць · рік 1 разом <b style="color:var(--dark)">5 329 замовлень</b></p>
+  <div class="foot">Базова частка 12% обсягу Glovo (бенчмарк ритейл-мереж на Bolt). Прогноз модельний.</div>
+</div>`,
+// 7 gmv
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Амбіція · GMV</div><h2>GMV-потенціал, AOV €15</h2>
+  <img class="chart" src="mz-gmv.png">
+  <p class="note">Рік 1: <b style="color:var(--green)">€79 935</b> · річний run-rate на 12-й міс: <b style="color:var(--dark)">€120 960/рік</b></p>
+  <div class="foot">GMV = замовлення × €15 AOV. Базовий сценарій.</div>
+</div>`,
+// 8 scenarios
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Сценарії</div><h2>Три рівні амбіції — рік 1</h2>
   <div class="scen">
    ${[['Консервативний','8% обсягу Glovo','€53 310','3 554 замовлень',false],['Базовий','12% обсягу Glovo','€79 935','5 329 замовлень',true],['Амбітний','18% обсягу Glovo','€119 925','7 995 замовлень',false]].map(s=>`<div class="scol${s[4]?' hot':''}"><div class="nm">${s[0]}</div><div class="sh">${s[1]}</div><div class="gmv">${s[2]}</div><div class="sh">GMV рік 1</div><div class="ord">${s[3]}</div></div>`).join('')}
   </div>
-  <p class="note">AOV €15 · базовий сценарій — рекомендований. Старт ~80 → ~670 замовлень/міс на 12-й місяць.</p>
-  <div class="foot">Частка обсягу Glovo — бенчмарк ритейл-мереж на Bolt. Прогноз модельний.</div>
+  <div class="foot">AOV €15. Базовий сценарій — рекомендований.</div>
 </div>`,
-// 11 rollout
+// 9 promo
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Промо · як розганяємо замовлення</div><h2>Промо-інструменти Bolt Food</h2>
+  <div class="promo">
+   ${[['1','Знижка на доставку','Частково або 0 ₴. №1 інструмент для залучення нових клієнтів.'],['2','Знижки на меню','Окремі позиції або весь асортимент — через API або від Bolt.'],['3','Когорти','Таргет на Нових / Втрачених / Активних — різний розмір знижки.'],['4','Банерна підтримка','Банер у вкладці «Магазини» в періоди активних акцій.']].map(p=>`<div class="pt"><div class="pn">${p[0]}</div><h4>${p[1]}</h4><p>${p[2]}</p></div>`).join('')}
+  </div>
+  <div class="pbot">
+   <div class="pbox"><h4>Рекомендований старт</h4><p>Безкоштовна доставка для нових клієнтів + MOV трохи вищий за середній чек.</p></div>
+   <div class="pbox d"><h4>Оподаткування (ПДВ)</h4><p>Знижки через Bolt → +20% ПДВ. Через API (зміна цін партнером) → без ПДВ.</p></div>
+  </div>
+  <div class="foot">Джерело: гайд «Промо-активності на Bolt Food» для партнерів (Україна)</div>
+</div>`,
+// 10 rollout
 `${logo()}<div class="slide"><div class="bar"></div><div class="kick">Запуск</div><h2>З чого починаємо</h2>
   <div class="two">
    <div class="col"><div style="font-weight:700;font-size:1.3vw;margin-bottom:.5vh">Топ-міста для старту</div>
@@ -194,7 +263,7 @@ const slides=[
    </div>
   </div>
 </div>`,
-// 12 closing
+// 11 closing
 `<div class="slide dark" style="justify-content:center">
   <h1>Готові запустити Master Zoo на Bolt Food</h1>
   <div class="accent" style="font-size:1.6vw;margin-top:1.6vh">Рік 1: ~5 329 замовлень · €79 935 GMV</div>
