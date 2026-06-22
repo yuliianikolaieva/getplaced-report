@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="uk"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Близенько × Bolt Food — Комерційна пропозиція (документ)</title>
+<style>
+:root{--green:#34D186;--dark:#2F313F;--grey:#6B7080;--light:#EEF6F1;--line:#E3E7EA}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,-apple-system,sans-serif;background:#fff;color:var(--dark);line-height:1.55}
+.wrap{max-width:920px;margin:0 auto;padding:34px 22px 70px}
+.kick{color:var(--green);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.bar{width:46px;height:5px;background:var(--green);border-radius:3px;margin:10px 0 6px}
+h1{font-size:30px}
+.sub{color:var(--grey);font-size:15px;margin-top:6px}
+h2{font-size:20px;margin:36px 0 12px;border-left:3px solid var(--green);padding-left:10px}
+h3{font-size:16px;margin-top:2px}
+p{font-size:14.5px;margin-top:8px}
+.assum{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.chip{background:var(--light);border-radius:10px;padding:10px 16px;font-size:14px}
+.chip b{color:var(--green)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.cards.three{grid-template-columns:1fr 1fr 1fr}
+.card{border-radius:14px;padding:18px 20px;background:var(--light);border-left:5px solid var(--green)}
+.card.d{border-left-color:var(--dark)}
+.card h3{font-size:15.5px}
+.card p{font-size:13.5px;color:var(--grey);margin-top:6px}
+.eco{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.ecard{flex:1;min-width:200px;border-radius:14px;overflow:hidden;text-align:center;background:var(--light)}
+.ecard .hd{background:var(--green);color:#fff;font-weight:700;font-size:15px;padding:9px 0}
+.ecard .bd{padding:16px 0;font-size:18px;font-weight:800;color:var(--dark);line-height:1.4}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--dark);color:#fff;font-size:13px}
+td.g{color:var(--green);font-weight:800}
+tr:nth-child(even) td{background:var(--light)}
+.note{background:var(--light);border-left:3px solid var(--dark);border-radius:10px;padding:14px 16px;color:var(--grey);font-size:13.5px;margin-top:16px}
+.note b{color:var(--dark)}
+.note.g{border-left-color:var(--green)}
+.tiles{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.tile{flex:1;min-width:150px;background:var(--light);border-radius:12px;padding:18px 10px;text-align:center}
+.tile .big{font-size:30px;font-weight:800;color:var(--green)}
+.tile .big.d{color:var(--dark)}
+.tile .lab{font-size:13px;color:var(--grey);margin-top:6px}
+.year{display:flex;gap:14px;margin-top:12px}
+.yc{flex:1;background:var(--light);border-radius:14px;padding:16px;text-align:center}
+.yc .yr{font-size:14px;color:var(--grey);font-weight:700}
+.yc .pct{font-size:40px;font-weight:800;color:var(--green);margin:4px 0}
+.yc .nt{font-size:12.5px;color:var(--grey)}
+.scen{display:flex;gap:14px;margin-top:12px}
+.scol{flex:1;border-radius:14px;background:var(--light);padding:20px 12px;text-align:center}
+.scol.hot{background:var(--green);color:#fff}
+.scol .nm{font-weight:700;font-size:16px}.scol .sh{font-size:13px;color:var(--grey)}
+.scol.hot .sh{color:#eafff4}
+.scol .gmv{font-size:30px;font-weight:800;color:var(--green);margin:6px 0}
+.scol.hot .gmv{color:#fff}.scol .ord{font-size:14px;font-weight:700}
+.steps{counter-reset:s;margin-top:12px}
+.steps .s{display:flex;gap:12px;align-items:flex-start;margin-top:10px}
+.steps .n{counter-increment:s;flex-shrink:0;width:26px;height:26px;border-radius:8px;background:var(--green);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.steps .n::before{content:counter(s)}
+.steps .t{font-size:14.5px;padding-top:3px}
+.kv{display:flex;justify-content:space-between;background:var(--light);border-radius:10px;padding:10px 14px;margin-top:8px;font-size:14px}
+.kv b{color:var(--green)}
+.fig{margin-top:16px;text-align:center}
+.fig img{max-width:100%;border-radius:12px;border:1px solid var(--line)}
+.figcap{font-size:12px;color:var(--grey);margin-top:6px}
+.brandrow{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
+.brandrow img{flex:1;min-width:240px;max-width:48%;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.bigmsg{background:var(--green);color:#fff;border-radius:12px;padding:14px 18px;margin-top:18px;font-size:15px;text-align:center;font-weight:700}
+.foot{margin-top:44px;color:var(--grey);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+.pdfbtn{position:fixed;right:18px;bottom:18px;background:var(--green);color:#fff;border:none;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);z-index:50}
+.pdfbtn:hover{background:#27b975}
+@media print{
+  @page{margin:13mm}
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .pdfbtn{display:none}
+  h2,h3{page-break-after:avoid}
+  table,.card,.ecard,.note,.scol,.fig,.brandrow,.steps .s,.tile,.yc{page-break-inside:avoid}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style></head>
+<body>
+<button class="pdfbtn" onclick="window.print()">⬇ Зберегти як PDF</button>
+<div class="wrap">
+
+<div class="kick">Близенько × Bolt Food · Комерційна пропозиція</div>
+<div class="bar"></div>
+<h1>Близенько × Bolt Food</h1>
+<p class="sub">Якірний рітейл регіону — другий канал, що додає оборот без або з мінімальним % канібалізації. Україна · Червень 2026</p>
+
+<h2>1. Bolt — вся екосистема в одному застосунку</h2>
+<div class="eco">
+  <div class="ecard"><div class="hd">Таксі</div><div class="bd">40+ країн<br>500+ міст</div></div>
+  <div class="ecard"><div class="hd">Доставка</div><div class="bd">15+ країн<br>200+ міст</div></div>
+  <div class="ecard"><div class="hd">Оренда / самокати</div><div class="bd">20+ країн<br>200+ міст</div></div>
+</div>
+<p>Крос-вертикальний ефект: користувачів таксі та Food ми конвертуємо у покупців Близенько — нові цифрові клієнти поза вашою офлайн-базою.</p>
+
+<h2>2. Сегмент stores росте шість місяців поспіль</h2>
+<div class="fig"><img src="cp-stores-growth.png" alt="Зростання сегмента stores"></div>
+<p class="figcap" style="text-align:left;color:var(--grey);font-size:12px;margin-top:8px"><b style="color:var(--dark)">stores</b> — найшвидше зростаючий сегмент Bolt Food · <b style="color:var(--dark)">×4</b> зростання активних локацій за 6 міс · напрям збільшує вагу в сегменті. Дані ілюстративні.</p>
+
+<h2>3. Чому Bolt для Близенько</h2>
+<div class="cards">
+  <div class="card"><h3>100% інкрементальний канал</h3><p>Близенько = 0 на Bolt Food. Кожне замовлення — поверх наявного каналу, без канібалізації + диверсифікація залежності від однієї платформи.</p></div>
+  <div class="card"><h3>Профіль під q-commerce</h3><p>Продукти біля дому — висока частота й повторні покупки. Ідеально під Bolt+ і безкоштовну доставку.</p></div>
+  <div class="card"><h3>Дірект-інтеграція POS</h3><p>Ваші реальні ціни, синхронізація стоків, контроль асортименту й промо. Capex на інтеграцію — на нас.</p></div>
+  <div class="card"><h3>Регіональна сила на Заході</h3><p>Розширюємось із іншими мережами → щільніша мережа кур'єрів і більше попиту в домашньому регіоні Близенько.</p></div>
+</div>
+
+<h2>4. Запуск підтримаємо широкою кампанією</h2>
+<p>Преміальні розміщення всередині застосунку — там, де клієнт ухвалює рішення про замовлення.</p>
+<div class="cards" style="margin-top:14px">
+  <div class="card"><h3>In-app модалки, банери та соцмережі</h3><p>In-app modal (повноекранне промо при вході) · In-app банер у стрічці магазинів · Social media — пости та сторіз Bolt Food.</p></div>
+  <div class="card"><h3>Промо-банери та категорії на головній</h3><p>Банер «Безкоштовна доставка» на головному екрані · спец-категорія / окрема полиця Близенько · видимість у періоди акцій і сезонів.</p></div>
+</div>
+<div class="fig"><img src="cp-campaign-creatives.png" alt="Креативи кампанії"></div>
+<p class="figcap">In-app modal banner · In-app banner · Social media — приклади розміщень</p>
+<div class="fig"><img src="cp-app-home.png" alt="Банери та категорії на головному екрані"></div>
+<p class="figcap">Промо-банери та категорії на головному екрані застосунку</p>
+<p class="note g">Комбінація каналів Bolt Food + Bolt Rides дає охоплення, недоступне поодинці — <b>до 10× на старті</b>.</p>
+
+<h2>5. Промо-інструменти Bolt Food</h2>
+<div class="cards">
+  <div class="card"><h3>1 · Знижка на доставку</h3><p>Частково або 0 ₴. №1 інструмент для залучення нових клієнтів.</p></div>
+  <div class="card"><h3>2 · Знижки на каталог</h3><p>Окремі позиції або весь асортимент — через API або від Bolt.</p></div>
+  <div class="card"><h3>3 · Когорти</h3><p>Таргет на Нових / Втрачених / Активних — різний розмір знижки.</p></div>
+  <div class="card"><h3>4 · Банерна підтримка</h3><p>Банер у вкладці «Магазини» в періоди активних акцій.</p></div>
+</div>
+<div class="cards" style="margin-top:14px">
+  <div class="card"><h3>Рекомендований старт</h3><p>Безкоштовна доставка для нових клієнтів + MOV трохи вищий за середній чек.</p></div>
+  <div class="card d"><h3>Знижки через API</h3><p>Передаєте фінальні ціни — без +20% ПДВ на знижку.</p></div>
+</div>
+
+<h2>6. Підтримка офлайн-брендингу</h2>
+<p><b>Брендинг у точках —</b> Bolt підтримує оформлення та видимість бренду на місцях продажу. <b>Звʼязок онлайн ↔ офлайн —</b> офлайн-аудиторія Близенько дізнається про вашу присутність на Bolt Food. <b>Спільні матеріали —</b> банери, наліпки, POS-матеріали для промо-періодів.</p>
+<div class="brandrow">
+  <img src="branding-tabletop.png" alt="Тейбл-тент Store to door">
+  <img src="branding-pickup.png" alt="Floor-стікер pickup">
+</div>
+<p class="note">Онлайн і офлайн працюють разом: магазини Близенько стають точками входу нових клієнтів у застосунок.</p>
+
+<h2>7. Наша пропозиція: комісія та безкоштовна доставка</h2>
+<div class="year">
+  <div class="yc"><div class="yr">2026</div><div class="pct">6%</div><div class="nt">комісія — стартовий рік</div></div>
+  <div class="yc"><div class="yr">2027</div><div class="pct">8+%</div><div class="nt">комісія — другий рік</div></div>
+</div>
+<h3 style="margin-top:18px">Безкоштовна доставка — спільне фінансування</h3>
+<table>
+<thead><tr><th>Період</th><th>Хто покриває доставку</th><th>Логіка</th></tr></thead>
+<tbody>
+<tr><td>Перші 6 міс (старт)</td><td class="g">Bolt 100%</td><td>якірний рітейл регіону — заводимо клієнтів за наш кошт</td></tr>
+<tr><td>Рік 2</td><td class="g">50% Bolt / 50% Близенько</td><td>спільна інвестиція в утриманий попит</td></tr>
+<tr><td>Рік 3</td><td class="g">75% Близенько / 25% Bolt</td><td>канал уже зрілий, Bolt лишається в долі</td></tr>
+<tr><td>Додатково</td><td class="g">OOH-підтримка</td><td>зовнішня реклама на старті понад digital</td></tr>
+</tbody>
+</table>
+<p class="note">Безкоштовна доставка 3–6 міс — обовʼязковий елемент старту для якірного рітейлу в регіоні.</p>
+
+<h2>8. Bolt+ — преміум-аудиторія, що замовляє частіше</h2>
+<div class="tiles">
+  <div class="tile"><div class="big">3.1–3.9×</div><div class="lab">частіше замовляють підписники Bolt+</div></div>
+  <div class="tile"><div class="big">+12–17%</div><div class="lab">замовлень/міс після оформлення підписки</div></div>
+  <div class="tile"><div class="big d">3 сервіси</div><div class="lab">таксі · Bolt Food · самокати в одній підписці</div></div>
+</div>
+<div style="margin-top:12px">
+  <div class="kv"><span><b style="color:var(--dark)">Рік 1 — безкоштовно:</b> Bolt+ підключено без жодної надбавки до комісії.</span></div>
+  <div class="kv"><span><b style="color:var(--dark)">Рік 2 — опційно:</b> за бажанням +1–2% лише на замовлення підписників; решта — за базовою ставкою.</span></div>
+  <div class="kv"><span><b style="color:var(--dark)">Повна свобода:</b> ви вільні відмовитись і не використовувати Bolt+ — це опція, а не зобовʼязання.</span></div>
+</div>
+<div class="bigmsg">Принцип: кожна 1 ₴ додаткової комісії за Bolt+ → ~7–8 ₴ додаткового обороту.</div>
+
+<h2>9. GMV-потенціал Близенько на Bolt</h2>
+<div class="assum">
+  <div class="chip">Старт: <b>60% покриття мережі</b> → зростання до 100%</div>
+  <div class="chip">середній чек <b>650 ₴</b></div>
+  <div class="chip">орієнтир <b>2–3 замовлення/день</b> на магазин</div>
+</div>
+<div class="scen">
+  <div class="scol"><div class="nm">Базовий</div><div class="sh">2 зам/день на магазин</div><div class="gmv">5,77 млн ₴</div><div class="sh">GMV / місяць</div><div class="ord">≈ 69 млн ₴ / рік</div></div>
+  <div class="scol hot"><div class="nm">Оптимальний</div><div class="sh">3 зам/день на магазин</div><div class="gmv">8,66 млн ₴</div><div class="sh">GMV / місяць</div><div class="ord">≈ 104 млн ₴ / рік</div></div>
+</div>
+<p class="note g">Прогноз — на старті при <b>60% покриття мережі</b>; з розширенням до <b>100%</b> потенціал зростає пропорційно. Повністю інкрементальний обсяг — новий канал поза наявним попитом.</p>
+<p class="note">Припущення: середній чек 650 ₴, 30 днів/міс. Параметри перераховуються під фактичні дані Близенько.</p>
+
+<h2>10. Наступні кроки</h2>
+<h3>Що пропонуємо коротко</h3>
+<div class="kv"><span>Комісія</span><b>6% (2026) → 8+% (2027)</b></div>
+<div class="kv"><span>Доставка</span><b>Bolt 100% перші 6 міс</b></div>
+<div class="kv"><span>Далі</span><b>50/50 рік 2 · 75/25 рік 3</b></div>
+<div class="kv"><span>Bolt+</span><b>рік 1 безкоштовно, далі опційно</b></div>
+<h3 style="margin-top:18px">Кроки</h3>
+<div class="steps">
+  <div class="s"><div class="n"></div><div class="t">Підтвердити інтерес і scope пілоту</div></div>
+  <div class="s"><div class="n"></div><div class="t">Узгодити умови комісії та доставки</div></div>
+  <div class="s"><div class="n"></div><div class="t">Дірект-інтеграція каталогу та цін (capex Bolt)</div></div>
+  <div class="s"><div class="n"></div><div class="t">Запуск у регіоні + спільний маркетинг</div></div>
+  <div class="s"><div class="n"></div><div class="t">Огляд результатів через 4 тижні</div></div>
+</div>
+<div class="bigmsg">Готові запустити Близенько на Bolt Food — інкрементальний оборот, безкоштовна доставка на старті та Bolt+ безкоштовно в перший рік.</div>
+
+<div class="foot">
+Близенько × Bolt Food · Комерційна пропозиція (документ для читання) · одиниці ₴.<br>
+Експорт у PDF — кнопка «Зберегти як PDF» (Cmd+P → Зберегти як PDF). Cmd+Shift+R для оновлення.
+</div>
+
+</div></body></html>
