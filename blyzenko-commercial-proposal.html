@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="uk"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Близенько × Bolt Food — Комерційна пропозиція</title>
+<style>
+:root{--green:#34D186;--dark:#2F313F;--grey:#6B7080;--light:#EEF6F1;--line:#E3E7EA}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,-apple-system,sans-serif;background:#0c0f14;color:var(--dark);
+display:flex;flex-direction:column;align-items:center;min-height:100vh}
+#stage{position:relative;width:min(96vw,1100px);aspect-ratio:16/9;background:#fff;
+border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);margin:auto}
+.slide{position:absolute;inset:0;padding:5.2% 5.5%;display:flex;flex-direction:column}
+.kick{color:var(--green);font-weight:700;font-size:1.05vw;letter-spacing:.06em;text-transform:uppercase}
+.bar{width:5%;height:.7vh;background:var(--green);border-radius:3px;margin-bottom:1.3vh}
+h1{font-size:2.5vw;line-height:1.15}
+h2{font-size:2.1vw;margin-bottom:1vh}
+.logo{position:absolute;top:4.4%;right:5%;height:5.4%}
+.sub{color:var(--grey);font-size:1.25vw}
+.tiles{display:flex;gap:1.2%;margin-top:2.4vh}
+.tile{flex:1;background:var(--light);border-radius:12px;padding:1.5vw;text-align:center}
+.tile .big{font-size:2.5vw;font-weight:800;color:var(--green)}
+.tile .big.d{color:var(--dark)}
+.tile .lab{font-size:1.0vw;color:var(--grey);margin-top:.5vh}
+.dark{background:var(--dark);color:#fff;padding:7% 6%}
+.dark h1{color:#fff;font-size:3.2vw}
+.dark .accent{color:var(--green);font-weight:700}
+.note{color:var(--grey);font-size:1.05vw;margin-top:auto}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1.4%;margin-top:2.2vh}
+.cards.three{grid-template-columns:1fr 1fr 1fr}
+.card{background:var(--light);border-radius:12px;padding:1.3vw 1.5vw;border-left:5px solid var(--green)}
+.card h3{font-size:1.3vw}.card p{font-size:.95vw;color:var(--grey);margin-top:.5vh}
+.scen{display:flex;gap:1.4%;margin-top:2.2vh}
+.scol{flex:1;border-radius:14px;background:var(--light);padding:2vw 1vw;text-align:center}
+.scol.hot{background:var(--green);color:#fff}
+.scol .nm{font-weight:700;font-size:1.3vw}.scol .sh{font-size:.95vw;color:var(--grey)}
+.scol.hot .sh{color:#eafff4}
+.scol .gmv{font-size:2.3vw;font-weight:800;color:var(--green);margin:.6vh 0}
+.scol.hot .gmv{color:#fff}.scol .ord{font-size:1.1vw;font-weight:700}
+.two{display:flex;gap:2%;margin-top:1.4vh}.col{flex:1}
+.coltitle{font-weight:700;font-size:1.25vw;margin-bottom:.7vh}
+.row{display:flex;justify-content:space-between;background:var(--light);border-radius:10px;
+padding:.8vw 1.1vw;margin-top:.8vh;font-size:1.1vw}.row b{color:var(--green)}
+.step{display:flex;align-items:center;gap:.9vw;margin-top:.85vh;font-size:1.1vw}
+.sc{width:1.9vw;height:1.9vw;border-radius:8px;background:var(--green);color:#fff;font-weight:700;
+display:flex;align-items:center;justify-content:center;font-size:.95vw;flex-shrink:0}
+.eco{display:flex;gap:2%;margin-top:2.2vh}
+.ecard{flex:1;background:var(--light);border-radius:14px;overflow:hidden;text-align:center}
+.ecard .hd{background:var(--green);color:#fff;font-weight:700;font-size:1.3vw;padding:.8vh 0}
+.ecard .bd{padding:1.6vh 0;font-size:1.7vw;font-weight:800;color:var(--dark);line-height:1.35}
+.caltbl{width:100%;border-collapse:collapse;margin-top:1.2vh;font-size:1vw}
+.caltbl th{background:var(--dark);color:#fff;padding:.8vh .8vw;text-align:left;font-size:.95vw}
+.caltbl td{padding:.8vh .8vw;border-bottom:1px solid var(--line);color:var(--grey)}
+.caltbl td:first-child{font-weight:700;color:var(--dark)}
+.caltbl tr:nth-child(even) td{background:var(--light)}
+.chip{background:var(--light);border-radius:10px;padding:.7vh 1vw;font-size:1vw;color:var(--dark)}
+.chip b{color:var(--green)}
+.chips{display:flex;gap:1.2%;margin-top:1.4vh;flex-wrap:wrap}
+.bigmsg{background:var(--green);color:#fff;border-radius:12px;padding:1.2vh 1.4vw;margin-top:1.6vh;font-size:1.08vw;text-align:center}
+.bigmsg b{color:#fff}
+.foot{position:absolute;bottom:3.2%;left:5.5%;color:var(--grey);font-size:.82vw}
+.comnum{font-size:3.2vw;font-weight:800;color:var(--green);line-height:1}
+.comyear{display:flex;gap:1.4%;margin-top:1.4vh}
+.cy{flex:1;background:var(--light);border-radius:14px;padding:1.6vh 1vw;text-align:center}
+.cy .yr{font-size:1.1vw;color:var(--grey);font-weight:700}
+.cy .pct{font-size:3vw;font-weight:800;color:var(--green);margin:.4vh 0}
+.cy .nt{font-size:.85vw;color:var(--grey)}
+#nav{display:flex;gap:14px;align-items:center;padding:14px;color:#aab}
+#nav button{background:#1b2330;color:#fff;border:1px solid #2c3647;border-radius:8px;
+padding:7px 14px;cursor:pointer;font-size:14px}
+#nav button:hover{background:#26303f}
+#dots{display:flex;gap:6px}.dot{width:8px;height:8px;border-radius:50%;background:#3a4456;cursor:pointer}
+.dot.on{background:var(--green)}
+</style></head>
+<body>
+<div id="stage"></div>
+<div id="nav">
+  <button onclick="go(-1)">‹ Назад</button>
+  <span id="counter">1 / 7</span>
+  <button onclick="go(1)">Далі ›</button>
+  <div id="dots"></div>
+</div>
+
+<script>
+const LOGO='bolt-food-logo.png';
+function logo(){return `<img class="logo" src="${LOGO}" onerror="this.style.display='none'">`}
+const slides=[
+// 1 title
+`<div class="slide dark" style="justify-content:center">
+  <div class="kick">Комерційна пропозиція</div>
+  <h1 style="margin:1.4vh 0">Близенько <span class="accent">×</span> Bolt&nbsp;Food</h1>
+  <div class="sub" style="color:#c9ced6">Якірний рітейл регіону — другий канал, що додає оборот без канібалізації</div>
+  <div style="margin-top:3vh;color:#9aa0ac;font-size:1.1vw">Україна · Червень 2026</div>
+</div>`,
+// 2 about Bolt
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Про Bolt</div><h2>Bolt — масштаб і екосистема</h2>
+  <div class="tiles">
+   ${[['50+','країн'],['850+','міст'],['4 млн+','замовлень/день'],['€12 млрд+','GMV run-rate'],['30%+','GMV CAGR 21–25']].map(t=>`<div class="tile"><div class="big">${t[0]}</div><div class="lab">${t[1]}</div></div>`).join('')}
+  </div>
+  <div class="eco">
+   ${[['Таксі','40+ країн','500+ міст'],['Доставка','15+ країн','200+ міст'],['Оренда / самокати','20+ країн','200+ міст']].map(e=>`<div class="ecard"><div class="hd">${e[0]}</div><div class="bd">${e[1]}<br>${e[2]}</div></div>`).join('')}
+  </div>
+  <p class="note">Один застосунок: доставка їжі та товарів, таксі, оренда. Крос-вертикальний ефект — аудиторію таксі та Food конвертуємо у покупців Близенько.</p>
+</div>`,
+// 3 what we give as a company
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Що ми даємо як компанія</div><h2>Цінність для Близенько</h2>
+  <div class="cards three">
+   ${[
+     ['100% інкрементальний канал','Близенько = 0 на Bolt Food. Кожне замовлення — поверх Glovo, без канібалізації + диверсифікація залежності від однієї платформи.'],
+     ['Безкоштовна доставка на старті','Bolt 100% покриває перші 6 міс. Безкоштовна доставка — драйвер №1 першого замовлення.'],
+     ['Маркетинг до 10× охоплення','In-app банер, push/email, спец-категорія, paid ads, інфлюенсери + OOH-підтримка (зовнішня реклама).'],
+     ['Дірект-інтеграція POS','Ваші реальні ціни, синхронізація стоків, контроль асортименту й промо. Capex на інтеграцію — на нас.'],
+     ['Bolt+ — преміум-аудиторія','Підписники замовляють у 2,1–2,2× частіше. Перший рік — безкоштовно.'],
+     ['Регіональна сила на Заході','Розширюємось із Рукавичкою → щільніша мережа кур’єрів і більше попиту в регіоні Близенько.']
+   ].map(c=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')}
+  </div>
+</div>`,
+// 4 our offer — commission + free delivery
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Наша пропозиція</div><h2>Комісія та безкоштовна доставка</h2>
+  <div class="comyear">
+   <div class="cy"><div class="yr">2026</div><div class="pct">6%</div><div class="nt">комісія — стартовий рік</div></div>
+   <div class="cy"><div class="yr">2027</div><div class="pct">8%</div><div class="nt">комісія — другий рік</div></div>
+  </div>
+  <div class="coltitle" style="margin-top:1.8vh">Безкоштовна доставка — спільне фінансування</div>
+  <table class="caltbl">
+   <tr><th>Період</th><th>Хто покриває доставку</th><th>Логіка</th></tr>
+   ${[
+     ['Перші 6 міс (старт)','<b style="color:var(--green)">Bolt 100%</b>','якірний рітейл регіону — заводимо клієнтів за наш кошт'],
+     ['Рік 2','50% Bolt / 50% Близенько','спільна інвестиція в утриманий попит'],
+     ['Рік 3','75% Близенько / <b style="color:var(--green)">25% Bolt</b>','канал уже зрілий, Bolt лишається в долі'],
+     ['Додатково','<b style="color:var(--green)">OOH-підтримка</b>','зовнішня реклама на старті понад digital']
+   ].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}
+  </table>
+  <div class="foot">Безкоштовна доставка 3–6 міс — обовʼязковий елемент старту для якірного рітейлу в регіоні.</div>
+</div>`,
+// 5 Bolt+
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Bolt+</div><h2>Преміум-аудиторія, що замовляє частіше</h2>
+  <div class="tiles">
+   <div class="tile"><div class="big">2.1–2.2×</div><div class="lab">частіше замовляють підписники Bolt+</div></div>
+   <div class="tile"><div class="big">+12–17%</div><div class="lab">замовлень/міс після оформлення підписки</div></div>
+   <div class="tile"><div class="big d">3 сервіси</div><div class="lab">таксі · Bolt Food · самокати в одній підписці</div></div>
+  </div>
+  <div style="margin-top:1.6vh">
+   ${[
+     ['Рік 1 — безкоштовно:','Bolt+ підключено без жодної надбавки до комісії.'],
+     ['Рік 2 — опційно:','за бажанням +1–2% <b>лише на замовлення підписників</b>; решта — за базовою ставкою.'],
+     ['Повна свобода:','ви вільні відмовитись і не використовувати Bolt+ — це опція, а не зобовʼязання.']
+   ].map(b=>`<div class="row" style="justify-content:flex-start;gap:.4vw"><b style="color:var(--dark)">${b[0]}</b> <span>${b[1]}</span></div>`).join('')}
+  </div>
+  <div class="bigmsg">Принцип: кожна 1 ₴ додаткової комісії за Bolt+ → ~7–8 ₴ додаткового обороту.</div>
+</div>`,
+// 6 turnover / GMV
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Товарообіг · потенціал</div><h2>GMV-потенціал Близенько на Bolt</h2>
+  <div class="chips">
+   <div class="chip">246 локацій Glovo · покриття Bolt 60% ≈ <b>148 магазинів</b></div>
+   <div class="chip">середній чек <b>650 ₴</b></div>
+   <div class="chip">орієнтир <b>2–3 зам/день</b> ≈ 30–40% Glovo</div>
+  </div>
+  <div class="scen">
+   <div class="scol"><div class="nm">Базовий</div><div class="sh">2 зам/день · ~8 880 зам/міс</div><div class="gmv">5,77 млн ₴</div><div class="sh">GMV / місяць</div><div class="ord">69,3 млн ₴ / рік</div></div>
+   <div class="scol hot"><div class="nm">Оптимальний</div><div class="sh">3 зам/день · ~13 320 зам/міс</div><div class="gmv">8,66 млн ₴</div><div class="sh">GMV / місяць</div><div class="ord">103,9 млн ₴ / рік</div></div>
+  </div>
+  <p class="note">Повністю інкрементальний обсяг поверх Glovo. За комісії 6% (2026) це ≈ 0,35–0,52 млн ₴/міс — Bolt повертає частину назад через безкоштовну доставку та маркетинг.</p>
+  <div class="foot">Припущення: 60% покриття мережі, 30 днів/міс, середній чек 650 ₴. Параметри перераховуються під фактичні дані Близенько.</div>
+</div>`,
+// 7 closing / next steps
+`${logo()}<div class="slide"><div class="bar"></div><div class="kick">Наступні кроки</div><h2>Як швидко стартуємо</h2>
+  <div class="two">
+   <div class="col"><div class="coltitle">Що пропонуємо коротко</div>
+    ${[['Комісія','6% (2026) → 8% (2027)'],['Доставка','Bolt 100% перші 6 міс'],['Далі','50/50 рік 2 · 75/25 рік 3'],['Bolt+','рік 1 безкоштовно, далі опційно']].map(c=>`<div class="row"><span>${c[0]}</span><b>${c[1]}</b></div>`).join('')}
+   </div>
+   <div class="col"><div class="coltitle">Кроки</div>
+    ${['Підтвердити інтерес і scope пілоту','Узгодити умови комісії та доставки','Дірект-інтеграція каталогу та цін (capex Bolt)','Запуск у регіоні + спільний маркетинг','Огляд результатів через 4 тижні'].map((s,i)=>`<div class="step"><div class="sc">${i+1}</div><span>${s}</span></div>`).join('')}
+   </div>
+  </div>
+  <div class="bigmsg">Готові запустити Близенько на Bolt Food — інкрементальний оборот, безкоштовна доставка на старті та Bolt+ безкоштовно в перший рік.</div>
+</div>`
+];
+let i=0;const stage=document.getElementById('stage'),dots=document.getElementById('dots');
+stage.innerHTML=slides.map((h,n)=>`<div class="slidewrap${n===0?' on':''}" data-i="${n}" style="position:absolute;inset:0;display:${n===0?'block':'none'}">${h}</div>`).join('');
+slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');d.onclick=()=>set(n);dots.appendChild(d)});
+function set(n){i=Math.max(0,Math.min(slides.length-1,n));
+  document.querySelectorAll('.slidewrap').forEach(w=>w.style.display=(+w.dataset.i===i)?'block':'none');
+  document.querySelectorAll('.dot').forEach((d,k)=>d.classList.toggle('on',k===i));
+  document.getElementById('counter').textContent=(i+1)+' / '+slides.length;}
+function go(d){set(i+d)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1)});
+</script>
+</body></html>
