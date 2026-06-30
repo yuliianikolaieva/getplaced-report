@@ -951,10 +951,39 @@ renderInsights(){
   const tq1=k.tj+k.tf+k.tm,gq1=k.gj+k.gf+k.gm,bq1=k.bj+k.bf+k.bm;
   const tq2=k.ta+k.ty,gq2=k.ga+k.gy,bq2=k.ba+k.by;
   const bq1p=this.pct(bq1,tq1),bq2p=this.pct(bq2,tq2);
-  const bGrow=brands.filter(b=>(b.ty||0)>=300&&b.byp>b.bap).length;
-  const bDecl=brands.filter(b=>(b.ta||0)>=300&&b.byp<b.bap).length;
   const topBolt=brands.filter(b=>(b.ty||0)>=300).sort((a,b)=>b.byp-a.byp).slice(0,3);
   const newMayBolt=brands.filter(b=>b.tj===0&&b.tf===0&&b.tm===0&&(b.ba||0)===0&&(b.by||0)>0).length;
+  // ---- detail lists for the trend block (Bolt) ----
+  const _pp=v=>`${v>=0?'+':''}${v.toFixed(1)}pp`;
+  const TH=1000, CAP=15;
+  const incList=brands.filter(b=>(b.ta||0)>=TH&&(b.ty||0)>=TH&&b.byp>b.bap).sort((a,b)=>(b.byp-b.bap)-(a.byp-a.bap));
+  const declList=brands.filter(b=>(b.ta||0)>=TH&&(b.ty||0)>=TH&&b.byp<b.bap).sort((a,b)=>(a.byp-a.bap)-(b.byp-b.bap));
+  const bGrow=incList.length, bDecl=declList.length;
+  const newBoltAll=brands.filter(b=>b.tj===0&&b.tf===0&&b.tm===0&&(b.ba||0)===0&&(b.by||0)>0).sort((a,b)=>(b.by||0)-(a.by||0));
+  const newBoltList=newBoltAll.filter(b=>(b.by||0)>=100);
+  const liB=r=>`<li><strong>${this.esc(r.brand)}</strong> · Bolt% ${r.bap.toFixed(1)}→<b>${r.byp.toFixed(1)}%</b> <span class="${this.dc(r.byp-r.bap)}">${_pp(r.byp-r.bap)}</span> · ${this.fmtN(r.by)} зам. May (Apr ${this.fmtN(r.ba)})</li>`;
+  const more=(n)=>n>CAP?`<li style="list-style:none;color:var(--ts)">…та ще ${n-CAP}</li>`:'';
+  const detailBolt=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
+    <div><div style="font-size:11px;font-weight:700;color:var(--bolt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📈 Наростили частку Bolt (Apr→May) · ${incList.length}</div><ul style="margin:0;padding-left:18px;font-size:12px">${incList.slice(0,CAP).map(liB).join('')||'<li>—</li>'}${more(incList.length)}</ul></div>
+    <div><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📉 Знизили частку Bolt (Apr→May) · ${declList.length}</div><ul style="margin:0;padding-left:18px;font-size:12px">${declList.slice(0,CAP).map(liB).join('')||'<li>—</li>'}${more(declList.length)}</ul></div>
+  </div>
+  <div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--bolt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">🆕 Нові на Bolt у травні (не було Jan–Apr) · усього ${newBoltAll.length}, показано ≥100 зам.</div>
+    <ul style="margin:0;padding-left:18px;columns:2;font-size:12px">${newBoltList.map(r=>`<li><strong>${this.esc(r.brand)}</strong> — ${this.fmtN(r.by)} зам. Bolt (всього May ${this.fmtN(r.ty)})</li>`).join('')||'<li>—</li>'}</ul></div>`;
+  // ---- Glovo insights ----
+  const gBig=brands.filter(b=>(b.gy||0)>=300||(b.ga||0)>=300);
+  const gGain=[...gBig].sort((a,b)=>((b.gy||0)-(b.ga||0))-((a.gy||0)-(a.ga||0))).slice(0,10);
+  const gLoss=[...gBig].filter(b=>(b.gy||0)<(b.ga||0)).sort((a,b)=>((a.gy||0)-(a.ga||0))-((b.gy||0)-(b.ga||0))).slice(0,10);
+  const newGlovoList=brands.filter(b=>b.gj===0&&b.gf===0&&b.gm===0&&(b.ga||0)===0&&(b.gy||0)>0).sort((a,b)=>(b.gy||0)-(a.gy||0));
+  const liG=r=>`<li><strong>${this.esc(r.brand)}</strong> · ${this.fmtN(r.ga)}→<b>${this.fmtN(r.gy)}</b> <span class="${this.dc(r.gy-r.ga)}">${this.ds(r.gy-r.ga)}${this.fmtN(Math.abs(r.gy-r.ga))}</span> (${this.ds(this.pct(r.gy-r.ga,r.ga))}${this.pct(r.gy-r.ga,r.ga).toFixed(0)}%)</li>`;
+  const glovoCard=`<div class="ic" style="border-left-color:var(--glovo)"><h3>🛵 Glovo — динаміка Apr→May</h3>
+    <p>Glovo загалом: ${this.fmtN(k.ga)} → <strong>${this.fmtN(k.gy)}</strong> зам. (${this.ds(k.gy-k.ga)}${this.pct(k.gy-k.ga,k.ga).toFixed(1)}%) · частка ринку ${gap.toFixed(1)}% (Apr) → <strong>${gyp.toFixed(1)}%</strong> (May, ${this.ds(gyp-gap)}${(gyp-gap).toFixed(1)}pp).</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px">
+      <div><div style="font-size:11px;font-weight:700;color:var(--glovo);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📈 Найбільший приріст Glovo за обсягом (топ-10)</div><ul style="margin:0;padding-left:18px;font-size:12px">${gGain.map(liG).join('')}</ul></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📉 Найбільше падіння Glovo за обсягом (топ-10)</div><ul style="margin:0;padding-left:18px;font-size:12px">${gLoss.map(liG).join('')}</ul></div>
+    </div>
+    <div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--glovo);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">🆕 Нові на Glovo у травні · ${newGlovoList.length}</div>
+      <ul style="margin:0;padding-left:18px;columns:2;font-size:12px">${newGlovoList.slice(0,20).map(r=>`<li><strong>${this.esc(r.brand)}</strong> — ${this.fmtN(r.gy)} зам.</li>`).join('')||'<li>—</li>'}</ul>${newGlovoList.length>20?`<div style="font-size:11px;color:var(--ts);margin-top:2px">…та ще ${newGlovoList.length-20}</div>`:''}</div>
+  </div>`;
   // verification / data-integrity block
   const vChanged=(typeof VERIFY!=='undefined')?VERIFY.changedCols.length:0;
   const integrity=(typeof VERIFY!=='undefined')?`
@@ -995,10 +1024,12 @@ renderInsights(){
     <p>May vs April: Bolt <strong>${this.fmtN(k.by)}</strong> (${this.ds(k.by-k.ba)}${this.pct(k.by-k.ba,k.ba).toFixed(1)}%) | Glovo <strong>${this.fmtN(k.gy)}</strong> (${this.ds(k.gy-k.ga)}${this.pct(k.gy-k.ga,k.ga).toFixed(1)}%)</p>
     <ul>
       <li>Total market: ${this.fmtN(k.tj)} → ${this.fmtN(k.tf)} → ${this.fmtN(k.tm)} → ${this.fmtN(k.ta)} → <strong>${this.fmtN(k.ty)}</strong> (May) | ${this.ds(k.ty-k.tj)}${this.pct(k.ty-k.tj,k.tj).toFixed(1)}% Jan→May</li>
-      <li>${bGrow} partners increased Bolt share Apr→May | ${bDecl} declined</li>
+      <li>${bGrow} partners increased Bolt share Apr→May | ${bDecl} declined (партнери з ≥1000 зам. і в Apr, і в May)</li>
       <li>${newMayBolt} partners new to Bolt in May only (not in Jan–Apr)</li>
     </ul>
+    ${detailBolt}
   </div>
+  ${glovoCard}
   <div class="ic"><h3>📅 Quarterly view (rolling) — Q1 (Jan–Mar) vs Apr–May</h3>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px">
       <div style="background:#f8fafc;border-radius:8px;padding:10px 12px"><div style="font-size:10px;color:var(--ts);font-weight:700">TOTAL avg/mo</div><div style="font-size:18px;font-weight:800">${this.fmtN(tq1/3)}</div><div style="font-size:11px;color:var(--ts)">Q1 · Σ ${this.fmtN(tq1)}</div><div style="font-size:14px;font-weight:700;margin-top:4px;color:var(--pri)">${this.fmtN(tq2/2)}</div><div style="font-size:11px" class="${this.dc(tq2/2-tq1/3)}">Apr–May · ${this.ds(this.pct(tq2/2-tq1/3,tq1/3))}${this.pct(tq2/2-tq1/3,tq1/3).toFixed(1)}%</div></div>
