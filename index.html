@@ -173,9 +173,10 @@ getFilteredBrands(brands){
 },
 kpis(data){
   let tj=0,gj=0,bj=0,tf=0,gf=0,bf=0,tm=0,gm=0,bm=0,ta=0,ga=0,ba=0,ty=0,gy=0,by=0;
+  let glA=0,blA=0,glY=0,blY=0;
   const br=new Set(),ct=new Set();
-  data.forEach(d=>{tj+=d[2];gj+=d[3];bj+=d[4];tf+=d[5];gf+=d[6];bf+=d[7];tm+=d[8];gm+=d[9];bm+=d[10];ta+=(d[20]||0);ga+=(d[21]||0);ba+=(d[22]||0);ty+=(d[26]||0);gy+=(d[27]||0);by+=(d[28]||0);br.add(d[0]);ct.add(d[1]);});
-  return {tj,gj,bj,tf,gf,bf,tm,gm,bm,ta,ga,ba,ty,gy,by,nb:br.size,nc:ct.size};
+  data.forEach(d=>{tj+=d[2];gj+=d[3];bj+=d[4];tf+=d[5];gf+=d[6];bf+=d[7];tm+=d[8];gm+=d[9];bm+=d[10];ta+=(d[20]||0);ga+=(d[21]||0);ba+=(d[22]||0);ty+=(d[26]||0);gy+=(d[27]||0);by+=(d[28]||0);glA+=(d[23]||0)+(d[24]||0);blA+=(d[25]||0)+(d[24]||0);glY+=(d[29]||0)+(d[30]||0);blY+=(d[31]||0)+(d[30]||0);br.add(d[0]);ct.add(d[1]);});
+  return {tj,gj,bj,tf,gf,bf,tm,gm,bm,ta,ga,ba,ty,gy,by,glocsA:glA,blocsA:blA,glocsY:glY,blocsY:blY,nb:br.size,nc:ct.size};
 },
 renderKPIs(){
   const all=this.getFiltered();
@@ -187,7 +188,7 @@ renderKPIs(){
   const gmp=this.pct(k.gm,k.tm),bmp=this.pct(k.bm,k.tm);
   const gap2=this.pct(k.ga,k.ta),bap2=this.pct(k.ba,k.ta);
   const gyp=this.pct(k.gy,k.ty),byp=this.pct(k.by,k.ty);
-  const mkCard=(label,color,j,f,m,a,y,jp,fp,mp,ap,yp,gapv,bapv,showMs,msSums)=>{
+  const mkCard=(label,color,j,f,m,a,y,jp,fp,mp,ap,yp,gapv,bapv,showMs,msSums,locHtml='')=>{
     const df=f-j,dm=m-f,da=a-m,dy=y-a,pjf=this.pct(df,j),pfm=this.pct(dm,f),pma=this.pct(da,m),pay=this.pct(dy,a);
     // Quarterly (rolling): Q1=Jan-Mar, Apr-May
     const q1=j+f+m, q2=a+y, q1avg=q1/3, q2avg=q2/2, dAvg=this.pct(q2avg-q1avg,q1avg);
@@ -226,6 +227,7 @@ renderKPIs(){
           <div class="kpi-month"><div class="lb">Apr</div><div class="vl" style="color:${color}">${this.fmtN(a)}</div><div class="ch ${this.dc(da)}">${this.ds(da)}${pma.toFixed(1)}%</div></div>
           <div class="kpi-month" style="background:#e0f7fa"><div class="lb">May</div><div class="vl" style="color:${color}">${this.fmtN(y)}</div><div class="ch ${this.dc(dy)}">${this.ds(dy)}${pay.toFixed(1)}%</div></div>
         </div>
+        ${locHtml}
         ${qBlock}
         ${msBlock}
       </div></div>`;
@@ -271,11 +273,18 @@ renderKPIs(){
     p=>p==='j'?kr.bj:p==='f'?kr.bf:p==='m'?kr.bm:p==='a'?(kr.ba||0):(kr.by||0),
     p=>p==='j'?kt.bj:p==='f'?kt.bf:p==='m'?kt.bm:p==='a'?(kt.ba||0):(kt.by||0),
     'Food','Retail','var(--bolt)','#8b5cf6');
+  const locBadge=(lbl,val,col)=>`<span style="display:inline-block;padding:2px 8px;border-radius:8px;background:#f1f5f9;font-size:11px;margin-right:5px">${lbl} <b style="color:${col}">${this.fmtN(val)}</b></span>`;
+  const locTot=`<div style="margin-top:10px;font-size:10px;color:var(--ts);font-weight:700">Локацій (активні, May · Apr)</div>
+    <div style="margin-top:3px">${locBadge('Glovo',k.glocsY,'var(--glovo)')}${locBadge('Bolt',k.blocsY,'var(--bolt)')}<span style="font-size:10px;color:var(--ts)">Apr: G ${this.fmtN(k.glocsA)} · B ${this.fmtN(k.blocsA)}</span></div>`;
+  const locGlv=`<div style="margin-top:10px;font-size:10px;color:var(--ts);font-weight:700">Локацій Glovo (активні)</div>
+    <div style="margin-top:3px">${locBadge('May',k.glocsY,'var(--glovo)')}${locBadge('Apr',k.glocsA,'var(--glovo)')}</div>`;
+  const locBlt=`<div style="margin-top:10px;font-size:10px;color:var(--ts);font-weight:700">Локацій Bolt (активні)</div>
+    <div style="margin-top:3px">${locBadge('May',k.blocsY,'var(--bolt)')}${locBadge('Apr',k.blocsA,'var(--bolt)')}</div>`;
   document.getElementById('kpiBox').innerHTML=`
     <div class="kpi-grid">
-      ${mkCard('Total Market','var(--pri)',k.tj,k.tf,k.tm,k.ta,k.ty,bjp,bfp,bmp,bap2,byp,gyp,byp,true,k)}
-      ${mkCard('Glovo','var(--glovo)',k.gj,k.gf,k.gm,k.ga,k.gy,gjp,gfp,gmp,gap2,gyp,gyp,byp,false,k)}
-      ${mkCard('Bolt','var(--bolt)',k.bj,k.bf,k.bm,k.ba,k.by,bjp,bfp,bmp,bap2,byp,gyp,byp,false,k)}
+      ${mkCard('Total Market','var(--pri)',k.tj,k.tf,k.tm,k.ta,k.ty,bjp,bfp,bmp,bap2,byp,gyp,byp,true,k,locTot)}
+      ${mkCard('Glovo','var(--glovo)',k.gj,k.gf,k.gm,k.ga,k.gy,gjp,gfp,gmp,gap2,gyp,gyp,byp,false,k,locGlv)}
+      ${mkCard('Bolt','var(--bolt)',k.bj,k.bf,k.bm,k.ba,k.by,bjp,bfp,bmp,bap2,byp,gyp,byp,false,k,locBlt)}
     </div>
     <div class="mix-grid">${gMix}${bMix}</div>`;
 },
@@ -347,11 +356,12 @@ brandCities(bi,data){
   const rows={};
   data.filter(d=>d[0]===bi).forEach(d=>{
     const ci=d[1];
-    if(!rows[ci]) rows[ci]={city:C[ci],gq1:0,bq1:0,tq1:0,ga:0,ba:0,ta:0,gy:0,by:0,ty:0,glocsY:0,blocsY:0};
+    if(!rows[ci]) rows[ci]={city:C[ci],gq1:0,bq1:0,tq1:0,ga:0,ba:0,ta:0,gy:0,by:0,ty:0,glocsA:0,blocsA:0,glocsY:0,blocsY:0};
     const r=rows[ci];
     r.gq1+=d[3]+d[6]+d[9];r.bq1+=d[4]+d[7]+d[10];r.tq1+=d[2]+d[5]+d[8];
     r.ga+=(d[21]||0);r.ba+=(d[22]||0);r.ta+=(d[20]||0);
     r.gy+=(d[27]||0);r.by+=(d[28]||0);r.ty+=(d[26]||0);
+    r.glocsA+=(d[23]||0)+(d[24]||0);r.blocsA+=(d[25]||0)+(d[24]||0);
     r.glocsY+=(d[29]||0)+(d[30]||0);r.blocsY+=(d[31]||0)+(d[30]||0);
   });
   return Object.values(rows).sort((a,b)=>(b.ty+b.ta)-(a.ty+a.ta));
@@ -518,8 +528,8 @@ renderPartners(){
   // ── Summary KPI bar for selected mission ──────────────────────────────────
   const seg=this.filterSeg;
   const segBrands=seg==='all'?allBrands:allBrands.filter(b=>b.seg===seg);
-  const sv={tj:0,gj:0,bj:0,tf:0,gf:0,bf:0,tm:0,gm:0,bm:0,ta:0,ga:0,ba:0,ty:0,gy:0,by:0};
-  segBrands.forEach(b=>{sv.tj+=b.tj;sv.gj+=b.gj;sv.bj+=b.bj;sv.tf+=b.tf;sv.gf+=b.gf;sv.bf+=b.bf;sv.tm+=b.tm;sv.gm+=b.gm;sv.bm+=b.bm;sv.ta+=(b.ta||0);sv.ga+=(b.ga||0);sv.ba+=(b.ba||0);sv.ty+=(b.ty||0);sv.gy+=(b.gy||0);sv.by+=(b.by||0);});
+  const sv={tj:0,gj:0,bj:0,tf:0,gf:0,bf:0,tm:0,gm:0,bm:0,ta:0,ga:0,ba:0,ty:0,gy:0,by:0,glA:0,blA:0,glY:0,blY:0};
+  segBrands.forEach(b=>{sv.tj+=b.tj;sv.gj+=b.gj;sv.bj+=b.bj;sv.tf+=b.tf;sv.gf+=b.gf;sv.bf+=b.bf;sv.tm+=b.tm;sv.gm+=b.gm;sv.bm+=b.bm;sv.ta+=(b.ta||0);sv.ga+=(b.ga||0);sv.ba+=(b.ba||0);sv.ty+=(b.ty||0);sv.gy+=(b.gy||0);sv.by+=(b.by||0);sv.glA+=(b.glocs||0);sv.blA+=(b.blocs||0);sv.glY+=(b.glocsY||0);sv.blY+=(b.blocsY||0);});
   const col=seg==='all'?'var(--pri)':(SEG_COLORS[seg]||'#f1f5f9|#475569').split('|')[1];
   const segLabel=seg==='all'?'Всі місії':(SEG_LABELS[seg]||seg);
   const mkStat=(label,j,f,m,a,y,color)=>{
@@ -547,6 +557,14 @@ renderPartners(){
       ${mkStat('Total Orders',sv.tj,sv.tf,sv.tm,sv.ta,sv.ty,'var(--pri)')}
       ${mkStat('Glovo',sv.gj,sv.gf,sv.gm,sv.ga,sv.gy,'var(--glovo)')}
       ${mkStat('Bolt',sv.bj,sv.bf,sv.bm,sv.ba,sv.by,'var(--bolt)')}
+      <div style="flex:1;min-width:230px;background:#fff;border-radius:10px;padding:12px 16px;border-top:3px solid var(--green)">
+        <div style="font-size:10px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Локацій (активні)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:center">
+          <div style="background:#fff4ef;border-radius:6px;padding:6px 4px"><div style="font-size:9px;color:var(--ts)">Glovo</div><div style="font-size:17px;font-weight:800;color:var(--glovo)">${this.fmtN(sv.glY)}</div><div style="font-size:9px" class="${this.dc(sv.glY-sv.glA)}">${this.ds(sv.glY-sv.glA)}${this.fmtN(Math.abs(sv.glY-sv.glA))} vs Apr</div></div>
+          <div style="background:#f0fdf4;border-radius:6px;padding:6px 4px"><div style="font-size:9px;color:var(--ts)">Bolt</div><div style="font-size:17px;font-weight:800;color:var(--bolt)">${this.fmtN(sv.blY)}</div><div style="font-size:9px" class="${this.dc(sv.blY-sv.blA)}">${this.ds(sv.blY-sv.blA)}${this.fmtN(Math.abs(sv.blY-sv.blA))} vs Apr</div></div>
+        </div>
+        <div style="font-size:9px;color:var(--ts);text-align:center;margin-top:5px">May, з замовленнями</div>
+      </div>
       <div style="flex:1;min-width:230px;background:#fff;border-radius:10px;padding:12px 16px;border-top:3px solid var(--bolt)">
         <div style="font-size:10px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Bolt %</div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;text-align:center">
@@ -673,26 +691,39 @@ togglePartnerCities(bi,clickedRow){
       <th colspan="3" style="text-align:center;color:var(--bolt);background:#f0fdf4">Bolt замовлення</th>
       <th colspan="3" style="text-align:center">Всього</th>
       <th class="n">Bolt% May</th>
-      <th class="n" style="color:var(--bolt)">Лок. May</th>
+      <th colspan="2" style="text-align:center;background:#eef7ff">Локацій (Apr→May)</th>
       <th style="min-width:70px">Split May</th>
     </tr><tr style="background:#eef2f7">
       <th class="n" style="color:var(--glovo)">Q1</th><th class="n" style="color:var(--glovo)">Apr</th><th class="n" style="color:var(--glovo);font-weight:800">May</th>
       <th class="n" style="color:var(--bolt)">Q1</th><th class="n" style="color:var(--bolt)">Apr</th><th class="n" style="color:var(--bolt);font-weight:800">May</th>
       <th class="n">Q1</th><th class="n">Apr</th><th class="n" style="font-weight:800">May</th>
+      <th class="n" style="color:var(--glovo);background:#eef7ff">Glovo</th><th class="n" style="color:var(--bolt);background:#eef7ff">Bolt</th>
     </tr></thead><tbody>`;
+  let Tgq1=0,Tga=0,Tgy=0,Tbq1=0,Tba=0,Tby=0,Ttq1=0,Tta=0,Tty=0,TglA=0,TglY=0,TblA=0,TblY=0;
   cities.forEach(c=>{
     const bp=this.pct(c.by,c.ty);
+    Tgq1+=c.gq1;Tga+=c.ga;Tgy+=c.gy;Tbq1+=c.bq1;Tba+=c.ba;Tby+=c.by;Ttq1+=c.tq1;Tta+=c.ta;Tty+=c.ty;
+    TglA+=c.glocsA;TglY+=c.glocsY;TblA+=c.blocsA;TblY+=c.blocsY;
     h+=`<tr style="border-bottom:1px solid var(--border)">
       <td style="padding-left:40px;font-weight:600">${this.esc(c.city)}</td>
       <td class="n gt">${this.fmtN(c.gq1)}</td><td class="n gt">${this.fmtN(c.ga)}</td><td class="n gt" style="font-weight:700">${this.fmtN(c.gy)}</td>
       <td class="n bt">${this.fmtN(c.bq1)}</td><td class="n bt">${this.fmtN(c.ba)}</td><td class="n bt" style="font-weight:700">${this.fmtN(c.by)}</td>
       <td class="n" style="color:var(--ts)">${this.fmtN(c.tq1)}</td><td class="n" style="color:var(--ts)">${this.fmtN(c.ta)}</td><td class="n" style="font-weight:700">${this.fmtN(c.ty)}</td>
       <td class="n" style="font-weight:700;color:${bp>50?'var(--bolt)':'var(--glovo)'}">${bp.toFixed(1)}%</td>
-      <td class="n" style="color:var(--bolt)">${c.blocsY}/${c.glocsY}</td>
+      <td class="n gt" style="background:#eef7ff">${c.glocsA}→<b>${c.glocsY}</b></td><td class="n bt" style="background:#eef7ff">${c.blocsA}→<b>${c.blocsY}</b></td>
       <td>${this.bar(this.pct(c.gy,c.ty),bp)}</td>
     </tr>`;
   });
-  if(!cities.length) h+=`<tr><td colspan="13" style="padding:10px 40px;color:var(--ts)">Немає даних по містах для цього партнера.</td></tr>`;
+  if(!cities.length) h+=`<tr><td colspan="15" style="padding:10px 40px;color:var(--ts)">Немає даних по містах для цього партнера.</td></tr>`;
+  else h+=`<tr style="border-top:2px solid var(--border);background:#f8fafc;font-weight:700">
+      <td style="padding-left:40px">Разом (${cities.length} міст)</td>
+      <td class="n gt">${this.fmtN(Tgq1)}</td><td class="n gt">${this.fmtN(Tga)}</td><td class="n gt">${this.fmtN(Tgy)}</td>
+      <td class="n bt">${this.fmtN(Tbq1)}</td><td class="n bt">${this.fmtN(Tba)}</td><td class="n bt">${this.fmtN(Tby)}</td>
+      <td class="n">${this.fmtN(Ttq1)}</td><td class="n">${this.fmtN(Tta)}</td><td class="n">${this.fmtN(Tty)}</td>
+      <td class="n">${this.pct(Tby,Tty).toFixed(1)}%</td>
+      <td class="n gt" style="background:#eef7ff">${TglA}→${TglY}</td><td class="n bt" style="background:#eef7ff">${TblA}→${TblY}</td>
+      <td></td>
+    </tr>`;
   h+=`</tbody></table></td>`;
   detailRow.innerHTML=h;
   detailRow.style.display='';
@@ -775,7 +806,7 @@ renderTopCity(){
     h+=`<div style="background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden">
       <div style="padding:10px 16px;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff">
         <strong>${this.esc(c.city)}</strong>
-        <span style="float:right;font-size:10px;opacity:.8">B ${c.byp.toFixed(1)}% May | ${this.fmtN(c.ty)} May</span>
+        <span style="float:right;font-size:10px;opacity:.8">B ${c.byp.toFixed(1)}% May | ${this.fmtN(c.ty)} зам. | 📍G ${this.fmtN(c.glocsY)}/B ${this.fmtN(c.blocsY)} лок.</span>
       </div><table class="ctab"><thead><tr><th>#</th><th>Partner</th><th class="n" title="Всього замовлень Jan–Mar (G+B)">Q1</th><th class="n">Apr</th><th class="n" style="font-weight:800">May</th><th class="n bt">B% May</th></tr></thead><tbody>`;
     stores.forEach((s,i)=>{h+=`<tr><td style="color:var(--ts)">${i+1}</td><td class="pn" style="max-width:155px">${this.esc(s.brand)}</td><td class="n" style="color:var(--ts)">${this.fmtN(s.tq1)}</td><td class="n">${this.fmtN(s.ta)}</td><td class="n" style="font-weight:700">${this.fmtN(s.ty)}</td><td class="n bt" style="font-weight:700">${s.byp.toFixed(1)}%</td></tr>`;});
     h+=`</tbody></table></div>`;
@@ -1024,6 +1055,7 @@ renderInsights(){
     <p>May vs April: Bolt <strong>${this.fmtN(k.by)}</strong> (${this.ds(k.by-k.ba)}${this.pct(k.by-k.ba,k.ba).toFixed(1)}%) | Glovo <strong>${this.fmtN(k.gy)}</strong> (${this.ds(k.gy-k.ga)}${this.pct(k.gy-k.ga,k.ga).toFixed(1)}%)</p>
     <ul>
       <li>Total market: ${this.fmtN(k.tj)} → ${this.fmtN(k.tf)} → ${this.fmtN(k.tm)} → ${this.fmtN(k.ta)} → <strong>${this.fmtN(k.ty)}</strong> (May) | ${this.ds(k.ty-k.tj)}${this.pct(k.ty-k.tj,k.tj).toFixed(1)}% Jan→May</li>
+      <li>Total locations (May, активні): <strong style="color:var(--glovo)">${this.fmtN(k.glocsY)}</strong> Glovo · <strong style="color:var(--bolt)">${this.fmtN(k.blocsY)}</strong> Bolt (Apr: G ${this.fmtN(k.glocsA)} · B ${this.fmtN(k.blocsA)})</li>
       <li>${bGrow} partners increased Bolt share Apr→May | ${bDecl} declined (партнери з ≥1000 зам. і в Apr, і в May)</li>
       <li>${newMayBolt} partners new to Bolt in May only (not in Jan–Apr)</li>
     </ul>
@@ -1074,8 +1106,8 @@ renderShopper(){
   const allBrands=this.aggBrands(data);
   // Shopper missions = retail partners (type 't')
   const shopBrands=this.filter==='r'?allBrands:allBrands.filter(b=>b.type==='t');
-  const st={gj:0,gf:0,gm:0,ga:0,gy:0,bj:0,bf:0,bm:0,ba:0,by:0,tj:0,tf:0,tm:0,ta:0,ty:0};
-  shopBrands.forEach(b=>{st.gj+=b.gj;st.gf+=b.gf;st.gm+=b.gm;st.ga+=(b.ga||0);st.gy+=(b.gy||0);st.bj+=b.bj;st.bf+=b.bf;st.bm+=b.bm;st.ba+=(b.ba||0);st.by+=(b.by||0);st.tj+=b.tj;st.tf+=b.tf;st.tm+=b.tm;st.ta+=(b.ta||0);st.ty+=(b.ty||0);});
+  const st={gj:0,gf:0,gm:0,ga:0,gy:0,bj:0,bf:0,bm:0,ba:0,by:0,tj:0,tf:0,tm:0,ta:0,ty:0,glY:0,blY:0,glA:0,blA:0};
+  shopBrands.forEach(b=>{st.gj+=b.gj;st.gf+=b.gf;st.gm+=b.gm;st.ga+=(b.ga||0);st.gy+=(b.gy||0);st.bj+=b.bj;st.bf+=b.bf;st.bm+=b.bm;st.ba+=(b.ba||0);st.by+=(b.by||0);st.tj+=b.tj;st.tf+=b.tf;st.tm+=b.tm;st.ta+=(b.ta||0);st.ty+=(b.ty||0);st.glY+=(b.glocsY||0);st.blY+=(b.blocsY||0);st.glA+=(b.glocs||0);st.blA+=(b.blocs||0);});
   const mk={ty:0,gy:0,by:0};
   allBrands.forEach(b=>{mk.ty+=(b.ty||0);mk.gy+=(b.gy||0);mk.by+=(b.by||0);});
   const shopShare=mk.ty>0?(st.ty/mk.ty*100):0;
@@ -1140,6 +1172,7 @@ renderShopper(){
           <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(mkMoM)}"><b>MoM:</b> ${pf(mkMoM)}</span>
           <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${shopShare.toFixed(1)}% ринку</span>
         </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій May: <b style="color:var(--glovo)">${this.fmtN(st.glY)}</b> Glovo · <b style="color:var(--bolt)">${this.fmtN(st.blY)}</b> Bolt</div>
       </div>
       <div class="ec" style="border-top:4px solid var(--bolt)">
         <h3 style="color:var(--bolt)">⚡ Bolt Shopper</h3>
@@ -1156,6 +1189,7 @@ renderShopper(){
           <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(bMoM)}"><b>MoM:</b> ${pf(bMoM)}</span>
           <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${bShopShare.toFixed(1)}% від Bolt</span>
         </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій May: <b style="color:var(--bolt)">${this.fmtN(st.blY)}</b> Bolt <span class="${dc(st.blY-st.blA)}">(${this.ds(st.blY-st.blA)}${this.fmtN(Math.abs(st.blY-st.blA))} vs Apr)</span></div>
       </div>
       <div class="ec" style="border-top:4px solid var(--glovo)">
         <h3 style="color:var(--glovo)">🛵 Glovo Shopper</h3>
@@ -1172,6 +1206,7 @@ renderShopper(){
           <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(gMoM)}"><b>MoM:</b> ${pf(gMoM)}</span>
           <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${gShopShare.toFixed(1)}% від Glovo</span>
         </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій May: <b style="color:var(--glovo)">${this.fmtN(st.glY)}</b> Glovo <span class="${dc(st.glY-st.glA)}">(${this.ds(st.glY-st.glA)}${this.fmtN(Math.abs(st.glY-st.glA))} vs Apr)</span></div>
       </div>
     </div>
     <div class="card">
