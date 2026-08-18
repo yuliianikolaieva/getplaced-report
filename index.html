@@ -470,9 +470,9 @@ renderCities(){
   let h=`<div class="card"><div class="card-hd"><h2>Glovo vs Bolt by City — Jan–Jul 2026</h2>
     <span style="font-size:11px;color:var(--ts)">▶ Клік по місту — Top 15 партнерів з локаціями (Jul)</span></div>
   <div class="legend"><span><span class="dot" style="background:var(--glovo)"></span>Glovo</span><span><span class="dot" style="background:var(--bolt)"></span>Bolt</span><span style="color:var(--ts)">Q1 = Jan–Mar · Q2 = Apr–Jun · Jul = Q3 start</span></div>
-  <div style="overflow-x:auto"><table><thead><tr>
-    <th rowspan="2" style="width:24px"></th>
-    <th rowspan="2">City</th>
+  <div class="stw"><table><thead><tr>
+    <th rowspan="2" class="st1" style="width:28px"></th>
+    <th rowspan="2" class="st2 st-end" style="min-width:120px">City</th>
     <th colspan="7" style="text-align:center;color:var(--glovo);background:#fff4ef">Glovo Orders</th>
     <th colspan="7" style="text-align:center;color:var(--bolt)">Bolt Orders</th>
     <th colspan="7" style="text-align:center">Bolt MS %</th>
@@ -492,8 +492,8 @@ renderCities(){
     const gOL=r.glocsL>0?Math.round(r.gl/r.glocsL):'—';
     const bOL=r.blocsL>0?Math.round(r.bl/r.blocsL):'—';
     h+=`<tr class="city-row" data-city="${this.esc(r.city)}" style="cursor:pointer;user-select:none">
-      <td style="color:var(--pri);font-weight:700;text-align:center;font-size:11px">▶</td>
-      <td class="pn">${this.esc(r.city)}</td>
+      <td class="st1" style="color:var(--pri);font-weight:700;text-align:center;font-size:11px">▶</td>
+      <td class="pn st2 st-end">${this.esc(r.city)}</td>
       <td class="n gt">${this.fmtN(r.gj)}</td><td class="n gt">${this.fmtN(r.gf)}</td><td class="n gt">${this.fmtN(r.gm)}</td><td class="n gt">${this.fmtN(r.ga)}</td><td class="n gt">${this.fmtN(r.gy)}</td><td class="n gt">${this.fmtN(r.gn)}</td><td class="n gt" style="font-weight:700">${this.fmtN(r.gl)}</td>
       <td class="n bt">${this.fmtN(r.bj)}</td><td class="n bt">${this.fmtN(r.bf)}</td><td class="n bt">${this.fmtN(r.bm)}</td><td class="n bt">${this.fmtN(r.ba)}</td><td class="n bt">${this.fmtN(r.by)}</td><td class="n bt">${this.fmtN(r.bn)}</td><td class="n bt" style="font-weight:700">${this.fmtN(r.bl)}</td>
       <td class="n bt">${r.bjp.toFixed(1)}%</td><td class="n bt">${r.bfp.toFixed(1)}%</td><td class="n bt">${r.bmp.toFixed(1)}%</td><td class="n bt">${r.bap.toFixed(1)}%</td><td class="n bt">${r.byp.toFixed(1)}%</td><td class="n bt">${r.bnp.toFixed(1)}%</td>
