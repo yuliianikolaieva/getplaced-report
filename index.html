@@ -288,7 +288,48 @@ renderKPIs(){
     <div style="margin-top:3px">${locBadge('Jul',k.glocsL,'var(--glovo)')}${locBadge('Jun',k.glocsN,'var(--glovo)')}${locBadge('May',k.glocsY,'var(--glovo)')}</div>`;
   const locBlt=`<div style="margin-top:10px;font-size:10px;color:var(--ts);font-weight:700">Локацій Bolt (активні)</div>
     <div style="margin-top:3px">${locBadge('Jul',k.blocsL,'var(--bolt)')}${locBadge('Jun',k.blocsN,'var(--bolt)')}${locBadge('May',k.blocsY,'var(--bolt)')}</div>`;
+  // Retail MS = platform share of TOTAL RETAIL (not of all platform GMV)
+  const rG={j:kt.gj,f:kt.gf,m:kt.gm,a:kt.ga||0,y:kt.gy||0,n:kt.gn||0,l:kt.gl||0};
+  const rB={j:kt.bj,f:kt.bf,m:kt.bm,a:kt.ba||0,y:kt.by||0,n:kt.bn||0,l:kt.bl||0};
+  const rMonths=['j','f','m','a','y','n','l'], rLabs=['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const rMs=rMonths.map(p=>{
+    const tot=(rG[p]||0)+(rB[p]||0);
+    return {tot,g:rG[p]||0,b:rB[p]||0,gp:this.pct(rG[p]||0,tot),bp:this.pct(rB[p]||0,tot)};
+  });
+  const rQ1g=rG.j+rG.f+rG.m, rQ1b=rB.j+rB.f+rB.m, rQ1t=rQ1g+rQ1b;
+  const rQ2g=rG.a+rG.y+rG.n, rQ2b=rB.a+rB.y+rB.n, rQ2t=rQ2g+rQ2b;
+  const rQ1bp=this.pct(rQ1b,rQ1t), rQ2bp=this.pct(rQ2b,rQ2t);
+  const rJul=rMs[6], rJun=rMs[5];
+  const retailMsCard=`<div class="kpi-card" style="border-top:4px solid #7c3aed;margin-bottom:14px">
+    <div class="kpi-hd" style="color:#7c3aed">Retail — частка Glovo / Bolt від Total Retail
+      <span style="font-size:11px;font-weight:500;color:var(--ts);margin-left:8px">база = лише retail (не food+retail)</span>
+      <span class="${this.dc(rJul.bp-rJun.bp)}" style="font-size:11px;margin-left:8px">Jul Bolt ${rJul.bp.toFixed(1)}% ${this.ds(rJul.bp-rJun.bp)}${(rJul.bp-rJun.bp).toFixed(1)}pp</span>
+    </div>
+    <div class="kpi-body">
+      <div style="font-size:11px;color:var(--ts);margin-bottom:8px">Jul Total Retail <b>${this.fmtN(rJul.tot)}</b> · Glovo <b style="color:var(--glovo)">${this.fmtN(rJul.g)}</b> (${rJul.gp.toFixed(1)}%) · Bolt <b style="color:var(--bolt)">${this.fmtN(rJul.b)}</b> (${rJul.bp.toFixed(1)}%)</div>
+      <div class="pbar" style="height:10px;margin-bottom:10px"><div class="g" style="width:${rJul.gp}%"></div><div class="b" style="width:${rJul.bp}%"></div></div>
+      <div class="kpi-months" style="grid-template-columns:repeat(7,1fr)">
+        ${rMs.map((m,i)=>{
+          const prev=i>0?rMs[i-1]:null;
+          const dB=prev!==null?m.bp-prev.bp:null;
+          const hi=i===6;
+          return `<div class="kpi-month"${hi?' style="background:#e0f7fa"':''}>
+            <div class="lb">${rLabs[i]}</div>
+            <div class="vl" style="font-size:12px;color:var(--glovo)">${m.gp.toFixed(1)}%</div>
+            <div class="vl" style="font-size:12px;color:var(--bolt);font-weight:800">${m.bp.toFixed(1)}%</div>
+            <div style="font-size:9px;color:var(--ts)">${this.fmtN(m.tot)}</div>
+            ${dB===null?'<div class="ch dz">–</div>':`<div class="ch ${this.dc(dB)}">${this.ds(dB)}${dB.toFixed(1)}pp</div>`}
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="kpi-months" style="grid-template-columns:1fr 1fr;margin-top:8px">
+        <div class="kpi-month"><div class="lb">Q1 Retail Bolt%</div><div class="vl" style="font-size:15px;color:var(--bolt)">${rQ1bp.toFixed(1)}%</div><div class="ch dz" style="font-size:9px">Σ ${this.fmtN(rQ1t)} · G ${this.pct(rQ1g,rQ1t).toFixed(1)}%</div></div>
+        <div class="kpi-month" style="background:#eef2ff"><div class="lb">Q2 Retail Bolt%</div><div class="vl" style="font-size:15px;color:var(--bolt)">${rQ2bp.toFixed(1)}%</div><div class="ch ${this.dc(rQ2bp-rQ1bp)}" style="font-size:9px">${this.ds(rQ2bp-rQ1bp)}${(rQ2bp-rQ1bp).toFixed(1)}pp · Σ ${this.fmtN(rQ2t)}</div></div>
+      </div>
+    </div>
+  </div>`;
   document.getElementById('kpiBox').innerHTML=`
+    ${retailMsCard}
     <div class="kpi-grid">
       ${mkCard('Total Market','var(--pri)',k.tj,k.tf,k.tm,k.ta,k.ty,k.tn,k.tl,bjp,bfp,bmp,bap2,byp,bnp,blp,glp,blp,true,k,locTot)}
       ${mkCard('Glovo','var(--glovo)',k.gj,k.gf,k.gm,k.ga,k.gy,k.gn,k.gl,gjp,gfp,gmp,gap2,gyp,gnp,glp,glp,blp,false,k,locGlv)}
