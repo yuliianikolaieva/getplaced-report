@@ -883,6 +883,11 @@ renderMovers(){
     ${mkT('Bolt — Biggest Losses (Jul&rarr;Aug)','var(--red)',bL,bv,r=>(r.bs||0)-(r.bl||0))}
     ${mkT('Bolt MS — Most Improved (Jul&rarr;Aug)','var(--bolt)',ms,(r,p)=>parseFloat((p==='a'?r.bap:p==='y'?r.byp:p==='n'?r.bnp:p==='l'?r.blp:r.bsp).toFixed(1)),r=>+(r.bsp-r.blp).toFixed(2))}
   </div>`;
+  h+=`<div style="margin-top:28px;padding-top:22px;border-top:3px solid var(--pri)">
+    <h2 style="font-size:17px;font-weight:800;margin:0 0 4px;color:var(--pri)">🛒 Retail Shopper Mission</h2>
+    <p style="font-size:12px;color:var(--ts);margin:0 0 14px">Спочатку — чи зростає/падає shopper сегмент загалом; нижче — топ партнерів.</p>
+    ${this.shopperMissionSummaryHtml(shopBrands,brands,{showBanner:false})}
+  </div>`;
   h+=this.shopperPartnerDynamicsHtml(shopBrands,stTs,{limit:40,showSearch:false,title:'Retail shopper — топ-40 за серпнем (split G/B + MoM)'});
   document.getElementById('moversBox').innerHTML=h;
 },
@@ -1195,6 +1200,104 @@ bindSort(tbodyId){
     });
   });
 },
+shopperMissionSummaryHtml(shopBrands,marketBrands,opts){
+  const st={gj:0,gf:0,gm:0,ga:0,gy:0,gn:0,gl:0,gs:0,bj:0,bf:0,bm:0,ba:0,by:0,bn:0,bl:0,bs:0,tj:0,tf:0,tm:0,ta:0,ty:0,tn:0,tl:0,ts:0,glL:0,blL:0,glS:0,blS:0};
+  shopBrands.forEach(b=>{st.gj+=b.gj;st.gf+=b.gf;st.gm+=b.gm;st.ga+=(b.ga||0);st.gy+=(b.gy||0);st.gn+=(b.gn||0);st.gl+=(b.gl||0);st.gs+=(b.gs||0);st.bj+=b.bj;st.bf+=b.bf;st.bm+=b.bm;st.ba+=(b.ba||0);st.by+=(b.by||0);st.bn+=(b.bn||0);st.bl+=(b.bl||0);st.bs+=(b.bs||0);st.tj+=b.tj;st.tf+=b.tf;st.tm+=b.tm;st.ta+=(b.ta||0);st.ty+=(b.ty||0);st.tn+=(b.tn||0);st.tl+=(b.tl||0);st.ts+=(b.ts||0);st.glL+=(b.glocsL||0);st.blL+=(b.blocsL||0);st.glS+=(b.glocsS||0);st.blS+=(b.blocsS||0);});
+  const mk={ts:0,gs:0,bs:0};
+  (marketBrands||shopBrands).forEach(b=>{mk.ts+=(b.ts||0);mk.gs+=(b.gs||0);mk.bs+=(b.bs||0);});
+  const shopShare=mk.ts>0?(st.ts/mk.ts*100):0;
+  const gShopShare=mk.gs>0?(st.gs/mk.gs*100):0;
+  const bShopShare=mk.bs>0?(st.bs/mk.bs*100):0;
+  const mkMoM=st.tl>0?((st.ts-st.tl)/st.tl*100):0;
+  const gMoM=st.gl>0?((st.gs-st.gl)/st.gl*100):0;
+  const bMoM=st.bl>0?((st.bs-st.bl)/st.bl*100):0;
+  const mkAY=st.ta>0?((st.ty-st.ta)/st.ta*100):0;
+  const mkYN=st.ty>0?((st.tn-st.ty)/st.ty*100):0;
+  const mkNL=st.tn>0?((st.tl-st.tn)/st.tn*100):0;
+  const mkLS=st.tl>0?((st.ts-st.tl)/st.tl*100):0;
+  const mkMA=st.tm>0?((st.ta-st.tm)/st.tm*100):0;
+  const mkJF=st.tj>0?((st.tf-st.tj)/st.tj*100):0;
+  const mkFM=st.tf>0?((st.tm-st.tf)/st.tf*100):0;
+  const bPctAug=st.ts>0?(st.bs/st.ts*100):0;
+  const bPctJul=st.tl>0?(st.bl/st.tl*100):0;
+  const janAug=st.tj>0?((st.ts-st.tj)/st.tj*100):0;
+  const dc=v=>v>0?'dp':v<0?'dn':'dz';
+  const pf=v=>`${v>=0?'+':''}${v.toFixed(1)}%`;
+  const ch=(v)=>v!==0?`<span class="${dc(v)}" style="font-size:10px;margin-left:3px">${pf(v)}</span>`:'';
+  const catLabel=opts&&opts.catLabel?opts.catLabel:(this.filter==='all'?'Всі категорії':this.filter==='t'?'Retail тільки':'Restaurants тільки');
+  const showBanner=!opts||opts.showBanner!==false;
+  const banner=showBanner?`<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 16px;font-size:12px;color:#0c4a6e;margin-bottom:16px">
+      📊 <strong>Shopper Missions</strong> — ритейл-партнери де пікер збирає замовлення. Фільтр: <strong>${catLabel}</strong> · Jan–Aug 2026 · <strong>${shopBrands.length}</strong> партнерів
+    </div>`:'';
+  const verdict=mkMoM>=0?`зростає <span class="dp">${pf(mkMoM)}</span> MoM`:`падає <span class="dn">${pf(mkMoM)}</span> MoM`;
+  const headline=`<div style="background:linear-gradient(90deg,#f0f9ff,#f0fdf4);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:13px">
+    <strong>Shopper mission загалом ${verdict}</strong> (Jul ${this.fmtN(st.tl)} → Aug <strong>${this.fmtN(st.ts)}</strong>).
+    Bolt% сегменту: ${bPctJul.toFixed(1)}% → <strong>${bPctAug.toFixed(1)}%</strong> <span class="${dc(bPctAug-bPctJul)}">(${bPctAug-bPctJul>=0?'+':''}${(bPctAug-bPctJul).toFixed(1)}pp)</span>.
+    Jan→Aug total: <span class="${dc(janAug)}">${pf(janAug)}</span> · ${shopShare.toFixed(1)}% від total market (Aug).
+  </div>`;
+  return `${banner}${headline}<div class="eg">
+      <div class="ec" style="border-top:4px solid var(--pri)">
+        <h3 style="color:var(--pri)">Total Shopper</h3>
+        <div style="font-size:24px;font-weight:900;color:var(--pri);margin:4px 0">${this.fmtN(st.ts)}</div>
+        <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jan</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tj)}</div></div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Feb</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tf)}</div>${ch(mkJF)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Mar</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tm)}</div>${ch(mkFM)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Apr</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ta)}</div>${ch(mkMA)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">May</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ty)}</div>${ch(mkAY)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jun</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tn)}</div>${ch(mkYN)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jul</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tl)}</div>${ch(mkNL)}</div>
+          <div style="background:#e0f2fe;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Aug</div><div style="font-size:12px;font-weight:800;color:var(--pri)">${this.fmtN(st.ts)}</div>${ch(mkLS)}</div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(mkMoM)}"><b>MoM:</b> ${pf(mkMoM)}</span>
+          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${shopShare.toFixed(1)}% ринку</span>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій Aug: <b style="color:var(--glovo)">${this.fmtN(st.glS)}</b> Glovo · <b style="color:var(--bolt)">${this.fmtN(st.blS)}</b> Bolt</div>
+      </div>
+      <div class="ec" style="border-top:4px solid var(--bolt)">
+        <h3 style="color:var(--bolt)">⚡ Bolt Shopper</h3>
+        <div style="font-size:24px;font-weight:900;color:var(--bolt);margin:4px 0">${this.fmtN(st.bs)}</div>
+        <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jan</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bj)}</div></div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Feb</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bf)}</div>${ch(st.bj>0?((st.bf-st.bj)/st.bj*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Mar</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bm)}</div>${ch(st.bf>0?((st.bm-st.bf)/st.bf*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Apr</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ba)}</div>${ch(st.bm>0?((st.ba-st.bm)/st.bm*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">May</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.by)}</div>${ch(st.ba>0?((st.by-st.ba)/st.ba*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jun</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bn)}</div>${ch(st.by>0?((st.bn-st.by)/st.by*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jul</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bl)}</div>${ch(st.bn>0?((st.bl-st.bn)/st.bn*100):0)}</div>
+          <div style="background:#f0fdf4;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Aug</div><div style="font-size:12px;font-weight:800;color:var(--bolt)">${this.fmtN(st.bs)}</div>${ch(bMoM)}</div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(bMoM)}"><b>MoM:</b> ${pf(bMoM)}</span>
+          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${bShopShare.toFixed(1)}% від Bolt</span>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій Aug: <b style="color:var(--bolt)">${this.fmtN(st.blS)}</b> Bolt <span class="${dc(st.blS-st.blL)}">(${this.ds(st.blS-st.blL)}${this.fmtN(Math.abs(st.blS-st.blL))} vs Jul)</span></div>
+      </div>
+      <div class="ec" style="border-top:4px solid var(--glovo)">
+        <h3 style="color:var(--glovo)">🛵 Glovo Shopper</h3>
+        <div style="font-size:24px;font-weight:900;color:var(--glovo);margin:4px 0">${this.fmtN(st.gs)}</div>
+        <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jan</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gj)}</div></div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Feb</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gf)}</div>${ch(st.gj>0?((st.gf-st.gj)/st.gj*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Mar</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gm)}</div>${ch(st.gf>0?((st.gm-st.gf)/st.gf*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Apr</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ga)}</div>${ch(st.gm>0?((st.ga-st.gm)/st.gm*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">May</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gy)}</div>${ch(st.ga>0?((st.gy-st.ga)/st.ga*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jun</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gn)}</div>${ch(st.gy>0?((st.gn-st.gy)/st.gy*100):0)}</div>
+          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jul</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gl)}</div>${ch(st.gn>0?((st.gl-st.gn)/st.gn*100):0)}</div>
+          <div style="background:#fff4ef;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Aug</div><div style="font-size:12px;font-weight:800;color:var(--glovo)">${this.fmtN(st.gs)}</div>${ch(gMoM)}</div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(gMoM)}"><b>MoM:</b> ${pf(gMoM)}</span>
+          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${gShopShare.toFixed(1)}% від Glovo</span>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій Aug: <b style="color:var(--glovo)">${this.fmtN(st.glS)}</b> Glovo <span class="${dc(st.glS-st.glL)}">(${this.ds(st.glS-st.glL)}${this.fmtN(Math.abs(st.glS-st.glL))} vs Jul)</span></div>
+      </div>
+    </div>`;
+},
 shopperPartnerDynamicsHtml(shopBrands,stTs,opts){
   const limit=opts&&opts.limit?opts.limit:0;
   const showSearch=!opts||opts.showSearch!==false;
@@ -1263,27 +1366,8 @@ renderShopper(){
   const data=this.getFiltered();
   const allBrands=this.aggBrands(data);
   const shopBrands=this.filter==='r'?allBrands:allBrands.filter(b=>b.type==='t');
-  const st={gj:0,gf:0,gm:0,ga:0,gy:0,gn:0,gl:0,gs:0,bj:0,bf:0,bm:0,ba:0,by:0,bn:0,bl:0,bs:0,tj:0,tf:0,tm:0,ta:0,ty:0,tn:0,tl:0,ts:0,glY:0,blY:0,glN:0,blN:0,glL:0,blL:0,glS:0,blS:0};
-  shopBrands.forEach(b=>{st.gj+=b.gj;st.gf+=b.gf;st.gm+=b.gm;st.ga+=(b.ga||0);st.gy+=(b.gy||0);st.gn+=(b.gn||0);st.gl+=(b.gl||0);st.gs+=(b.gs||0);st.bj+=b.bj;st.bf+=b.bf;st.bm+=b.bm;st.ba+=(b.ba||0);st.by+=(b.by||0);st.bn+=(b.bn||0);st.bl+=(b.bl||0);st.bs+=(b.bs||0);st.tj+=b.tj;st.tf+=b.tf;st.tm+=b.tm;st.ta+=(b.ta||0);st.ty+=(b.ty||0);st.tn+=(b.tn||0);st.tl+=(b.tl||0);st.ts+=(b.ts||0);st.glY+=(b.glocsY||0);st.blY+=(b.blocsY||0);st.glN+=(b.glocsN||0);st.blN+=(b.blocsN||0);st.glL+=(b.glocsL||0);st.blL+=(b.blocsL||0);st.glS+=(b.glocsS||0);st.blS+=(b.blocsS||0);});
-  const mk={tn:0,gn:0,bn:0,tl:0,gl:0,bl:0,ts:0,gs:0,bs:0};
-  allBrands.forEach(b=>{mk.tn+=(b.tn||0);mk.gn+=(b.gn||0);mk.bn+=(b.bn||0);mk.tl+=(b.tl||0);mk.gl+=(b.gl||0);mk.bl+=(b.bl||0);mk.ts+=(b.ts||0);mk.gs+=(b.gs||0);mk.bs+=(b.bs||0);});
-  const shopShare=mk.ts>0?(st.ts/mk.ts*100):0;
-  const gShopShare=mk.gs>0?(st.gs/mk.gs*100):0;
-  const bShopShare=mk.bs>0?(st.bs/mk.bs*100):0;
-  const mkMoM=st.tl>0?((st.ts-st.tl)/st.tl*100):0;
-  const gMoM=st.gl>0?((st.gs-st.gl)/st.gl*100):0;
-  const bMoM=st.bl>0?((st.bs-st.bl)/st.bl*100):0;
-  const mkAY=st.ta>0?((st.ty-st.ta)/st.ta*100):0;
-  const mkYN=st.ty>0?((st.tn-st.ty)/st.ty*100):0;
-  const mkNL=st.tn>0?((st.tl-st.tn)/st.tn*100):0;
-  const mkLS=st.tl>0?((st.ts-st.tl)/st.tl*100):0;
-  const mkMA=st.tm>0?((st.ta-st.tm)/st.tm*100):0;
-  const mkJF=st.tj>0?((st.tf-st.tj)/st.tj*100):0;
-  const mkFM=st.tf>0?((st.tm-st.tf)/st.tf*100):0;
-  const dc=v=>v>0?'dp':v<0?'dn':'dz';
-  const pf=v=>`${v>=0?'+':''}${v.toFixed(1)}%`;
-  const ch=(v)=>v!==0?`<span class="${dc(v)}" style="font-size:10px;margin-left:3px">${pf(v)}</span>`:'';
   const catLabel=this.filter==='all'?'Всі категорії':this.filter==='t'?'Retail тільки':'Restaurants тільки';
+  const stTs=shopBrands.reduce((s,b)=>s+(b.ts||0),0);
   const segMap={};
   shopBrands.forEach(b=>{
     const s=b.seg||'Other Retail';
@@ -1305,73 +1389,8 @@ renderShopper(){
     bPctF:v.tf>0?(v.bf/v.tf*100):0,
     bPctJ:v.tj>0?(v.bj/v.tj*100):0
   })).sort((a,b)=>b.ts-a.ts);
-  let h=`
-    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 16px;font-size:12px;color:#0c4a6e;margin-bottom:16px">
-      📊 <strong>Shopper Missions</strong> — ритейл-партнери де пікер збирає замовлення. Фільтр: <strong>${catLabel}</strong> · Jan–Aug 2026
-    </div>
-    <div class="eg">
-      <div class="ec" style="border-top:4px solid var(--pri)">
-        <h3 style="color:var(--pri)">Total Shopper</h3>
-        <div style="font-size:24px;font-weight:900;color:var(--pri);margin:4px 0">${this.fmtN(st.ts)}</div>
-        <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
-        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jan</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tj)}</div></div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Feb</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tf)}</div>${ch(mkJF)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Mar</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tm)}</div>${ch(mkFM)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Apr</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ta)}</div>${ch(mkMA)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">May</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ty)}</div>${ch(mkAY)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jun</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tn)}</div>${ch(mkYN)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jul</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.tl)}</div>${ch(mkNL)}</div>
-          <div style="background:#e0f2fe;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Aug</div><div style="font-size:12px;font-weight:800;color:var(--pri)">${this.fmtN(st.ts)}</div>${ch(mkLS)}</div>
-        </div>
-        <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
-          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(mkMoM)}"><b>MoM:</b> ${pf(mkMoM)}</span>
-          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${shopShare.toFixed(1)}% ринку</span>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій Aug: <b style="color:var(--glovo)">${this.fmtN(st.glS)}</b> Glovo · <b style="color:var(--bolt)">${this.fmtN(st.blS)}</b> Bolt</div>
-      </div>
-      <div class="ec" style="border-top:4px solid var(--bolt)">
-        <h3 style="color:var(--bolt)">⚡ Bolt Shopper</h3>
-        <div style="font-size:24px;font-weight:900;color:var(--bolt);margin:4px 0">${this.fmtN(st.bs)}</div>
-        <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
-        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jan</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bj)}</div></div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Feb</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bf)}</div>${ch(st.bj>0?((st.bf-st.bj)/st.bj*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Mar</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bm)}</div>${ch(st.bf>0?((st.bm-st.bf)/st.bf*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Apr</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ba)}</div>${ch(st.bm>0?((st.ba-st.bm)/st.bm*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">May</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.by)}</div>${ch(st.ba>0?((st.by-st.ba)/st.ba*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jun</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bn)}</div>${ch(st.by>0?((st.bn-st.by)/st.by*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jul</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.bl)}</div>${ch(st.bn>0?((st.bl-st.bn)/st.bn*100):0)}</div>
-          <div style="background:#f0fdf4;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Aug</div><div style="font-size:12px;font-weight:800;color:var(--bolt)">${this.fmtN(st.bs)}</div>${ch(bMoM)}</div>
-        </div>
-        <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
-          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(bMoM)}"><b>MoM:</b> ${pf(bMoM)}</span>
-          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${bShopShare.toFixed(1)}% від Bolt</span>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій Aug: <b style="color:var(--bolt)">${this.fmtN(st.blS)}</b> Bolt <span class="${dc(st.blS-st.blL)}">(${this.ds(st.blS-st.blL)}${this.fmtN(Math.abs(st.blS-st.blL))} vs Jul)</span></div>
-      </div>
-      <div class="ec" style="border-top:4px solid var(--glovo)">
-        <h3 style="color:var(--glovo)">🛵 Glovo Shopper</h3>
-        <div style="font-size:24px;font-weight:900;color:var(--glovo);margin:4px 0">${this.fmtN(st.gs)}</div>
-        <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
-        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jan</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gj)}</div></div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Feb</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gf)}</div>${ch(st.gj>0?((st.gf-st.gj)/st.gj*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Mar</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gm)}</div>${ch(st.gf>0?((st.gm-st.gf)/st.gf*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Apr</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.ga)}</div>${ch(st.gm>0?((st.ga-st.gm)/st.gm*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">May</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gy)}</div>${ch(st.ga>0?((st.gy-st.ga)/st.ga*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jun</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gn)}</div>${ch(st.gy>0?((st.gn-st.gy)/st.gy*100):0)}</div>
-          <div style="background:#f8fafc;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Jul</div><div style="font-size:12px;font-weight:700">${this.fmtN(st.gl)}</div>${ch(st.gn>0?((st.gl-st.gn)/st.gn*100):0)}</div>
-          <div style="background:#fff4ef;border-radius:6px;padding:5px 2px"><div style="font-size:9px;color:var(--ts)">Aug</div><div style="font-size:12px;font-weight:800;color:var(--glovo)">${this.fmtN(st.gs)}</div>${ch(gMoM)}</div>
-        </div>
-        <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
-          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc" class="${dc(gMoM)}"><b>MoM:</b> ${pf(gMoM)}</span>
-          <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#f8fafc;color:var(--ts)">${gShopShare.toFixed(1)}% від Glovo</span>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--ts)">📍 Локацій Aug: <b style="color:var(--glovo)">${this.fmtN(st.glS)}</b> Glovo <span class="${dc(st.glS-st.glL)}">(${this.ds(st.glS-st.glL)}${this.fmtN(Math.abs(st.glS-st.glL))} vs Jul)</span></div>
-      </div>
-    </div>
-    <div class="card">
+  let h=this.shopperMissionSummaryHtml(shopBrands,allBrands,{catLabel});
+  h+=`<div class="card">
       <div class="card-hd">
         <h2>Місії — breakdown по сегментах</h2>
         <span style="font-size:11px;color:var(--ts)">▶ клікни сегмент → топ-15 партнерів · ${shopBrands.length} партнерів · ${this._shopSegs.length} сегментів</span>
@@ -1426,7 +1445,7 @@ renderShopper(){
         </tr>
       </thead><tbody id="shopSegTb">`;
   this._shopSegs.forEach((seg,idx)=>{
-    const sh=st.ts>0?(seg.ts/st.ts*100):0;
+    const sh=stTs>0?(seg.ts/stTs*100):0;
     const mkSpkn=(v)=>{
       if(Math.abs(v)<0.5) return `<span style="color:var(--ts);font-size:9px">≈0%</span>`;
       return `<span class="${dc(v)}" style="font-size:9px;font-weight:700">${pf(v)}</span>`;
@@ -1476,7 +1495,7 @@ renderShopper(){
     </tr>`;
   });
   h+=`</tbody></table></div></div>`;
-  h+=this.shopperPartnerDynamicsHtml(shopBrands,st.ts,{showSearch:true,title:'По кожному партнеру — доля Glovo/Bolt і тренд MoM'});
+  h+=this.shopperPartnerDynamicsHtml(shopBrands,stTs,{showSearch:true,title:'По кожному партнеру — доля Glovo/Bolt і тренд MoM'});
   document.getElementById('shopperBox').innerHTML=h;
 },
 toggleShopperSeg(idx,row){
