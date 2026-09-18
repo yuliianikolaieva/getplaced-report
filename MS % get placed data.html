@@ -883,12 +883,19 @@ renderMovers(){
     ${mkT('Bolt — Biggest Losses (Jul&rarr;Aug)','var(--red)',bL,bv,r=>(r.bs||0)-(r.bl||0))}
     ${mkT('Bolt MS — Most Improved (Jul&rarr;Aug)','var(--bolt)',ms,(r,p)=>parseFloat((p==='a'?r.bap:p==='y'?r.byp:p==='n'?r.bnp:p==='l'?r.blp:r.bsp).toFixed(1)),r=>+(r.bsp-r.blp).toFixed(2))}
   </div>`;
+  const shopSeg=this.getFilteredBrands(shopBrands);
+  const segStTs=shopSeg.reduce((s,b)=>s+(b.ts||0),0);
   h+=`<div style="margin-top:28px;padding-top:22px;border-top:3px solid var(--pri)">
-    <h2 style="font-size:17px;font-weight:800;margin:0 0 4px;color:var(--pri)">🛒 Retail Shopper Mission</h2>
-    <p style="font-size:12px;color:var(--ts);margin:0 0 14px">Спочатку — чи зростає/падає shopper сегмент загалом; нижче — топ партнерів.</p>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+      <div>
+        <h2 style="font-size:17px;font-weight:800;margin:0 0 4px;color:var(--pri)">🛒 Retail Shopper Mission</h2>
+        <p style="font-size:12px;color:var(--ts);margin:0">Обери місію — KPI і таблиця нижче оновляться разом.</p>
+      </div>
+      ${this.shopperMissionFilterSelectHtml(shopBrands,'App.renderMovers()')}
+    </div>
     ${this.shopperMissionSummaryHtml(shopBrands,brands,{showBanner:false})}
   </div>`;
-  h+=this.shopperPartnerDynamicsHtml(shopBrands,stTs,{limit:40,showSearch:false,title:'Retail shopper — топ-40 за серпнем (split G/B + MoM)'});
+  h+=this.shopperPartnerDynamicsHtml(shopBrands,segStTs,{limit:40,showSearch:false,hideMissionFilter:true,title:'Retail shopper — топ-40 за серпнем (split G/B + MoM)'});
   document.getElementById('moversBox').innerHTML=h;
 },
 renderTopCity(){
@@ -1200,14 +1207,28 @@ bindSort(tbodyId){
     });
   });
 },
+shopperMissionFilterSelectHtml(shopBrands,onRender){
+  const segOpts=['all','Restaurant','Fast Food','Pizza','Burgers','Sushi','Shawarma/Kebab','Coffee & Bakery','Alcohol','Grocery','Pharma','Dark Store','Flowers & Gifts','Pets','Tobacco/Vape','Gas Station','Specialty','Toys','Erotic','Beauty','Meat','Other Retail'].map(s=>{
+    const cnt=shopBrands.filter(b=>(b.seg||'SMB')===s).length;
+    const lbl=s==='all'?`Всі місії (${shopBrands.length})`:`${SEG_LABELS[s]||s} (${cnt})`;
+    return `<option value="${s}" ${this.filterSeg===s?'selected':''}>${lbl}</option>`;
+  }).join('');
+  const fn=onRender||'App.render()';
+  return `<label style="font-size:12px;color:var(--ts);display:flex;align-items:center;gap:8px">
+    <span style="font-weight:700;color:var(--pri)">Shopper місія</span>
+    <select class="sb" style="width:auto;padding:8px 12px;min-width:200px" onchange="App.filterSeg=this.value;${fn}">${segOpts}</select>
+  </label>`;
+},
 shopperMissionSummaryHtml(shopBrands,marketBrands,opts){
+  const activeBrands=this.getFilteredBrands(shopBrands);
   const st={gj:0,gf:0,gm:0,ga:0,gy:0,gn:0,gl:0,gs:0,bj:0,bf:0,bm:0,ba:0,by:0,bn:0,bl:0,bs:0,tj:0,tf:0,tm:0,ta:0,ty:0,tn:0,tl:0,ts:0,glL:0,blL:0,glS:0,blS:0};
-  shopBrands.forEach(b=>{st.gj+=b.gj;st.gf+=b.gf;st.gm+=b.gm;st.ga+=(b.ga||0);st.gy+=(b.gy||0);st.gn+=(b.gn||0);st.gl+=(b.gl||0);st.gs+=(b.gs||0);st.bj+=b.bj;st.bf+=b.bf;st.bm+=b.bm;st.ba+=(b.ba||0);st.by+=(b.by||0);st.bn+=(b.bn||0);st.bl+=(b.bl||0);st.bs+=(b.bs||0);st.tj+=b.tj;st.tf+=b.tf;st.tm+=b.tm;st.ta+=(b.ta||0);st.ty+=(b.ty||0);st.tn+=(b.tn||0);st.tl+=(b.tl||0);st.ts+=(b.ts||0);st.glL+=(b.glocsL||0);st.blL+=(b.blocsL||0);st.glS+=(b.glocsS||0);st.blS+=(b.blocsS||0);});
-  const mk={ts:0,gs:0,bs:0};
-  (marketBrands||shopBrands).forEach(b=>{mk.ts+=(b.ts||0);mk.gs+=(b.gs||0);mk.bs+=(b.bs||0);});
-  const shopShare=mk.ts>0?(st.ts/mk.ts*100):0;
-  const gShopShare=mk.gs>0?(st.gs/mk.gs*100):0;
-  const bShopShare=mk.bs>0?(st.bs/mk.bs*100):0;
+  activeBrands.forEach(b=>{st.gj+=b.gj;st.gf+=b.gf;st.gm+=b.gm;st.ga+=(b.ga||0);st.gy+=(b.gy||0);st.gn+=(b.gn||0);st.gl+=(b.gl||0);st.gs+=(b.gs||0);st.bj+=b.bj;st.bf+=b.bf;st.bm+=b.bm;st.ba+=(b.ba||0);st.by+=(b.by||0);st.bn+=(b.bn||0);st.bl+=(b.bl||0);st.bs+=(b.bs||0);st.tj+=b.tj;st.tf+=b.tf;st.tm+=b.tm;st.ta+=(b.ta||0);st.ty+=(b.ty||0);st.tn+=(b.tn||0);st.tl+=(b.tl||0);st.ts+=(b.ts||0);st.glL+=(b.glocsL||0);st.blL+=(b.blocsL||0);st.glS+=(b.glocsS||0);st.blS+=(b.blocsS||0);});
+  const denom={ts:0,gs:0,bs:0};
+  shopBrands.forEach(b=>{denom.ts+=(b.ts||0);denom.gs+=(b.gs||0);denom.bs+=(b.bs||0);});
+  const shopShare=denom.ts>0?(st.ts/denom.ts*100):0;
+  const gShopShare=denom.gs>0?(st.gs/denom.gs*100):0;
+  const bShopShare=denom.bs>0?(st.bs/denom.bs*100):0;
+  const segLabel=this.filterSeg==='all'?null:(SEG_LABELS[this.filterSeg]||this.filterSeg);
   const mkMoM=st.tl>0?((st.ts-st.tl)/st.tl*100):0;
   const gMoM=st.gl>0?((st.gs-st.gl)/st.gl*100):0;
   const bMoM=st.bl>0?((st.bs-st.bl)/st.bl*100):0;
@@ -1227,17 +1248,19 @@ shopperMissionSummaryHtml(shopBrands,marketBrands,opts){
   const catLabel=opts&&opts.catLabel?opts.catLabel:(this.filter==='all'?'Всі категорії':this.filter==='t'?'Retail тільки':'Restaurants тільки');
   const showBanner=!opts||opts.showBanner!==false;
   const banner=showBanner?`<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 16px;font-size:12px;color:#0c4a6e;margin-bottom:16px">
-      📊 <strong>Shopper Missions</strong> — ритейл-партнери де пікер збирає замовлення. Фільтр: <strong>${catLabel}</strong> · Jan–Aug 2026 · <strong>${shopBrands.length}</strong> партнерів
+      📊 <strong>Shopper Missions</strong> — ритейл-партнери де пікер збирає замовлення. Фільтр: <strong>${catLabel}</strong>${segLabel?` · місія <strong>${segLabel}</strong>`:''} · Jan–Aug 2026 · <strong>${activeBrands.length}</strong> партнерів
     </div>`:'';
+  const missionTitle=segLabel?`місія «${segLabel}»`:'shopper mission загалом';
   const verdict=mkMoM>=0?`зростає <span class="dp">${pf(mkMoM)}</span> MoM`:`падає <span class="dn">${pf(mkMoM)}</span> MoM`;
   const headline=`<div style="background:linear-gradient(90deg,#f0f9ff,#f0fdf4);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:13px">
-    <strong>Shopper mission загалом ${verdict}</strong> (Jul ${this.fmtN(st.tl)} → Aug <strong>${this.fmtN(st.ts)}</strong>).
-    Bolt% сегменту: ${bPctJul.toFixed(1)}% → <strong>${bPctAug.toFixed(1)}%</strong> <span class="${dc(bPctAug-bPctJul)}">(${bPctAug-bPctJul>=0?'+':''}${(bPctAug-bPctJul).toFixed(1)}pp)</span>.
-    Jan→Aug total: <span class="${dc(janAug)}">${pf(janAug)}</span> · ${shopShare.toFixed(1)}% від total market (Aug).
+    <strong>${missionTitle} ${verdict}</strong> (Jul ${this.fmtN(st.tl)} → Aug <strong>${this.fmtN(st.ts)}</strong>).
+    Bolt% ${segLabel?'місії':'сегменту'}: ${bPctJul.toFixed(1)}% → <strong>${bPctAug.toFixed(1)}%</strong> <span class="${dc(bPctAug-bPctJul)}">(${bPctAug-bPctJul>=0?'+':''}${(bPctAug-bPctJul).toFixed(1)}pp)</span>.
+    Jan→Aug: <span class="${dc(janAug)}">${pf(janAug)}</span> · ${shopShare.toFixed(1)}% від total retail shopper (Aug).
   </div>`;
+  const sub=segLabel?`<div style="font-size:10px;color:var(--ts);margin-top:2px">${this.segBadge(this.filterSeg)}</div>`:'';
   return `${banner}${headline}<div class="eg">
       <div class="ec" style="border-top:4px solid var(--pri)">
-        <h3 style="color:var(--pri)">Total Shopper</h3>
+        <h3 style="color:var(--pri)">Total Shopper${segLabel?' — '+segLabel:''}</h3>${sub}
         <div style="font-size:24px;font-weight:900;color:var(--pri);margin:4px 0">${this.fmtN(st.ts)}</div>
         <div style="font-size:10px;color:var(--ts)">ордерів · Серпень 2026</div>
         <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;text-align:center;margin-top:8px">
@@ -1310,11 +1333,7 @@ shopperPartnerDynamicsHtml(shopBrands,stTs,opts){
   const mom=(cur,prev)=>prev>0?((cur-prev)/prev*100):null;
   const totCell=(v,m)=>`<td class="n" style="font-size:11px;vertical-align:top"><div>${this.fmtN(v)}</div>${m===null?'<div style="font-size:8px;color:var(--ts)">–</div>':`<div style="font-size:8px" class="${this.dc(m)}">${this.ds(m)}${m.toFixed(0)}%</div>`}</td>`;
   const splitCell=(g,t,b)=>{const gp=this.pct(g,t),bp=this.pct(b,t);return `<td class="n" style="font-size:10px;vertical-align:top"><div><span style="color:var(--glovo)">${gp.toFixed(0)}%</span> · <span style="color:var(--bolt)">${bp.toFixed(0)}%</span></div><div style="margin-top:2px">${this.bar(gp,bp)}</div></td>`;};
-  const segOpts=['all','Restaurant','Fast Food','Pizza','Burgers','Sushi','Shawarma/Kebab','Coffee & Bakery','Alcohol','Grocery','Pharma','Dark Store','Flowers & Gifts','Pets','Tobacco/Vape','Gas Station','Specialty','Toys','Erotic','Beauty','Meat','Other Retail'].map(s=>{
-    const cnt=shopBrands.filter(b=>b.seg===s).length;
-    const lbl=s==='all'?`Всі місії (${shopBrands.length})`:`${SEG_LABELS[s]||s} (${cnt})`;
-    return `<option value="${s}" ${this.filterSeg===s?'selected':''}>${lbl}</option>`;
-  }).join('');
+  const hideMissionFilter=opts&&opts.hideMissionFilter;
   let tb='';
   shown.forEach((b,i)=>{
     const ts=[b.tj,b.tf,b.tm,b.ta||0,b.ty||0,b.tn||0,b.tl||0,b.ts||0];
@@ -1340,12 +1359,13 @@ shopperPartnerDynamicsHtml(shopBrands,stTs,opts){
   });
   const more=limit>0&&list.length>limit?`<div style="font-size:11px;color:var(--ts);padding:8px 16px">Показано топ-${limit} з ${list.length}. Повний список — вкладка <b>Shopper Missions</b>.</div>`:'';
   const searchBlock=showSearch?`<input type="text" class="sb" placeholder="Пошук партнера..." oninput="App.searchShop=this.value;App.renderShopper()" value="${this.esc(this.searchShop)}" style="min-width:200px">`:'';
+  const filterBlock=hideMissionFilter?'':this.shopperMissionFilterSelectHtml(shopBrands,opts&&opts.onFilterRender);
   return `<div class="card" style="margin-top:20px">
     <div class="card-hd"><h2>${title}</h2>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         ${searchBlock}
-        <select class="sb" style="width:auto;padding:8px 10px" onchange="App.filterSeg=this.value;App.render()">${segOpts}</select>
-        <span style="font-size:12px;color:var(--ts)">${shown.length} партнерів · Aug total shopper ${this.fmtN(stTs)}</span>
+        ${filterBlock}
+        <span style="font-size:12px;color:var(--ts)">${shown.length} партнерів · Aug ${this.filterSeg==='all'?'total shopper':'місія'} ${this.fmtN(stTs)}</span>
       </div>
       <div style="font-size:11px;color:var(--ts);margin-top:6px">Доля G/B — частка Glovo та Bolt у <b>загальних</b> замовленнях партнера. MoM — зміна total ордерів місяць до місяця. Split — той самий split по місяцях.</div>
     </div>
@@ -1367,7 +1387,8 @@ renderShopper(){
   const allBrands=this.aggBrands(data);
   const shopBrands=this.filter==='r'?allBrands:allBrands.filter(b=>b.type==='t');
   const catLabel=this.filter==='all'?'Всі категорії':this.filter==='t'?'Retail тільки':'Restaurants тільки';
-  const stTs=shopBrands.reduce((s,b)=>s+(b.ts||0),0);
+  const shopSeg=this.getFilteredBrands(shopBrands);
+  const stTs=shopSeg.reduce((s,b)=>s+(b.ts||0),0);
   const segMap={};
   shopBrands.forEach(b=>{
     const s=b.seg||'Other Retail';
@@ -1389,7 +1410,8 @@ renderShopper(){
     bPctF:v.tf>0?(v.bf/v.tf*100):0,
     bPctJ:v.tj>0?(v.bj/v.tj*100):0
   })).sort((a,b)=>b.ts-a.ts);
-  let h=this.shopperMissionSummaryHtml(shopBrands,allBrands,{catLabel});
+  let h=`<div style="display:flex;justify-content:flex-end;margin-bottom:12px">${this.shopperMissionFilterSelectHtml(shopBrands,'App.renderShopper()')}</div>`;
+  h+=this.shopperMissionSummaryHtml(shopBrands,allBrands,{catLabel});
   h+=`<div class="card">
       <div class="card-hd">
         <h2>Місії — breakdown по сегментах</h2>
@@ -1495,7 +1517,7 @@ renderShopper(){
     </tr>`;
   });
   h+=`</tbody></table></div></div>`;
-  h+=this.shopperPartnerDynamicsHtml(shopBrands,stTs,{showSearch:true,title:'По кожному партнеру — доля Glovo/Bolt і тренд MoM'});
+  h+=this.shopperPartnerDynamicsHtml(shopBrands,stTs,{showSearch:true,hideMissionFilter:true,title:'По кожному партнеру — доля Glovo/Bolt і тренд MoM'});
   document.getElementById('shopperBox').innerHTML=h;
 },
 toggleShopperSeg(idx,row){
