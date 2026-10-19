@@ -1106,45 +1106,45 @@ renderInsights(){
   const tq1=k.tj+k.tf+k.tm,gq1=k.gj+k.gf+k.gm,bq1=k.bj+k.bf+k.bm;
   const tq2=k.ta+k.ty+k.tn,gq2=k.ga+k.gy+k.gn,bq2=k.ba+k.by+k.bn;
   const bq1p=this.pct(bq1,tq1),bq2p=this.pct(bq2,tq2);
-  const topBolt=brands.filter(b=>(b.tu||0)>=300).sort((a,b)=>b.bsp-a.bsp).slice(0,3);
-  const janJulBolt=b=>b.bj+b.bf+b.bm+(b.ba||0)+(b.by||0)+(b.bn||0)+(b.bl||0);
-  const newAugBolt=brands.filter(b=>janJulBolt(b)===0&&(b.bs||0)>0).length;
+  const topBolt=brands.filter(b=>(b.tu||0)>=300).sort((a,b)=>b.bup-a.bup).slice(0,3);
+  const janAugBolt=b=>b.bj+b.bf+b.bm+(b.ba||0)+(b.by||0)+(b.bn||0)+(b.bl||0)+(b.bs||0);
+  const newSepBolt=brands.filter(b=>janAugBolt(b)===0&&(b.bu||0)>0).length;
   const _pp=v=>`${v>=0?'+':''}${v.toFixed(1)}pp`;
   const TH=1000, CAP=15;
-  const incList=brands.filter(b=>(b.tl||0)>=TH&&(b.ts||0)>=TH&&b.bsp>b.blp).sort((a,b)=>(b.bsp-b.blp)-(a.bsp-a.blp));
-  const declList=brands.filter(b=>(b.tl||0)>=TH&&(b.ts||0)>=TH&&b.bsp<b.blp).sort((a,b)=>(a.bsp-a.blp)-(b.bsp-b.blp));
+  const incList=brands.filter(b=>(b.ts||0)>=TH&&(b.tu||0)>=TH&&b.bup>b.bsp).sort((a,b)=>(b.bup-b.bsp)-(a.bup-a.bsp));
+  const declList=brands.filter(b=>(b.ts||0)>=TH&&(b.tu||0)>=TH&&b.bup<b.bsp).sort((a,b)=>(a.bup-a.bsp)-(b.bup-b.bsp));
   const bGrow=incList.length, bDecl=declList.length;
-  const newBoltAll=brands.filter(b=>janJulBolt(b)===0&&(b.bs||0)>0).sort((a,b)=>(b.bs||0)-(a.bs||0));
-  const newBoltList=newBoltAll.filter(b=>(b.bs||0)>=100);
-  const liB=r=>`<li><strong>${this.esc(r.brand)}</strong> · Bolt% ${r.blp.toFixed(1)}→<b>${r.bsp.toFixed(1)}%</b> <span class="${this.dc(r.bsp-r.blp)}">${_pp(r.bsp-r.blp)}</span> · ${this.fmtN(r.bs)} зам. Aug (Jul ${this.fmtN(r.bl)})</li>`;
+  const newBoltAll=brands.filter(b=>janAugBolt(b)===0&&(b.bu||0)>0).sort((a,b)=>(b.bu||0)-(a.bu||0));
+  const newBoltList=newBoltAll.filter(b=>(b.bu||0)>=100);
+  const liB=r=>`<li><strong>${this.esc(r.brand)}</strong> · Bolt% ${r.bsp.toFixed(1)}→<b>${r.bup.toFixed(1)}%</b> <span class="${this.dc(r.bup-r.bsp)}">${_pp(r.bup-r.bsp)}</span> · ${this.fmtN(r.bu)} зам. Sep (Aug ${this.fmtN(r.bs)})</li>`;
   const more=(n)=>n>CAP?`<li style="list-style:none;color:var(--ts)">…та ще ${n-CAP}</li>`:'';
   const detailBolt=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
-    <div><div style="font-size:11px;font-weight:700;color:var(--bolt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📈 Наростили частку Bolt (Jul→Aug) · ${incList.length}</div><ul style="margin:0;padding-left:18px;font-size:12px">${incList.slice(0,CAP).map(liB).join('')||'<li>—</li>'}${more(incList.length)}</ul></div>
-    <div><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📉 Знизили частку Bolt (Jul→Aug) · ${declList.length}</div><ul style="margin:0;padding-left:18px;font-size:12px">${declList.slice(0,CAP).map(liB).join('')||'<li>—</li>'}${more(declList.length)}</ul></div>
+    <div><div style="font-size:11px;font-weight:700;color:var(--bolt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📈 Наростили частку Bolt (Aug→Sep) · ${incList.length}</div><ul style="margin:0;padding-left:18px;font-size:12px">${incList.slice(0,CAP).map(liB).join('')||'<li>—</li>'}${more(incList.length)}</ul></div>
+    <div><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📉 Знизили частку Bolt (Aug→Sep) · ${declList.length}</div><ul style="margin:0;padding-left:18px;font-size:12px">${declList.slice(0,CAP).map(liB).join('')||'<li>—</li>'}${more(declList.length)}</ul></div>
   </div>
-  <div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--bolt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">🆕 Нові на Bolt у серпні (не було Jan–Jul) · усього ${newBoltAll.length}, показано ≥100 зам.</div>
-    <ul style="margin:0;padding-left:18px;columns:2;font-size:12px">${newBoltList.map(r=>`<li><strong>${this.esc(r.brand)}</strong> — ${this.fmtN(r.bs)} зам. Bolt (всього Aug ${this.fmtN(r.ts)})</li>`).join('')||'<li>—</li>'}</ul></div>`;
-  const gBig=brands.filter(b=>(b.gl||0)>=300||(b.gs||0)>=300);
-  const gGain=[...gBig].sort((a,b)=>((b.gs||0)-(b.gl||0))-((a.gs||0)-(a.gl||0))).slice(0,10);
-  const gLoss=[...gBig].filter(b=>(b.gs||0)<(b.gl||0)).sort((a,b)=>((a.gs||0)-(a.gl||0))-((b.gs||0)-(b.gl||0))).slice(0,10);
-  const janJulGlovo=b=>b.gj+b.gf+b.gm+(b.ga||0)+(b.gy||0)+(b.gn||0)+(b.gl||0);
-  const newGlovoList=brands.filter(b=>janJulGlovo(b)===0&&(b.gs||0)>0).sort((a,b)=>(b.gs||0)-(a.gs||0));
-  const liG=r=>`<li><strong>${this.esc(r.brand)}</strong> · ${this.fmtN(r.gl)}→<b>${this.fmtN(r.gs)}</b> <span class="${this.dc(r.gs-r.gl)}">${this.ds(r.gs-r.gl)}${this.fmtN(Math.abs(r.gs-r.gl))}</span> (${this.ds(this.pct(r.gs-r.gl,r.gl))}${this.pct(r.gs-r.gl,r.gl).toFixed(0)}%)</li>`;
-  const glovoCard=`<div class="ic" style="border-left-color:var(--glovo)"><h3>🛵 Glovo — динаміка Jul→Aug</h3>
-    <p>Glovo загалом: ${this.fmtN(k.gl)} → <strong>${this.fmtN(k.gs)}</strong> зам. (${this.ds(k.gs-k.gl)}${this.pct(k.gs-k.gl,k.gl).toFixed(1)}%) · частка ринку ${glp.toFixed(1)}% (Jul) → <strong>${gsp.toFixed(1)}%</strong> (Aug, ${this.ds(gsp-glp)}${(gsp-glp).toFixed(1)}pp).</p>
+  <div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--bolt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">🆕 Нові на Bolt у вересні (не було Jan–Aug) · усього ${newBoltAll.length}, показано ≥100 зам.</div>
+    <ul style="margin:0;padding-left:18px;columns:2;font-size:12px">${newBoltList.map(r=>`<li><strong>${this.esc(r.brand)}</strong> — ${this.fmtN(r.bu)} зам. Bolt (всього Sep ${this.fmtN(r.tu)})</li>`).join('')||'<li>—</li>'}</ul></div>`;
+  const gBig=brands.filter(b=>(b.gs||0)>=300||(b.gu||0)>=300);
+  const gGain=[...gBig].sort((a,b)=>((b.gu||0)-(b.gs||0))-((a.gu||0)-(a.gs||0))).slice(0,10);
+  const gLoss=[...gBig].filter(b=>(b.gu||0)<(b.gs||0)).sort((a,b)=>((a.gu||0)-(a.gs||0))-((b.gu||0)-(b.gs||0))).slice(0,10);
+  const janAugGlovo=b=>b.gj+b.gf+b.gm+(b.ga||0)+(b.gy||0)+(b.gn||0)+(b.gl||0)+(b.gs||0);
+  const newGlovoList=brands.filter(b=>janAugGlovo(b)===0&&(b.gu||0)>0).sort((a,b)=>(b.gu||0)-(a.gu||0));
+  const liG=r=>`<li><strong>${this.esc(r.brand)}</strong> · ${this.fmtN(r.gs)}→<b>${this.fmtN(r.gu)}</b> <span class="${this.dc(r.gu-r.gs)}">${this.ds(r.gu-r.gs)}${this.fmtN(Math.abs(r.gu-r.gs))}</span> (${this.ds(this.pct(r.gu-r.gs,r.gs))}${this.pct(r.gu-r.gs,r.gs).toFixed(0)}%)</li>`;
+  const glovoCard=`<div class="ic" style="border-left-color:var(--glovo)"><h3>🛵 Glovo — динаміка Aug→Sep</h3>
+    <p>Glovo загалом: ${this.fmtN(k.gs)} → <strong>${this.fmtN(k.gu)}</strong> зам. (${this.ds(k.gu-k.gs)}${this.pct(k.gu-k.gs,k.gs).toFixed(1)}%) · частка ринку ${gsp.toFixed(1)}% (Aug) → <strong>${gup.toFixed(1)}%</strong> (Sep, ${this.ds(gup-gsp)}${(gup-gsp).toFixed(1)}pp).</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px">
-      <div><div style="font-size:11px;font-weight:700;color:var(--glovo);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📈 Найбільший приріст Glovo за обсягом (топ-10)</div><ul style="margin:0;padding-left:18px;font-size:12px">${gGain.map(liG).join('')}</ul></div>
-      <div><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📉 Найбільше падіння Glovo за обсягом (топ-10)</div><ul style="margin:0;padding-left:18px;font-size:12px">${gLoss.map(liG).join('')}</ul></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--glovo);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📈 Найбільший приріст Glovo за обсягом Aug→Sep (топ-10)</div><ul style="margin:0;padding-left:18px;font-size:12px">${gGain.map(liG).join('')}</ul></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">📉 Найбільше падіння Glovo за обсягом Aug→Sep (топ-10)</div><ul style="margin:0;padding-left:18px;font-size:12px">${gLoss.map(liG).join('')}</ul></div>
     </div>
-    <div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--glovo);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">🆕 Нові на Glovo у серпні · ${newGlovoList.length}</div>
-      <ul style="margin:0;padding-left:18px;columns:2;font-size:12px">${newGlovoList.slice(0,20).map(r=>`<li><strong>${this.esc(r.brand)}</strong> — ${this.fmtN(r.gs)} зам.</li>`).join('')||'<li>—</li>'}</ul>${newGlovoList.length>20?`<div style="font-size:11px;color:var(--ts);margin-top:2px">…та ще ${newGlovoList.length-20}</div>`:''}</div>
+    <div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--glovo);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">🆕 Нові на Glovo у вересні (не було Jan–Aug) · ${newGlovoList.length}</div>
+      <ul style="margin:0;padding-left:18px;columns:2;font-size:12px">${newGlovoList.slice(0,20).map(r=>`<li><strong>${this.esc(r.brand)}</strong> — ${this.fmtN(r.gu)} зам.</li>`).join('')||'<li>—</li>'}</ul>${newGlovoList.length>20?`<div style="font-size:11px;color:var(--ts);margin-top:2px">…та ще ${newGlovoList.length-20}</div>`:''}</div>
   </div>`;
   const integrity=(typeof VERIFY!=='undefined')?`
   <div class="ic pos"><h3>✅ Data Integrity — джерела даних</h3>
     <p><strong>Січень–березень</strong> — без змін. <strong>Квітень</strong> — Apr2026_FINAL; <strong>Травень</strong> — May2026; <strong>Червень</strong> — Jun2026_final.csv; <strong>Липень</strong> — Enhanced_Merged_Dataset_UA_Jul2026; <strong>Вересень</strong> — <b>${VERIFY.septemberSource||'Enhanced_Merged_Dataset_UA_Sep2026'}</b>. Q1=Jan–Mar, Q2=Apr–Jun. Mistakes-алиаси застосовані.</p>
     <ul>
       <li>Total orders (branded): Jan ${this.fmtN(VERIFY.janTot)} · Feb ${this.fmtN(VERIFY.febTot)} · Mar ${this.fmtN(VERIFY.marTot)} · Apr ${this.fmtN(VERIFY.aprTot)} · May ${this.fmtN(VERIFY.mayTot)} · Jun ${this.fmtN(VERIFY.junTot||0)} · Jul ${this.fmtN(VERIFY.julTot||0)} · <strong>Aug ${this.fmtN(VERIFY.augTot||0)}</strong> · <strong>Sep ${this.fmtN(VERIFY.sepTot||0)}</strong></li>
-      <li>Apr–Aug — однакова методологія Enhanced (overlapping). Blank-brand замовлення виключені з партнерських агрегатів.</li>
+      <li>Apr–Sep — однакова методологія Enhanced (overlapping). Blank-brand замовлення виключені з партнерських агрегатів.</li>
     </ul>
   </div>`:'';
   const nm=(typeof NEWMAY!=='undefined')?NEWMAY:null;
@@ -1172,13 +1172,13 @@ renderInsights(){
   </div>`:'';
   document.getElementById('insightsBox').innerHTML=`
   <div class="ic pos"><h3>Jan–Sep 2026 — Bolt Growth Trend</h3>
-    <p>Bolt market share: <strong>${bjp.toFixed(1)}%</strong> (Jan) → <strong>${bfp.toFixed(1)}%</strong> (Feb) → <strong>${bmp.toFixed(1)}%</strong> (Mar) → <strong>${bap.toFixed(1)}%</strong> (Apr) → <strong>${byp.toFixed(1)}%</strong> (May) → <strong>${bnp.toFixed(1)}%</strong> (Jun) → <strong>${blp.toFixed(1)}%</strong> (Jul) → <strong>${bsp.toFixed(1)}%</strong> (Aug) → <strong>${bup.toFixed(1)}%</strong> (Sep) — <strong>${bup>bjp?'+':''}${(bup-bjp).toFixed(1)}pp</strong> Jan→Sep.</p>
-    <p>Sep vs Aug: Bolt <strong>${this.fmtN(k.bu)}</strong> (${this.ds(k.bu-k.bs)}${this.pct(k.bu-k.bs,k.bs).toFixed(1)}%) | Glovo <strong>${this.fmtN(k.gu)}</strong> (${this.ds(k.gu-k.gs)}${this.pct(k.gu-k.gs,k.gs).toFixed(1)}%) · Aug vs Jul: Bolt <strong>${this.fmtN(k.bs)}</strong> (${this.ds(k.bs-k.bl)}${this.pct(k.bs-k.bl,k.bl).toFixed(1)}%) | Glovo <strong>${this.fmtN(k.gs)}</strong> (${this.ds(k.gs-k.gl)}${this.pct(k.gs-k.gl,k.gl).toFixed(1)}%)</p>
+    <p>Bolt market share: <strong>${bjp.toFixed(1)}%</strong> (Jan) → <strong>${bfp.toFixed(1)}%</strong> (Feb) → <strong>${bmp.toFixed(1)}%</strong> (Mar) → <strong>${bap.toFixed(1)}%</strong> (Apr) → <strong>${byp.toFixed(1)}%</strong> (May) → <strong>${bnp.toFixed(1)}%</strong> (Jun) → <strong>${blp.toFixed(1)}%</strong> (Jul) → <strong>${bsp.toFixed(1)}%</strong> (Aug) → <strong>${bup.toFixed(1)}%</strong> (Sep) — <strong>${bup>bjp?'+':''}${(bup-bjp).toFixed(1)}pp</strong> Jan→Sep · <strong>${_pp(bup-bsp)}</strong> Aug→Sep.</p>
+    <p><strong>Aug→Sep:</strong> Total <strong>${this.fmtN(k.tu)}</strong> (${this.ds(k.tu-k.ts)}${this.pct(k.tu-k.ts,k.ts).toFixed(1)}%) · Bolt <strong>${this.fmtN(k.bu)}</strong> (${this.ds(k.bu-k.bs)}${this.pct(k.bu-k.bs,k.bs).toFixed(1)}%, MS ${bsp.toFixed(1)}%→<strong>${bup.toFixed(1)}%</strong>) · Glovo <strong>${this.fmtN(k.gu)}</strong> (${this.ds(k.gu-k.gs)}${this.pct(k.gu-k.gs,k.gs).toFixed(1)}%, MS ${gsp.toFixed(1)}%→<strong>${gup.toFixed(1)}%</strong>)</p>
     <ul>
-      <li>Total market: ${this.fmtN(k.tj)} → ${this.fmtN(k.tf)} → ${this.fmtN(k.tm)} → ${this.fmtN(k.ta)} → ${this.fmtN(k.ty)} → ${this.fmtN(k.tn)} → ${this.fmtN(k.tl)} → <strong>${this.fmtN(k.ts)}</strong> (Aug) | ${this.ds(k.ts-k.tj)}${this.pct(k.ts-k.tj,k.tj).toFixed(1)}% Jan→Aug</li>
-      <li>Total locations (Aug, активні): <strong style="color:var(--glovo)">${this.fmtN(k.glocsS)}</strong> Glovo · <strong style="color:var(--bolt)">${this.fmtN(k.blocsS)}</strong> Bolt (Jul: G ${this.fmtN(k.glocsL)} · B ${this.fmtN(k.blocsL)})</li>
-      <li>${bGrow} partners increased Bolt share Jul→Aug | ${bDecl} declined (партнери з ≥1000 зам. і в Jul, і в Aug)</li>
-      <li>${newAugBolt} partners new to Bolt in Aug only (not in Jan–Jul)</li>
+      <li>Total market: ${this.fmtN(k.tj)} → … → ${this.fmtN(k.tl)} (Jul) → <strong>${this.fmtN(k.ts)}</strong> (Aug) → <strong>${this.fmtN(k.tu)}</strong> (Sep) | ${this.ds(k.tu-k.tj)}${this.pct(k.tu-k.tj,k.tj).toFixed(1)}% Jan→Sep</li>
+      <li>Total locations (Sep, активні): <strong style="color:var(--glovo)">${this.fmtN(k.glocsS)}</strong> Glovo · <strong style="color:var(--bolt)">${this.fmtN(k.blocsS)}</strong> Bolt (Aug: G ${this.fmtN(k.glocsL)} · B ${this.fmtN(k.blocsL)})</li>
+      <li>${bGrow} partners increased Bolt share Aug→Sep | ${bDecl} declined (партнери з ≥1000 зам. і в Aug, і в Sep)</li>
+      <li>${newSepBolt} partners new to Bolt in Sep only (not in Jan–Aug)</li>
     </ul>
     ${detailBolt}
   </div>
@@ -1193,18 +1193,22 @@ renderInsights(){
   </div>
   ${newBlock}
   ${integrity}
-  <div class="ic act"><h3>Top Bolt-Dominant Partners in August</h3>
-    <ul>${topBolt.map(b=>`<li><strong>${this.esc(b.brand)}</strong>: ${b.bsp.toFixed(1)}% Bolt in Aug (${this.fmtN(b.bs||0)} orders) — Jul: ${b.blp.toFixed(1)}% <span class="${this.dc(b.bsp-b.blp)}" style="font-size:11px">${this.ds(b.bsp-b.blp)}${(b.bsp-b.blp).toFixed(1)}pp</span></li>`).join('')}</ul>
+  <div class="ic act"><h3>Top Bolt-Dominant Partners in September</h3>
+    <ul>${topBolt.map(b=>`<li><strong>${this.esc(b.brand)}</strong>: ${b.bup.toFixed(1)}% Bolt in Sep (${this.fmtN(b.bu||0)} orders) — Aug: ${b.bsp.toFixed(1)}% <span class="${this.dc(b.bup-b.bsp)}" style="font-size:11px">${this.ds(b.bup-b.bsp)}${(b.bup-b.bsp).toFixed(1)}pp</span></li>`).join('')}</ul>
     <div class="ab"><strong>Action:</strong> Use these brands as proof points when pitching dual-platform to Glovo-exclusive partners.</div>
   </div>
-  <div class="ic warn"><h3>Cities with Lowest Bolt Penetration in August</h3>
-    <ul>${cities.filter(c=>(c.ts||0)>5000).sort((a,b)=>a.bsp-b.bsp).slice(0,5)
-      .map(c=>`<li><strong>${this.esc(c.city)}</strong>: Bolt ${c.bsp.toFixed(1)}% — ${this.fmtN(c.bs)} orders vs Glovo ${this.fmtN(c.gs)} <span class="${this.dc(c.bsp-c.blp)}" style="font-size:11px">(${this.ds(c.bsp-c.blp)}${(c.bsp-c.blp).toFixed(1)}pp vs Jul)</span></li>`).join('')}</ul>
+  <div class="ic warn"><h3>Cities with Lowest Bolt Penetration in September</h3>
+    <ul>${cities.filter(c=>(c.tu||0)>5000).sort((a,b)=>a.bup-b.bup).slice(0,5)
+      .map(c=>`<li><strong>${this.esc(c.city)}</strong>: Bolt ${c.bup.toFixed(1)}% — ${this.fmtN(c.bu)} orders vs Glovo ${this.fmtN(c.gu)} <span class="${this.dc(c.bup-c.bsp)}" style="font-size:11px">(${this.ds(c.bup-c.bsp)}${(c.bup-c.bsp).toFixed(1)}pp vs Aug)</span></li>`).join('')}</ul>
     <div class="ab"><strong>Action:</strong> Prioritize partner acquisition and promotions in these cities.</div>
   </div>
-  <div class="ic"><h3>Cities — Strongest Bolt Growth Jan&rarr;Aug</h3>
-    <ul>${[...cities].filter(c=>c.tj>2000).sort((a,b)=>(b.bsp-b.bjp)-(a.bsp-a.bjp)).slice(0,5)
-      .map(c=>`<li><strong>${this.esc(c.city)}</strong>: ${c.bjp.toFixed(1)}% → ${c.bfp.toFixed(1)}% → ${c.bmp.toFixed(1)}% → ${c.bap.toFixed(1)}% → ${c.byp.toFixed(1)}% → ${c.bnp.toFixed(1)}% → ${c.blp.toFixed(1)}% → <strong>${c.bsp.toFixed(1)}%</strong> (${this.ds(c.bsp-c.bjp)}${(c.bsp-c.bjp).toFixed(1)}pp)</li>`).join('')}</ul>
+  <div class="ic"><h3>Cities — Strongest Bolt MS gain Aug&rarr;Sep</h3>
+    <ul>${[...cities].filter(c=>(c.tu||0)>2000&&(c.ts||0)>2000).sort((a,b)=>(b.bup-b.bsp)-(a.bup-a.bsp)).slice(0,5)
+      .map(c=>`<li><strong>${this.esc(c.city)}</strong>: ${c.bsp.toFixed(1)}% (Aug) → <strong>${c.bup.toFixed(1)}%</strong> (Sep) <span class="${this.dc(c.bup-c.bsp)}">${_pp(c.bup-c.bsp)}</span> · ${this.fmtN(c.tu)} total Sep</li>`).join('')}</ul>
+  </div>
+  <div class="ic"><h3>Cities — Full Bolt MS trend Jan&rarr;Sep</h3>
+    <ul>${[...cities].filter(c=>c.tj>2000).sort((a,b)=>(b.bup-b.bjp)-(a.bup-a.bjp)).slice(0,5)
+      .map(c=>`<li><strong>${this.esc(c.city)}</strong>: ${c.bjp.toFixed(1)}% → ${c.bfp.toFixed(1)}% → ${c.bmp.toFixed(1)}% → ${c.bap.toFixed(1)}% → ${c.byp.toFixed(1)}% → ${c.bnp.toFixed(1)}% → ${c.blp.toFixed(1)}% → ${c.bsp.toFixed(1)}% → <strong>${c.bup.toFixed(1)}%</strong> (${this.ds(c.bup-c.bjp)}${(c.bup-c.bjp).toFixed(1)}pp Jan→Sep)</li>`).join('')}</ul>
   </div>`;
 },
 bindSort(tbodyId){
